@@ -1,7 +1,6 @@
 
 # Virtual Plaza Client
 
-
 ## Dependencies
 
 name          | url
@@ -15,13 +14,12 @@ Grunt         | https://github.com/gruntjs/grunt
 ### Installation
 
 1. Install **Node.js** and **Compass**.
-2. Install global dependencies. You may need to run these commands with elevated privileges.
-   a. Run `npm install grunt -g` to install **Grunt**.
-   b. Run `npm install coffee-script -g` to install **CoffeeScript**.
-3. Run `npm install -d` to install the node dependencies.
-4. Run `./fetch-libs.sh` to fetch the third party client-side JS libraries.
-5. Run `grunt` to compile and package up the application.
-6. Done!
+2. Run `npm install grunt -g` to install **Grunt**.
+3. Run `npm install coffee-script -g` to install **CoffeeScript**.
+4. Run `npm install -d` to install the node dependencies.
+5. Run `./fetch-libs.sh` to fetch the third party client-side JS libraries.
+6. Run `grunt` to compile and package up the application.
+7. Done!
 
 
 ## Running the app
