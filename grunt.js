@@ -1,18 +1,19 @@
 
 module.exports = function(grunt) {
 
-  grunt.loadTasks( "tasks" );
-
-  grunt.loadNpmTasks( "grunt-coffee" );
-  grunt.loadNpmTasks( "grunt-compass" );
-  grunt.loadNpmTasks( "grunt-handlebars" );
-  grunt.loadNpmTasks( "grunt-contrib-copy" );
-  grunt.loadNpmTasks( "grunt-contrib-clean" );
+  [ "grunt-jade" 
+  , "grunt-coffee"
+  , "grunt-compass"
+  , "grunt-handlebars"
+  , "grunt-contrib-copy"
+  , "grunt-contrib-clean"
+  ].forEach(grunt.loadNpmTasks)
 
   grunt.initConfig({
   
     clean: {
-      build: "build"
+      build: "build",
+      tmp: "tmp"
     },
 
     // Compile CoffeeScript files to JavaScript
@@ -25,14 +26,11 @@ module.exports = function(grunt) {
           preserve_dirs: true,
           base_path: 'src/scripts/app'
         }
-      },
-      'handlebars-custom-helpers': {
-        src: 'src/jade/templates/handlebars-custom-helpers.coffee',
-        dest: 'build/assets/js/handlebars-custom-helpers.js'
       }
     },
 
     jade: {
+
       index: {
         src:  'src/jade/index.jade',
         dest: 'build/',
@@ -43,7 +41,7 @@ module.exports = function(grunt) {
 
       handlebars: {
         src:  'src/jade/templates/**/*.jade',
-        dest: 'build/assets/templates/handlebars',
+        dest: 'tmp/templates/handlebars',
         options: {
           client: false,
           extension: ''
@@ -59,7 +57,7 @@ module.exports = function(grunt) {
 
     handlebars: {
       js: {
-        src:  'build/assets/templates/handlebars',
+        src:  'tmp/templates/handlebars',
         dest: 'build/assets/js/app/templates.js'
       }
     },
@@ -97,7 +95,6 @@ module.exports = function(grunt) {
       base: './build'
     },
 
-
     watch: {
       all: {
         files: ["grunt.js", "src/**/*"],
@@ -107,6 +104,7 @@ module.exports = function(grunt) {
 
   });
   
-  grunt.registerTask('default', 'clean coffee jade handlebars compass copy');
+  grunt.registerTask('default', 'clean:build coffee jade handlebars compass copy clean:tmp');
   grunt.registerTask('run',     'default server watch');
+  // TODO: It would be cool if the `fetch-libs.sh` script was ported to a grunt task.
 };

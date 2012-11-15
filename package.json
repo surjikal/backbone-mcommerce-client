@@ -9,6 +9,6 @@
       , "grunt-contrib-clean": "~0.3.1"
       , "grunt-contrib-copy": "~0.3.2"
       , "grunt-handlebars": "~0.0.6"
-      , "jade": "0.27.7"
+      , "grunt-jade": "git://github.com/surjikal/grunt-jade.git#master"
     }
 }
