@@ -1,0 +1,20 @@
+
+//- Adheres to hcard microformat.
+//- http://microformats.org/wiki/hcard
+
+.vcard
+    em.n
+        span.given-name {{firstName}}
+        | 
+        span.family-name {{lastName}}
+    p.adr
+        span.street {{street}}
+        br
+        //- span.locality {{city}}
+        //- span.region, {{province}}
+        span.postal-code {{postalCode}}
+
+
+i.icon-checkmark.active.check(style="{{#unless selected}}display: none;{{/unless}}")
+
+span.remove.label.label-important(style="display: none;") remove

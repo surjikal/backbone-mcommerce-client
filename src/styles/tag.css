@@ -1,0 +1,48 @@
+payment, .payment {
+  position: relative;
+  display: block;
+  overflow: hidden;
+
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+       -ms-sizing: border-box;
+}
+
+payment label, .payment label {
+  display: block;
+  padding: 5px 0;
+
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+payment input, .payment input {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+       -ms-sizing: border-box;
+}
+
+payment .number input, .payment .number input {
+  width: 100%;
+}
+
+payment .expiry em {
+  display: none;
+}
+
+payment .cvc,
+.payment .cvc {
+  float: right;
+  text-align: right;
+}
+
+payment .expiry,
+.payment .expiry {
+}
+
+payment .message,
+.payment .message {
+  display: block;
+}
+

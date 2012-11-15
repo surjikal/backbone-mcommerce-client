@@ -1,0 +1,31 @@
+
+//- .instructions.section
+//-     | One last thing! Where should we send the receipt?
+
+form#confirm-form(method='post', action='.')
+
+    //- .section
+    //-     input#user-email(type='email', placeholder='Email', required='required')
+
+    .instructions.section Here's what your bill looks like:
+
+    .section
+        table.pricing
+            tbody
+                tr.item-cost
+                    td {{ item.name }}
+                    td.price {{ item.price }}
+
+                tr.variable-cost.shipping-cost
+                    td Shipping
+                    td.price {{ bill.shipping }}
+
+                tr.variable-cost.tax-cost
+                    td Tax
+                    td.price {{ bill.tax }}
+
+                tr.variable-cost.total-cost
+                    td Total
+                    td.price {{ bill.total }}
+
+    button#wizard-next-step.btn-big(type="submit") Sounds good!

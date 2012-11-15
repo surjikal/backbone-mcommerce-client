@@ -1,0 +1,15 @@
+
+ul.items
+  {{#each itemSpotRow}}
+  div.table-row
+    {{#each itemSpots}}
+    li
+      a.image(href="{{url}}", style="background-image: url({{image}});")
+      footer
+        .bottom-bar
+          p.price
+            span.dollar
+            {{itemPrice}}
+          a.buy-button(href="{{url}}") Buy
+    {{/each}}
+  {{/each}}

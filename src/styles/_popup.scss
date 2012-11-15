@@ -1,0 +1,66 @@
+
+.dim-overlay {
+    background: rgba(black, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 19;
+}
+
+// .dim-overlay
+//     .popup
+//         h1 Hello! Please create an account.
+//         p.subtext
+//             | It'll only take 10 seconds, and we won't spam you :)
+        
+//         fieldset
+//             input#email(type='email', placeholder='Email Address')
+//             input#password(type='password', placeholder='Password') 
+
+//         .buttons
+//             button.btn#login-button(type="button") Login
+//             button.btn#popup-dismiss(type="button") Cancel
+
+.popup {
+    background: #fff;
+    position: fixed;
+    top: 3%;
+    left: 4%;
+    right: 4%;
+    border: 1px solid #999;
+    border-bottom-width: 2px;
+    color: #444;
+    padding: 1em 1em;
+    z-index: 9999;
+
+    font-size: 80%;
+
+    h1 {
+        margin-bottom: 0.5em;
+        text-align: center;
+    }
+
+    p {
+        font-size: 80%;
+        color: #999;
+        font-style: italic;
+    }
+
+    fieldset {
+        padding: 1em 0 0 0;
+        font-size: 120%;
+    }
+
+    .buttons {
+        padding: 2em 1em 0.5em 1em;
+        text-align: center;
+
+        button {
+            display: inline-block;
+            margin: 0 2em;
+        }
+    }
+
+}

@@ -1,0 +1,68 @@
+
+//@import url(http://fonts.googleapis.com/css?family=Oswald:300,400);
+//@import url(http://fonts.googleapis.com/css?family=Duru+Sans|Gudea|Cantarell|Open+Sans);
+
+@import "compass/css3";
+@import "compass/css3/user-interface";
+@import "compass/reset";
+@import "compass/layout/stretching";
+@import "compass/utilities/general/clearfix";
+
+
+@mixin debug($color: red) {
+    @include box-sizing(border-box);
+    border: 1px solid $color;
+}
+
+@mixin emulate-device($width, $height) {
+    body {
+        @include box-sizing(border-box);
+        border: 1px solid #444;
+        height: $height;
+        width: $width;
+    }
+}
+
+
+* {
+    @include user-select(none);
+}
+
+.hidden {
+    display: none !important;
+}
+
+input {
+    @include user-select(text);
+}
+
+a {
+    text-decoration: none !important;
+    color: #555;
+
+    &:hover {
+        color: #222;
+    };
+}
+
+.light {
+    color: #888;
+    &:hover {
+        color: #444;
+    }
+}
+
+.table {
+    display: table;
+    margin: 0 !important;
+}
+
+.table-row {
+    display: table-row !important;
+}
+
+.table-cell {
+    display: table-cell !important;
+}
+
+

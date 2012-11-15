@@ -1,0 +1,154 @@
+
+@mixin button-color($color, $text-color) {
+
+    color: $text-color;
+    background-color: $color;
+
+    border-top:    1px solid darken($color, 5%);
+    border-right:  1px solid darken($color, 10%);
+    border-left:   1px solid darken($color, 10%);
+    border-bottom: 2px solid darken($color, 20%);
+
+    // @include text-shadow(
+    //     0px -1px 0px darken($color, 20%)
+    // );
+
+    -webkit-font-smoothing: antialiased;
+
+    // @include background(linear-gradient(
+    //     top,
+    //     #52A8E8 40%,
+    //     #377AD0 100%
+    // ));
+}
+
+.btn-big {
+    @include box-sizing(border-box);
+    @include button-color(#52A8E8, white);
+
+    display: block;
+    font-size: 80%;
+    width: 100%;
+    padding: 0px 8px 2px 8px;
+    text-align: center;
+    line-height: 40px;
+    margin: 0 auto;
+    float: left;
+
+    &.loading {
+        background-image: inline-image('spinner.gif');
+        background-position: center;
+        background-repeat: no-repeat;
+        text-indent: -9999px;
+        white-space: nowrap;
+    }
+
+    &:active:not(:disabled),
+    &.active:not(:disabled),
+    &:active:not(.loading),
+    &.active:not(.loading) {
+        border-bottom-width: 0px;
+        position: relative;
+        margin-top: 2px;
+    }
+
+    &:disabled, &.disabled {
+        @include button-color(darken(whitesmoke, 20%), white);
+    }
+}
+
+.btn.bs-big {
+    font-size: 60%;
+    float: none;
+    width: 100%;
+    padding: 0.6em 0;
+}
+
+input::-moz-placeholder,
+input::-webkit-input-placeholder {
+    color: #ccc;
+    line-height: normal;
+}
+
+select, textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    @include border-radius(0px);
+    @include box-sizing(border-box);
+    @include box-shadow(none !important);
+    @include transition(none !important);
+
+    border: 1px solid #eee;
+    border-bottom-color: #e7e7e7;
+    font-size: 90%;
+    margin: 0.5em auto 0.5em auto;
+    padding: 0.3em 0 0.3em 0.6em;
+    display: block;
+    height: 2em;
+    width: 100%;
+    margin: 0 0 0.3em 0;
+    color: #555;
+    font-weight: normal;
+    outline: none;
+    font: 20px "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"], {
+    -webkit-appearance: listbox;
+       -moz-appearance: listbox;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+    height: auto;
+}
+
+input[type=radio] {
+    bottom: 2px;
+}
+
+input.error {
+    border-color: rgb(185, 74, 72);
+}
+
+input.error::-moz-placeholder,
+input.error::-webkit-input-placeholder {
+    color: rgb(185, 74, 72);
+}
+
+input.error:focus::-moz-placeholder,
+input.error:focus::-webkit-input-placeholder {
+    color:  rgba(185, 74, 72, 0.7);
+    line-height: normal;
+    @include transition(color linear 0.2s);
+}

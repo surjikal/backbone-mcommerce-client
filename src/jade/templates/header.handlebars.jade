@@ -1,0 +1,21 @@
+
+.navigation-bar
+
+    .wrap.restrict-width
+
+        h1.logo VIRTUAL PLAZA
+
+        a.nav-action.left-action.back
+            i.icon-back
+
+        a.nav-action.right-action.open-menu
+            i.icon-list
+
+    .restrict-width
+        .menu
+            ul
+                //- li: a(href="/logout/?next=#{request.path}") Logout
+                //- li: a(href='/logout/') Logout
+                {{#each menuItems}}
+                li: a(href="{{href}}") {{title}}
+                {{/each}}

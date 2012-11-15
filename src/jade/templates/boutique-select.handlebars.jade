@@ -1,0 +1,21 @@
+
+h1.logo: a(href="/boutiques/bacon") VIRTUAL PLAZA
+
+hr
+
+//- - if message
+//-     .alert.alert-success
+//-         #{message}
+
+form#boutique-select-form(method='post', action='.')
+
+    label(for='boutique-code')
+      | Boutique Code
+      input#boutique-code(name='boutique-code', type='text', autocapitalize='off', autocorrect='off')
+
+    button.btn-big#navigate-to-boutique-button(type="submit") Visit Boutique
+
+    //- .phonegap-only(style="display: none")
+    //-     .sep(style="color: #aaa; padding: 1em 0; clear: both; text-shadow: 0px 1px 0px white") or
+
+    //-     button.btn-big#scan-barcode-button(type="button") Scan Item

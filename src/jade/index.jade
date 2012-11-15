@@ -1,0 +1,87 @@
+
+include mixins/asset-mixins
+
+!!!
+html
+    head
+        title Virtual Plaza
+
+        meta(charset='utf-8')
+
+        include includes/mobile-meta-tags
+
+        //- link(rel='apple-touch-icon-precomposed', href='#{STATIC_URL}images/apple-icon.png')
+        //- link(rel='apple-touch-startup-image',    href='#{STATIC_URL}images/apple-startup-image.png')
+
+        block stylesheets
+            mixin css-lib('bootstrap.min')
+            mixin css('application')
+
+        block js-libs
+            mixin js-lib('jquery')
+            mixin js-lib('jquery.cookie')
+            mixin js-lib('lodash')
+            mixin js-lib('backbone')
+            mixin js-lib('backbone.layoutmanager')
+            mixin js-lib('backbone.relational')
+            mixin js-lib('backbone.queryparams')
+            mixin js-lib('backbone.basicauth')
+            mixin js-lib('handlebars.runtime')
+            mixin js-lib('spin')
+
+        block app-core
+            mixin app-core('templates')
+            mixin app-core('app')
+            mixin app-core('main')
+            mixin app-core('utils')
+            mixin app-core('router')
+            mixin app-core('auth')
+
+        block app-models
+            mixin app-model('address')
+            mixin app-model('boutique')
+            mixin app-model('itemspot')
+            mixin app-model('user')
+
+        block app-views
+            mixin app-view('header')
+            mixin app-view('form')
+            //- mixin app-view('utils/stateful-button')
+            mixin app-view('popup')
+            mixin app-view('auth')
+            mixin app-view('wizard')
+            mixin app-view('itemspot')
+            mixin app-view('boutique')
+            mixin app-view('boutique-select')
+            mixin app-view('billing-paypal')
+            mixin app-view('billing-stripe')
+            mixin app-view('shipping')
+            mixin app-view('address-mode')
+            mixin app-view('address-create')
+            mixin app-view('address-select')
+            mixin app-view('thanks')
+            mixin app-view('purchase-wizard')
+            mixin app-view('confirm')
+
+        block app-layouts
+            mixin app-layout('main')
+
+        block app-collections
+            mixin app-collection('itemspot')
+            mixin app-collection('boutique')
+            mixin app-collection('address')
+
+
+    body
+        .banner
+            .spring
+            .summer
+            .fall
+            .winter
+
+        #main-layout
+
+            #header
+
+            #page
+

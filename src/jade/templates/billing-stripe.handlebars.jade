@@ -1,0 +1,12 @@
+
+.instructions.section
+    | Please enter your card information :)
+
+form#stripe-form(method='post', action='.')
+
+    .section(style="overflow: hidden")
+        input#billing-card-number.unknown(type='tel', placeholder='Card Number', required='required', maxlength='18')
+        input#billing-expiry(type='tel',  placeholder="Exp. (mm / yy)", maxlength='7', required='required')
+        input#billing-cvc(type='tel', placeholder='CVC', maxlength='4', required='required')
+
+    button#wizard-next-step.btn-big(type="submit", disabled=true) Fill in all fields

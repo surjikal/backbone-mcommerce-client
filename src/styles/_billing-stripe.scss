@@ -1,0 +1,55 @@
+@import "compass/css3";
+@import "compass/css3/user-interface";
+
+$images-dir: 'billing/stripe';
+
+.billing-stripe {
+  @include box-sizing(border-box);
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.billing-stripe #billing-card-number {
+  @include box-sizing(border-box);
+  background: #fff 98.5% 50% no-repeat;
+  width: 100%;
+
+  background-color: white;
+  background-position-x: 98.5%;
+  background-position-y: 50%;
+  background-repeat: no-repeat;
+
+  &.unknown {
+    background-image: inline-image($images-dir+'/generic.png','image/png');
+  }
+
+  &.visa {
+    background-image: inline-image($images-dir+'/visa.png','image/png');
+  }
+  &.mastercard {
+    background-image: inline-image($images-dir+'/mastercard.png','image/png');
+  }
+  &.discover {
+    background-image: inline-image($images-dir+'/discover.png','image/png');
+  }
+  &.amex {
+    background-image: inline-image($images-dir+'/amex.png','image/png');
+  }
+}
+
+.billing-stripe #billing-expiry {
+  float: left;
+  width: 67%;
+}
+
+.billing-stripe #billing-cvc {
+  width: 30%;
+  float: right;
+}
+
+.billing-stripe .pending,
+.billing-stripe .success {
+  background: #FFF url(spinner.gif) center center no-repeat;
+  min-height: 130px;
+}
