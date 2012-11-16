@@ -6,6 +6,7 @@ App =
         urls:
             root: '/'
             api: '/api'
+            static: '/static'
 
         debug:
             mockStripeAPI: true
