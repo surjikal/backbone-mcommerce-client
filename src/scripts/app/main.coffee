@@ -21,30 +21,6 @@ $ ->
         render: (template, context) ->
             @el = template context
 
-
-    # Needed for tastypie's SessionAuthorization.
-    # Sends the CSRF token via header on every ajax request.
-    # 
-    # See: 
-    # - https://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ajax
-    # - http://django-tastypie.readthedocs.org/en/latest/authentication_authorization.html
-    # csrfSafeMethod = (method) ->
-    #     # these HTTP methods do not require CSRF protection
-    #     /^(GET|HEAD|OPTIONS|TRACE)$/.test method
-
-
-    # $.ajaxSetup
-    #     crossDomain: false
-    #     beforeSend: (xhr, settings) ->
-    #         unless csrfSafeMethod settings.type
-    #             token = $.cookie 'csrftoken'
-
-    #             if not token
-    #                 return console.warn "Could not get CSRF token from cookies!"
-
-    #             xhr.setRequestHeader "X-CSRFToken", token
-
-
     # Unbind event handlers on view close
     Backbone.View.prototype.close = ->
         console.info "Closing view #{@}"

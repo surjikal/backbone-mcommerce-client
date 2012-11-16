@@ -34,11 +34,12 @@ a source file.
 ### Grunt Server Middleware Hack
 
 Include this middleware in the grunt server (`/node_modules/grunt/tasks/server.js`)
-to let our app router handle requests as opposed to the node server.
+to let our app router handle requests as opposed to the node server. More concretely,
+say you navigate to `/boutiques/vipl` instead of `/`. Instead of showing you a `404`,
+this middleware will serve the index file, which lets the backbone router handle the url.
 
-More concretely, say you navigate to `/boutiques/vipl` instead of `/`. Instead of
-showing you a `404`, this middleware will serve the index file, which lets the
-backbone router handle the url.
+It needs to be the **first** item in the `middleware` list. You'll have to close and reopen
+grunt after adding the middleware.
 
     function(req, res, next) {
         var isAjaxRequest  = 'x-requested-with' in req.headers;

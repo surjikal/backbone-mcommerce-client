@@ -4,7 +4,8 @@
   , "private": true
 
   , "dependencies": {
-        "grunt-coffee": "~0.0.6"
+        "grunt": "~0.3.17"
+      , "grunt-coffee": "~0.0.6"
       , "grunt-compass": "~0.3.2"
       , "grunt-contrib-clean": "~0.3.1"
       , "grunt-contrib-copy": "~0.3.2"
