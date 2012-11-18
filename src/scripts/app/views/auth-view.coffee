@@ -10,18 +10,20 @@ class App.Views.PasswordWidget extends App.Views.FormView
         'password': '#user-password'
 
     togglePasswordDisplay: ->
-        $passwordFields = @$el.find 'input.password'
+        $passwordFields = @$ 'input.password'
         $passwordFields.val $passwordFields.not('.hidden').val()
         $passwordFields.toggleClass 'hidden'
 
 
+# TODO: Refactor this so that some code can be shared with registration form.
 class App.Views.Auth extends App.Views.FormView
 
     template: 'auth'
     className: 'content auth'
 
     events:
-        'click #login-button': 'loginButtonClicked'
+        'click button':  'submitButtonClicked'
+        'keydown input': 'performValidation'
 
     fields:
         'email': '#user-email'
@@ -32,40 +34,67 @@ class App.Views.Auth extends App.Views.FormView
         @setView '.password-widget', @passwordWidget
         @next = options.next
 
-    loginButtonClicked: ->
-        email = @getFieldValue 'email'
+        _.defer =>
+            @performValidation()
+
+    submitButtonClicked: (event) ->
+        event.preventDefault()
+        @validateForm
+            error: (message) ->
+                @errorAlert message
+            success: (email, password) =>
+                @login email, password
+
+    performValidation: -> _.defer =>
+        $button = @$ 'button'
+        @validateForm
+            error: (message) ->
+                $button.text message
+                $button.attr 'disabled', true
+            success: ->
+                $button.text 'Continue'
+                $button.attr 'disabled', false
+
+    validateForm: (callbacks) ->
+        email    = @getFieldValue 'email'
         password = @passwordWidget.getFieldValue 'password'
+
         validForm = true
 
-        if not email
-            validForm = false
-            @setFieldError 'email'
+        if not email or not password
+            return callbacks.error? "Fill in all fields"
 
-        if not password
-            validForm = false
-            @passwordWidget.setFieldError 'password'
+        # TODO: validate email address against some regex
 
-        if not validForm
-            return @errorAlert "Please fill in all the fields in this form :)"
-
-        @login email, password
+        callbacks.success? email, password
 
     login: (email, password) ->
+        $button = @$ 'button'
+        $button.addClass 'loading'
+
+        done = ->
+            $button.removeClass 'loading'
+
         App.auth.login email, password,
             incorrect: =>
                 @errorAlert "You've supplied invalid credentials. Try again :)"
+                done()
             disabled: =>
                 @errorAlert "That account has been disabled. Sorry!"
+                done()
             error: =>
                 @errorAlert "Something went wrong with the login request. Try again :)"
                 console.error "Unhandled error during login request:"
                 console.error arguments
+                done()
             success: =>
                 console.debug "Logged in successfully!"
                 App.router.navigate @next, {trigger: true} if @next
+                done()
 
-    register: (email, password) ->
-        # user = new App.Models.User {username, password}
+    serialize: ->
+        buttonText: 'Login'
+        instructions: 'Enter your login info below :)'
 
 
 

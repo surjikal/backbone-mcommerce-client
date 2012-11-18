@@ -1,7 +1,10 @@
 
-form#auth-form(method="post", action=".")
+form(method="post", action=".")
 
-    input#user-email(type='email', name='email', placeholder='Email Address')
-    .password-widget
+    .instructions.section {{ instructions }}
 
-    button.btn-big#login-button(type="button") Login
+    fieldset.section
+        input#user-email(type='email', name='email', placeholder='Email Address')
+        .password-widget
+
+    button.btn-big(type="submit", disabled=true) {{ buttonText }}

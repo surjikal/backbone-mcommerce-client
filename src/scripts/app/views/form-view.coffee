@@ -13,7 +13,7 @@ class App.Views.FormView extends Backbone.LayoutView
 
     getField: (fieldName) ->
         selector = @fields[fieldName]
-        @$el.find(selector)
+        @$ selector
 
     getFieldValue: (fieldName) ->
         (@getField fieldName).val()
@@ -35,7 +35,7 @@ class App.Views.FormView extends Backbone.LayoutView
         (@getField fieldName).addClass 'error'
 
     clearFieldErrors: ->
-        (@getField 'input').removeClass 'error'
+        (@$ 'input').removeClass 'error'
 
     clearFieldError: ($el) ->
         $el.removeClass 'error'

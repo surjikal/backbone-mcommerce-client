@@ -13,9 +13,3 @@
 
     .restrict-width
         .menu
-            ul
-                //- li: a(href="/logout/?next=#{request.path}") Logout
-                //- li: a(href='/logout/') Logout
-                {{#each menuItems}}
-                li: a(href="{{href}}") {{title}}
-                {{/each}}

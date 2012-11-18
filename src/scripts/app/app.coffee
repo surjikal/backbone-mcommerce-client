@@ -25,6 +25,7 @@ App =
 
         @auth = new App.Auth()
 
+        @auth.loginFromSavedCredentials()
 
     Templates: Handlebars.templates
 

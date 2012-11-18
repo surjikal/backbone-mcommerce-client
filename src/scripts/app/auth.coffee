@@ -1,38 +1,58 @@
 
+
 class App.Auth
 
     urls:
         router:
             login: "/login"
         api:
-            login: "#{App.config.urls.api}/auth/login/"
-            logout: "#{App.config.urls.api}/auth/logout/"
+            validate: "#{App.config.urls.api}/auth/validate/"
+
+    isLoggedIn: false
 
     constructor: ->
-        @_authenticateFromSavedCredentials()
+        @events = _.extend {}, Backbone.Events
 
     login: (email, password, callbacks = {}) ->
-        console.debug "Login request for user '#{email}'."
-        @authenticate email, password
-        callbacks?.success?()
+        callbacks.success = _.wrap callbacks.success, (success) =>
+            @_login email, password
+            success? email, password
+        @_validate email, password, callbacks
 
     logout: (callbacks) ->
         console.debug "Logging out current user."
         Backbone.BasicAuth.clear()
+        @_clearSavedCredentials()
+        @isLoggedIn = false
+        @events.trigger 'logout'
 
-    _authenticate: (email, password) ->
-        Backbone.BasicAuth.set email, password
+    loginFromSavedCredentials: ->
+        {email, password} = @_loadCredentials()
+        @_login email, password if (email and password)
+
+    _login: (email, password) ->
+        console.debug "Logging in user #{email}."
         @_saveCredentials email, password
+        Backbone.BasicAuth.set email, password
+        @isLoggedIn = true
+        @events.trigger 'login'
+
+    _validate: (email, password, callbacks) ->
+        data = {email, password}
+        url  = @urls.api.validate
+        App.utils.postJSON {url, data, callbacks}
 
     _saveCredentials: (email, password) ->
-        $.cookie 'email', email
-        $.cookie 'password', password
+        localStorage.setItem 'email', email
+        localStorage.setItem 'password', password
 
     _loadCredentials: ->
-        email    = $.cookie 'email'
-        password = $.cookie 'password'
-        if email and password then {email, password} else {}
+        email    = localStorage.getItem 'email'
+        password = localStorage.getItem 'password'
+        if (email and password) then {email, password} \
+                                else {}
 
-    _authenticateFromSavedCredentials: ->
-        {email, password} = @_loadCredentials()
-        @_authenticate email, password if email and password
+    _clearSavedCredentials: ->
+        localStorage.removeItem 'email'
+        localStorage.removeItem 'password'
+
