@@ -2,7 +2,7 @@
 # Utility script to fetch your client-side libraries.
 
 
-LIBS_DIR="./src/scripts/libs"
+LIBS_DIR="./client_libs"
 
 COLOR_RED="\033[0;31m"
 COLOR_PURPLE="\033[0;35m"

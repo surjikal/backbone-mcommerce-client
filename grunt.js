@@ -1,7 +1,7 @@
 
 module.exports = function(grunt) {
 
-  [ "grunt-jade" 
+  [ "grunt-jade"
   , "grunt-coffee"
   , "grunt-compass"
   , "grunt-handlebars"
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
   ].forEach(grunt.loadNpmTasks)
 
   grunt.initConfig({
-  
+
     clean: {
       build: "build",
       tmp: "tmp"
@@ -63,9 +63,9 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      jslibs: {
+      clientlibs: {
         files: {
-          "build/assets/js/libs/": "src/scripts/libs/**"
+          "build/assets/js/libs/": "client_libs/**"
         }
       },
       csslibs: {
@@ -103,7 +103,7 @@ module.exports = function(grunt) {
     }
 
   });
-  
+
   grunt.registerTask('default', 'clean:build coffee jade handlebars compass copy clean:tmp');
   grunt.registerTask('run',     'default server watch');
   // TODO: It would be cool if the `fetch-libs.sh` script was ported to a grunt task.
