@@ -13,7 +13,6 @@ App =
     initialize: ->
         console.debug 'Initializing the app.'
 
-        App.config     = new App.Config()
         App.auth       = new App.Auth()
         App.router     = new App.Router()
         App.views.main = new App.Views.Main()
