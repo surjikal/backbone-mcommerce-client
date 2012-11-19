@@ -22,7 +22,7 @@ App.utils =
             type: options.type
             dataType: 'json'
             contentType: 'application/json'
-            data: (JSON.stringify (options.data or {})) if options.data
+            data: (JSON.stringify options.data) if options.data
 
             error: (jqXHR, textStatus, errorThrown) ->
                 response = JSON.parse jqXHR.responseText
@@ -31,4 +31,3 @@ App.utils =
 
             success: (data) ->
                 options.callbacks.success data
-

@@ -1,5 +1,4 @@
 
-
 class App.Auth
 
     urls:
@@ -13,20 +12,26 @@ class App.Auth
     constructor: ->
         @events = _.extend {}, Backbone.Events
 
+    initialize: ->
+        @_loginFromSavedCredentials()
+
     login: (email, password, callbacks = {}) ->
         callbacks.success = _.wrap callbacks.success, (success) =>
             @_login email, password
             success? email, password
         @_validate email, password, callbacks
 
-    logout: (callbacks) ->
+    logout: ->
         console.debug "Logging out current user."
         Backbone.BasicAuth.clear()
         @_clearSavedCredentials()
         @isLoggedIn = false
         @events.trigger 'logout'
 
-    loginFromSavedCredentials: ->
+    onUnauthorizedResponse: ->
+        @events.trigger 'unauthorized'
+
+    _loginFromSavedCredentials: ->
         {email, password} = @_loadCredentials()
         @_login email, password if (email and password)
 
@@ -51,7 +56,6 @@ class App.Auth
         password = localStorage.getItem 'password'
         if (email and password) then {email, password} \
                                 else {}
-
     _clearSavedCredentials: ->
         localStorage.removeItem 'email'
         localStorage.removeItem 'password'

@@ -28,7 +28,6 @@ class App.Views.WizardStepList extends Backbone.LayoutView
     className: 'wizard-steps'
 
     initialize: (options) ->
-        console.debug options
         @steps = options.steps
         @dispatcher = options.dispatcher
 
@@ -69,7 +68,6 @@ class App.Views.Wizard extends Backbone.LayoutView
     data: []
 
     initialize: (options) ->
-        console.debug "Wizard initializing."
         @initializeEventDispatcher()
 
         @steps = _.map options.steps, (step, index) =>
@@ -82,7 +80,7 @@ class App.Views.Wizard extends Backbone.LayoutView
         @setView '#wizard-step-list', @stepList
 
         @initializeEventDispatcher()
-        
+
     initializeEventDispatcher: ->
         @dispatcher = _.extend {}, Backbone.Events
         @dispatcher.on 'step:completed', (message) =>
@@ -116,7 +114,7 @@ class App.Views.Wizard extends Backbone.LayoutView
             step
 
         step = @steps[stepIndex]
-        
+
         throw "Wizard step ##{stepIndex} not found." if not step
 
         step.state = 'active'

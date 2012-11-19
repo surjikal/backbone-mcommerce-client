@@ -2,7 +2,6 @@
 App =
 
     config:
-
         urls:
             root: '/'
             api: '/api'
@@ -11,21 +10,18 @@ App =
         debug:
             mockStripeAPI: true
 
-        cookies:
-            secure: false
-            expires: 365
-
-
     initialize: ->
-        console.debug 'Initializing app.'
-        App.router = new App.Router()
-        
+        console.debug 'Initializing the app.'
+
+        App.config     = new App.Config()
+        App.auth       = new App.Auth()
+        App.router     = new App.Router()
+        App.views.main = new App.Views.Main()
+
         App.collections.boutiques = new App.Collections.Boutique()
-        App.models.user = new App.Models.User()
+        App.models.user           = new App.Models.User()
 
-        @auth = new App.Auth()
-
-        @auth.loginFromSavedCredentials()
+        App.auth.initialize()
 
     Templates: Handlebars.templates
 
@@ -41,8 +37,6 @@ App =
     models: {}
     layouts: {}
     collections: {}
-
-
 
 exports = exports ? this
 exports.App = App

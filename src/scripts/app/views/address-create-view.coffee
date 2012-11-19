@@ -18,24 +18,22 @@ class App.Views.AddressCreate extends App.Views.AddressModeView
         invalidFields = (name for name, value of fieldValues when value.length is 0)
 
         if not _.isEmpty invalidFields
-            # @setFieldErrors invalidFields
             return callbacks.error? 'Fill in all fields'
 
         postalCode = fieldValues.postalCode
         validPostalCode = PostalCodeUtils.validate postalCode
 
         if not validPostalCode
-            # @setFieldError 'postalCode'
             return callbacks.error? 'Please enter a valid postal code'
 
         callbacks.success? fieldValues
 
     submitForm: (cleanedFields, callbacks) ->
-        @addresses.create cleanedFields, callbacks
+        model = @addresses.add cleanedFields
+        callbacks.success model
 
     serialize: ->
         showCancelButton: not ((_.isUndefined @addresses) or @addresses.isEmpty())
-
 
 
 PostalCodeUtils = do ->

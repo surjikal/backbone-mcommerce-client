@@ -24,7 +24,7 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
         callbacks.success @selectedAddressView.model
 
     removeClicked: ->
-        console.debug "Remove clicked"
+        # The removal of the address model is done by the list item itself.
         @render()
 
     beforeRender: ->
@@ -57,7 +57,6 @@ class AddressListItemView extends Backbone.LayoutView
 
     initialize: (options) ->
         console.debug 'Initializing address view.'
-        console.debug @
         @parent = options.parent
         @select() if options.selected
 
@@ -65,7 +64,7 @@ class AddressListItemView extends Backbone.LayoutView
         if @isSelected()
             @toggleRemoveButton()
         else
-            @parent.selectAddressView @ 
+            @parent.selectAddressView @
 
     hideRemoveButton: ->
         @$el.find('.remove').hide()

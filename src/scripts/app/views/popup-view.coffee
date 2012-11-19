@@ -5,11 +5,15 @@ class App.Views.Popup extends Backbone.LayoutView
     className: 'dim-overlay'
 
     initialize: (options) ->
-        @title = options.title
-        @instructions = options.instructions
-        @setContentView options?.contents if options.contents
+        @title        = options?.title
+        @instructions = options?.instructions
+        @setContents options.contents if options?.contents
 
-    setContentView: (@contents) ->
+    setTitle: (@title) ->
+
+    setInstructions: (@instructions) ->
+
+    setContents: (@contents) ->
         @setView '.contents', @contents
 
     serialize: ->

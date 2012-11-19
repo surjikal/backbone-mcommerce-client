@@ -8,7 +8,6 @@ class App.Views.MenuItem extends Backbone.LayoutView
         {@title, @url} = options
 
     serialize: ->
-        console.debug "Serialize"
         {@title, @url}
 
 
@@ -67,6 +66,7 @@ class App.Views.Header extends Backbone.LayoutView
             items: [
                 {viewClass: App.Views.AuthMenuItem}
                 {title: 'Home', url: '/'}
+                {title: 'Profile', url: '/profile'}
             ]
 
     backButtonClicked: ->

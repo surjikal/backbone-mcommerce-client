@@ -62,9 +62,7 @@ html
             mixin app-view('thanks')
             mixin app-view('purchase-wizard')
             mixin app-view('confirm')
-
-        block app-layouts
-            mixin app-layout('main')
+            mixin app-view('main')
 
         block app-collections
             mixin app-collection('itemspot')
@@ -73,15 +71,15 @@ html
 
 
     body
+        #popup
+
         .banner
             .spring
             .summer
             .fall
             .winter
 
-        #main-layout
+        #header
 
-            #header
-
-            #page
+        #page
 

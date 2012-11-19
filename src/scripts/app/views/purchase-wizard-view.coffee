@@ -4,11 +4,13 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
 
     className: 'purchase-wizard'
 
-    keep: false
-
     initialize: (options) ->
-        console.debug "Purchase wizard initializing."
-        super _.extend options, 
+        console.debug "Initializing purchase wizard."
+
+        App.auth.events.on 'logout', ->
+            App.router.navigate "/boutiques/#{options.boutiqueCode}", {trigger: true}
+
+        super _.extend options,
             steps: [
                 # {
                 #     title: 'PayPal'

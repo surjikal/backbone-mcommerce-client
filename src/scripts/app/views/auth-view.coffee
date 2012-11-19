@@ -6,9 +6,6 @@ class App.Views.PasswordWidget extends App.Views.FormView
     events:
         'click #toggle-password-display-checkbox': 'togglePasswordDisplay'
 
-    fields:
-        'password': '#user-password'
-
     togglePasswordDisplay: ->
         $passwordFields = @$ 'input.password'
         $passwordFields.val $passwordFields.not('.hidden').val()
@@ -27,15 +24,13 @@ class App.Views.Auth extends App.Views.FormView
 
     fields:
         'email': '#user-email'
+        'password': '#user-password'
 
     initialize: (options) ->
         console.log 'Initializing auth view.'
-        @passwordWidget = new App.Views.PasswordWidget()
-        @setView '.password-widget', @passwordWidget
-        @next = options.next
-
-        _.defer =>
-            @performValidation()
+        @callbacks = options.callbacks or {}
+        @setView '.password-widget', new App.Views.PasswordWidget()
+        @performValidation()
 
     submitButtonClicked: (event) ->
         event.preventDefault()
@@ -57,9 +52,7 @@ class App.Views.Auth extends App.Views.FormView
 
     validateForm: (callbacks) ->
         email    = @getFieldValue 'email'
-        password = @passwordWidget.getFieldValue 'password'
-
-        validForm = true
+        password = @getFieldValue 'password'
 
         if not email or not password
             return callbacks.error? "Fill in all fields"
@@ -69,33 +62,26 @@ class App.Views.Auth extends App.Views.FormView
         callbacks.success? email, password
 
     login: (email, password) ->
-        $button = @$ 'button'
-        $button.addClass 'loading'
-
-        done = ->
-            $button.removeClass 'loading'
 
         App.auth.login email, password,
             incorrect: =>
                 @errorAlert "You've supplied invalid credentials. Try again :)"
-                done()
+                (@callbacks.incorrect or @callbacks.error)?()
             disabled: =>
                 @errorAlert "That account has been disabled. Sorry!"
-                done()
+                (@callbacks.disabled or @callbacks.error)?()
             error: =>
                 @errorAlert "Something went wrong with the login request. Try again :)"
                 console.error "Unhandled error during login request:"
                 console.error arguments
-                done()
+                @callbacks.error?()
             success: =>
                 console.debug "Logged in successfully!"
-                App.router.navigate @next, {trigger: true} if @next
-                done()
+                @callbacks.success? App.models.user  # FIXME: For now..
 
     serialize: ->
         buttonText: 'Login'
         instructions: 'Enter your login info below :)'
-
 
 
 class App.Views.LoginOrNewUser extends Backbone.LayoutView
@@ -111,23 +97,22 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
         'click #existing-user-button': 'loginButtonClicked'
         'click #cancel-button':        'cancelButtonClicked'
 
-    initialize: ->
+    initialize: (options) ->
+        console.debug options
+        @callbacks = options.callbacks
+        super
+            title: 'Yo! Before we begin, are you a...'
+            contents: new App.Views.LoginOrNewUser()
 
     newUserButtonClicked: ->
+        console.debug "New user button clicked."
         # show login view
 
     loginButtonClicked: ->
-        @setView '.contents', new App.Views.Auth()
+        console.debug "Login button clicked."
+        @setTitle 'Welcome back!'
+        @setContents new App.Views.Auth {@callbacks}
         @render()
 
     cancelButtonClicked: ->
         # go back to itemspot view
-
-    initialize: ->
-        super
-            contents: new App.Views.LoginOrNewUser()
-            title: 'Hello there!'
-            instructions: 'Are you a...'
-
-
-

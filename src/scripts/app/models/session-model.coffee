@@ -1,23 +1,42 @@
 
+
+class AuthPersistenceBackend
+
+    set: (username, password) ->
+        localStorage.setItem 'email',    email
+        localStorage.setItem 'password', password
+        Backbone.BasicAuth.set email, password
+
+    get: ->
+        email:    localStorage.getItem 'email'
+        password: localStorage.getItem 'password'
+
+    clear: ->
+        localStorage.removeItem 'email'
+        localStorage.removeItem 'password'
+        Backbone.BasicAuth.clear()
+
+
+
 class App.Models.Session extends Backbone.Model
 
     defaults:
-        token: null
-        userId: null
+        email: null
+        password: null
+
+    isAuthenticated: false
 
     initialize: ->
+        @backend = new AuthPersistenceBackend()
         @load()
 
-    authenticated: ->
-        Boolean(@get 'token')
+    save: (email, password)->
+        @backend.set username, password
+        @isAuthenticated = true
 
-    # Saves session information to cookie
-    save: (authHash)->
-        $.cookie 'userId', authHash.id
-        $.cookie 'token', authHash.accessToken
-
-    # Loads session information from cookie
     load: ->
-        @set
-          userId: $.cookie 'userId'
-          accessToken: $.cookie 'accessToken'
+        @set @backend.get()
+
+    clear: ->
+        @backend.clear()
+        super
