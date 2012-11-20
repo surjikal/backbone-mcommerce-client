@@ -107,7 +107,6 @@ class App.Views.Wizard extends Backbone.LayoutView
         @showStep index+1
 
     _setStepIndex: (stepIndex) ->
-
         # Resetting all step states to be normal if they are not complete.
         @steps = _.map @steps, (step, index) ->
             step.state = '' if step.state isnt 'complete'
@@ -121,13 +120,3 @@ class App.Views.Wizard extends Backbone.LayoutView
         @setView '#wizard-step', step.view
 
         step
-
-
-
-
-
-
-
-
-
-
