@@ -1,33 +1,40 @@
 
 App.utils =
 
-    postJSON: (options) ->
-        options.type = 'post'
-        @ajaxJSON options
+    json:
 
-    getJSON: (options) ->
-        options.type = 'get'
-        @ajaxJSON options
+        post: (options) ->
+            options.type = 'post'
+            @ajax options
 
-    ajaxJSON: (options) ->
+        get: (options) ->
+            options.type = 'get'
+            @ajax options
 
-        if not options.url
-            throw "Missing url option."
+        ajax: (options) ->
 
-        if not options.type
-            throw "Missing type options."
+            if not options.url
+                throw "Missing url option."
 
-        $.ajax
-            url: options.url
-            type: options.type
-            dataType: 'json'
-            contentType: 'application/json'
-            data: (JSON.stringify options.data) if options.data
+            if not options.type
+                throw "Missing type options."
 
-            error: (jqXHR, textStatus, errorThrown) ->
-                response = JSON.parse jqXHR.responseText
-                callback = options.callbacks[response?.reason or 'error']
-                callback?(jqXHR, textStatus, errorThrown)
+            $.ajax
+                url: options.url
+                type: options.type
+                dataType: 'json'
+                contentType: 'application/json'
+                data: (JSON.stringify options.data) if options.data
 
-            success: (data) ->
-                options.callbacks.success data
+                error: (jqXHR, textStatus, errorThrown) ->
+                    response = JSON.parse jqXHR.responseText
+                    callback = options.callbacks[response?.reason or 'error']
+                    callback?(jqXHR, textStatus, errorThrown)
+
+                success: (data) ->
+                    options.callbacks.success data
+
+    # Generate a pseudo-GUID by concatenating random hexadecimal.
+    guid: do ->
+        s4 = -> (((1+Math.random())*0x10000)|0).toString(16).substring(1)
+        -> "#{S4()}#{S4()}-#{S4()}-#{S4()}-#{S4()}#{S4()}#{S4()}"

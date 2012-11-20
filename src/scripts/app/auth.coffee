@@ -45,7 +45,7 @@ class App.Auth
     _validate: (email, password, callbacks) ->
         data = {email, password}
         url  = @urls.api.validate
-        App.utils.postJSON {url, data, callbacks}
+        App.utils.json.post {url, data, callbacks}
 
     _saveCredentials: (email, password) ->
         localStorage.setItem 'email', email

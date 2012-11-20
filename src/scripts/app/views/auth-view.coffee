@@ -98,7 +98,6 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
         'click #cancel-button':        'cancelButtonClicked'
 
     initialize: (options) ->
-        console.debug options
         @callbacks = options.callbacks
         super
             title: 'Yo! Before we begin, are you a...'
@@ -106,11 +105,16 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
 
     newUserButtonClicked: ->
         console.debug "New user button clicked."
-        # show login view
+        @callbacks.newUserSuccess? App.models.user
 
     loginButtonClicked: ->
         console.debug "Login button clicked."
         @setTitle 'Welcome back!'
+
+        _.extend @callbacks,
+            success: (user) =>
+                @callbacks.loginSuccess? user
+
         @setContents new App.Views.Auth {@callbacks}
         @render()
 

@@ -66,17 +66,23 @@ class App.Router extends Backbone.Router
         showPurchaseWizard = (boutiqueCode, index, addresses) ->
             App.views.main.setPageView new App.Views.PurchaseWizard {boutiqueCode, index, addresses}
 
+        newUserSuccess = (user) ->
+            App.views.main.removePopup()
+            showPurchaseWizard boutiqueCode, index, user.addresses
+
+        loginSuccess = (user) ->
+            App.views.main.removePopup()
+            fetchAddresses user
+
+        cancelled = ->
+            # TODO: Implement this on the popup side, and here too!
+
         showLoginOrNewUserPopup = ->
             App.views.main.showPopup new App.Views.LoginOrNewUserPopup
-                callbacks:
-                    cancelled: ->
-                            # TODO: Implement this on the popup side
-                    success: ->
-                        App.views.main.removePopup()
-                        App.router.purchaseWizard boutiqueCode, index
+                callbacks: {cancelled, loginSuccess, newUserSuccess}
 
-        fetchAddresses = ->
-            App.models.user.addresses.fetch
+        fetchAddresses = (user) ->
+            user.addresses.fetch
                 unauthorized: ->
                     # This means that we thought we were logged in but we werent.
                     console.warn "[POTENTIAL AUTH BUG] Unauthorized to fetch addresses."
@@ -86,8 +92,8 @@ class App.Router extends Backbone.Router
                 success: (addresses) ->
                     showPurchaseWizard boutiqueCode, index, addresses
 
-        return fetchAddresses() if App.auth.isLoggedIn
-        showLoginOrNewUserPopup()
+        return showLoginOrNewUserPopup() if not App.auth.isLoggedIn
+        fetchAddresses()
 
 
     thanks: (boutiqueCode, index) ->

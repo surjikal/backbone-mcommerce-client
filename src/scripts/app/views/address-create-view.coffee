@@ -35,7 +35,7 @@ class App.Views.AddressCreate extends App.Views.AddressModeView
     serialize: ->
         showCancelButton: not ((_.isUndefined @addresses) or @addresses.isEmpty())
 
-
+# TODO: need to port this..
 PostalCodeUtils = do ->
 
     validate: (postalCode) ->
