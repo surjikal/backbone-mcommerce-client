@@ -12,12 +12,8 @@ App.utils =
             @ajax options
 
         ajax: (options) ->
-
-            if not options.url
-                throw "Missing url option."
-
-            if not options.type
-                throw "Missing type options."
+            throw "Missing url option."  if not options.url
+            throw "Missing type option." if not options.type
 
             $.ajax
                 url: options.url

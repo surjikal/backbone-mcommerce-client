@@ -63,23 +63,25 @@ class App.Router extends Backbone.Router
     purchaseWizard: (boutiqueCode, index) ->
         console.debug 'Routing to purchase wizard.'
 
+        # Callbacks that shows the purchase wizard
         showPurchaseWizard = (boutiqueCode, index, addresses) ->
             App.views.main.setPageView new App.Views.PurchaseWizard {boutiqueCode, index, addresses}
 
-        newUserSuccess = (user) ->
-            App.views.main.removePopup()
-            showPurchaseWizard boutiqueCode, index, user.addresses
-
-        loginSuccess = (user) ->
-            App.views.main.removePopup()
-            fetchAddresses user
-
-        cancelled = ->
-            # TODO: Implement this on the popup side, and here too!
+        popupCallbacks =
+            # The "new user" button is clicked.
+            newUserSuccess: (user) ->
+                App.views.main.removePopup()
+                showPurchaseWizard boutiqueCode, index, user.addresses
+            # The user logs in.
+            loginSuccess: (user) ->
+                App.views.main.removePopup()
+                fetchAddresses user
+            # The popup is cancelled, i.e. the 'x' button is clicked
+            cancelled: ->
+                # TODO: Implement this on the popup side, and here too!
 
         showLoginOrNewUserPopup = ->
-            App.views.main.showPopup new App.Views.LoginOrNewUserPopup
-                callbacks: {cancelled, loginSuccess, newUserSuccess}
+            App.views.main.showPopup new App.Views.LoginOrNewUserPopup {callbacks: popupCallbacks}
 
         fetchAddresses = (user) ->
             user.addresses.fetch
@@ -93,7 +95,7 @@ class App.Router extends Backbone.Router
                     showPurchaseWizard boutiqueCode, index, addresses
 
         return showLoginOrNewUserPopup() if not App.auth.isLoggedIn
-        fetchAddresses()
+        fetchAddresses App.models.user
 
 
     thanks: (boutiqueCode, index) ->

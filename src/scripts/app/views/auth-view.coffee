@@ -62,7 +62,6 @@ class App.Views.Auth extends App.Views.FormView
         callbacks.success? email, password
 
     login: (email, password) ->
-
         App.auth.login email, password,
             incorrect: =>
                 @errorAlert "You've supplied invalid credentials. Try again :)"
@@ -72,12 +71,11 @@ class App.Views.Auth extends App.Views.FormView
                 (@callbacks.disabled or @callbacks.error)?()
             error: =>
                 @errorAlert "Something went wrong with the login request. Try again :)"
-                console.error "Unhandled error during login request:"
-                console.error arguments
+                console.error "Unhandled error during login request:\n#{arguments}"
                 @callbacks.error?()
-            success: =>
+            success: (user) =>
                 console.debug "Logged in successfully!"
-                @callbacks.success? App.models.user  # FIXME: For now..
+                @callbacks.success? user  # FIXME: For now..
 
     serialize: ->
         buttonText: 'Login'

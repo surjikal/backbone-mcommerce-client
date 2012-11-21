@@ -1,12 +1,6 @@
 
 class App.Auth
 
-    urls:
-        router:
-            login: "/login"
-        api:
-            validate: "#{App.config.urls.api}/auth/validate/"
-
     isLoggedIn: false
 
     constructor: ->
@@ -18,8 +12,14 @@ class App.Auth
     login: (email, password, callbacks = {}) ->
         callbacks.success = _.wrap callbacks.success, (success) =>
             @_login email, password
-            success? email, password
-        @_validate email, password, callbacks
+            success? @_resetUser()
+        App.api.auth.validate email, password, callbacks
+
+    register: (email, password, callbacks = {}) ->
+        callbacks.success = _.wrap callbacks.success, (success) =>
+            @_login email, password
+            success? @_resetUser()
+        App.api.auth.register email, password, callbacks
 
     logout: ->
         console.debug "Logging out current user."
@@ -28,8 +28,9 @@ class App.Auth
         @isLoggedIn = false
         @events.trigger 'logout'
 
-    onUnauthorizedResponse: ->
-        @events.trigger 'unauthorized'
+    _resetUser: ->
+        App.models.user.clear()
+        App.models.user = new App.Models.User()
 
     _loginFromSavedCredentials: ->
         {email, password} = @_loadCredentials()
@@ -41,11 +42,6 @@ class App.Auth
         Backbone.BasicAuth.set email, password
         @isLoggedIn = true
         @events.trigger 'login'
-
-    _validate: (email, password, callbacks) ->
-        data = {email, password}
-        url  = @urls.api.validate
-        App.utils.json.post {url, data, callbacks}
 
     _saveCredentials: (email, password) ->
         localStorage.setItem 'email', email

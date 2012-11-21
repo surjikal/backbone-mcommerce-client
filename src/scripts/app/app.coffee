@@ -10,6 +10,7 @@ App =
         debug:
             mockStripeAPI: true
 
+
     initialize: ->
         console.debug 'Initializing the app.'
 
@@ -21,21 +22,29 @@ App =
         App.models.user           = new App.Models.User()
 
         App.auth.initialize()
+        @initializeApi()
+
+
+    initializeApi: ->
+        rootUrl = App.config.urls.api
+        App.api.auth = new App.Api.Auth rootUrl
+
 
     Templates: Handlebars.templates
 
+    Api: {}
+    Collections: {}
+    Layouts: {}
     Models: {}
-
     Views:
         Utils: {}
 
-    Layouts: {}
-    Collections: {}
-
-    views: {}
-    models: {}
-    layouts: {}
+    api: {}
     collections: {}
+    layouts: {}
+    models: {}
+    views: {}
+
 
 exports = exports ? this
 exports.App = App
