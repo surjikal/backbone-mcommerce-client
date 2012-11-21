@@ -10,8 +10,7 @@ class App.Router extends Backbone.Router
         'boutiques/:boutiqueCode/items/:index/checkout': 'purchaseWizard'
         'boutiques/:boutiqueCode/items/:index/thanks':   'thanks'
 
-        'debug/csrf':  '__debug_csrf'
-        'debug/popup': '__debug_popup'
+        'debug/registration': '__debug_registration'
 
         '*_': 'routeNotFound'
 
@@ -110,10 +109,7 @@ class App.Router extends Backbone.Router
         console.debug "Route '#{route}' not found."
 
 
-    __debug_csrf: ->
-        console.debug "[DEBUG] CSRF Token: #{$.cookie 'csrftoken'}"
-
-
-    __debug_popup: ->
+    __debug_registration: ->
         console.debug App.Views
-        App.views.main.showPopup new App.Views.LoginOrNewUserPopup()
+        # App.views.main.showPopup new App.Views.LoginOrNewUserPopup()
+        App.views.main.setPageView new App.Views.Registration()

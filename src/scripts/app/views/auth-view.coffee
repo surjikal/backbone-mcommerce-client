@@ -23,7 +23,7 @@ class App.Views.Auth extends App.Views.FormView
         'keydown input': 'performValidation'
 
     fields:
-        'email': '#user-email'
+        'email':    '#user-email'
         'password': '#user-password'
 
     initialize: (options) ->
@@ -47,7 +47,7 @@ class App.Views.Auth extends App.Views.FormView
                 $button.text message
                 $button.attr 'disabled', true
             success: ->
-                $button.text 'Continue'
+                $button.text 'Login'
                 $button.attr 'disabled', false
 
     validateForm: (callbacks) ->
@@ -80,6 +80,68 @@ class App.Views.Auth extends App.Views.FormView
     serialize: ->
         buttonText: 'Login'
         instructions: 'Enter your login info below :)'
+
+
+class App.Views.Registration extends App.Views.FormView
+
+    template: 'registration'
+    className: 'content auth'
+
+    events:
+        'click button':  'submitButtonClicked'
+        'keydown input': 'performValidation'
+
+    fields:
+        'email':    '#user-email'
+        'password': '#user-password'
+
+    initialize: (options) ->
+        console.log 'Initializing auth view.'
+        @callbacks = options.callbacks or {}
+        @setView '.password-widget', new App.Views.PasswordWidget()
+        @performValidation()
+
+    submitButtonClicked: (event) ->
+        event.preventDefault()
+        @validateForm
+            error: (message) ->
+                @errorAlert message
+            success: (email, password) =>
+                @register email, password
+
+    performValidation: -> _.defer =>
+        $button = @$ 'button'
+        @validateForm
+            error: (message) ->
+                $button.text message
+                $button.attr 'disabled', true
+            success: (email, password) ->
+                text = if password then 'Register and Continue' \
+                                   else 'Continue'
+                $button.text text
+                $button.attr 'disabled', false
+
+    validateForm: (callbacks) ->
+        email    = @getFieldValue 'email'
+        password = @getFieldValue 'password'
+
+        return callbacks.error? "Please enter your email" if not email
+
+        # TODO: validate email address against some regex
+
+        callbacks.success? email, password
+
+    register: (email, password) ->
+        App.auth.register email, password,
+            alreadyInUse: =>
+                @errorAlert "That email address is already in use."
+                (@callbacks.alreadyInUse or @callbacks.error)?()
+            error: =>
+                @errorAlert "Something went wrong with the registration request. Try again :)"
+                console.error "Unhandled error during registration request:\n#{arguments}"
+                @callbacks.error?()
+            success: (user) =>
+                @callbacks.success? user
 
 
 class App.Views.LoginOrNewUser extends Backbone.LayoutView
@@ -118,3 +180,10 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
 
     cancelButtonClicked: ->
         # go back to itemspot view
+
+
+class App.Views.RegistrationPopup extends App.Views.Popup
+
+    initialize: (options) ->
+        super
+            title: 'One last thing!'
