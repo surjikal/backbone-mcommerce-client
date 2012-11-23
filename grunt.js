@@ -24,7 +24,8 @@ module.exports = function(grunt) {
         dest: 'build/assets/js/app',
         options: {
           preserve_dirs: true,
-          base_path: 'src/scripts/app'
+          base_path: 'src/scripts/app',
+          bare: false
         }
       }
     },
