@@ -35,7 +35,8 @@ class App.Router extends Backbone.Router
     login: (params) ->
         console.debug "Routing to login. Params: #{params}"
         next = params?.next or '/'
-        App.views.main.setPageView new App.Views.Auth {next}
+        model = App.models.user
+        App.views.main.setPageView new App.Views.Auth {next, model}
 
 
     logout: ->
@@ -60,15 +61,15 @@ class App.Router extends Backbone.Router
         console.debug 'Routing to purchase wizard.'
         getItemSpotOrShowNotFound boutiqueCode, index, (itemspot) ->
 
-            showPurchaseWizard = (boutiqueCode, index, addresses) ->
+            showPurchaseWizard = (user) ->
                 # TODO: Use itemspot as params to purchase wizard.
-                App.views.main.setPageView new App.Views.PurchaseWizard {boutiqueCode, index, addresses}
+                App.views.main.setPageView new App.Views.PurchaseWizard {itemspot, user}
 
             popupCallbacks =
                 # The "new user" button is clicked.
                 newUserSuccess: (user) ->
                     App.views.main.removePopup()
-                    showPurchaseWizard boutiqueCode, index, user.addresses
+                    showPurchaseWizard user
                 # The user logs in.
                 loginSuccess: (user) ->
                     App.views.main.removePopup()
@@ -78,18 +79,13 @@ class App.Router extends Backbone.Router
                     App.router.navigate "boutiques/#{boutiqueCode}/items/#{index}", {trigger: true}
 
             showLoginOrNewUserPopup = ->
-                App.views.main.showPopup new App.Views.LoginOrNewUserPopup {callbacks: popupCallbacks}
+                App.views.main.showPopup new App.Views.LoginOrNewUserPopup
+                    model: App.models.user
+                    callbacks: popupCallbacks
 
             fetchAddresses = (user) ->
-                user.addresses.fetch
-                    unauthorized: ->
-                        # This means that we thought we were logged in but we werent.
-                        console.warn "[POTENTIAL AUTH BUG] Unauthorized to fetch addresses."
-                        showLoginOrNewUserPopup()
-                    error: (addresses) ->
-                        # TODO: Show network error popup?
-                    success: (addresses) ->
-                        showPurchaseWizard boutiqueCode, index, addresses
+                user.fetch success: ->
+                    showPurchaseWizard user
 
             return showLoginOrNewUserPopup() if not App.auth.isLoggedIn
             fetchAddresses App.models.user

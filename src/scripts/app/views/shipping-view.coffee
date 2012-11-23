@@ -14,8 +14,8 @@ class App.Views.Shipping extends App.Views.WizardStep
         'keydown input':              'performValidation'
 
     initialize: (options) ->
-        super options
-        @addresses = options.addresses
+        super
+        @addresses = @collection
 
         @addresses.on 'remove', =>
             @render() if @addresses.isEmpty()
@@ -42,7 +42,7 @@ class App.Views.Shipping extends App.Views.WizardStep
         event.preventDefault()
 
         if not @pending
-            @enablePending() 
+            @enablePending()
             @currentAddressModeView.validateForm
 
                 error: ->

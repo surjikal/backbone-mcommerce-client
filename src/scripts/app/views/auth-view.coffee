@@ -68,10 +68,10 @@ class App.Views.Auth extends App.Views.FormView
         callbacks.success? email, password
 
     login: (email, password) ->
-        App.auth.login email, password,
-            success: (user) =>
+        @model.login email, password,
+            success: =>
                 console.debug "Logged in successfully!"
-                @callbacks.success? user
+                @callbacks.success? @model
             incorrect: =>
                 @errorAlert "You've supplied invalid credentials. Try again :)"
                 (@callbacks.incorrect or @callbacks.error)?()
@@ -80,12 +80,13 @@ class App.Views.Auth extends App.Views.FormView
                 (@callbacks.disabled or @callbacks.error)?()
             error: =>
                 @errorAlert "Something went wrong with the login request. Try again :)"
-                console.error "Unhandled error during login request:\n#{arguments}"
+                console.error "Unhandled error during login request:\n", arguments
                 @callbacks.error?()
 
     serialize: ->
         buttonText: 'Login'
         instructions: 'Enter your login info below :)'
+        user: @model.toJSON()
 
 
 class App.Views.Registration extends App.Views.FormView
@@ -169,13 +170,18 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
         'click .close':                'close'
 
     initialize: (options) ->
-        super _.extend options,
+
+        contents = new App.Views.LoginOrNewUser
+            model: options.model
+
+        super _.extend options, {
             title: 'Before we begin, are you a...'
-            contents: new App.Views.LoginOrNewUser()
+            contents
+        }
 
     newUserButtonClicked: ->
         console.debug "New user button clicked."
-        @callbacks.newUserSuccess? App.models.user
+        @callbacks.newUserSuccess? @model
 
     loginButtonClicked: ->
         console.debug "Login button clicked."
@@ -189,7 +195,7 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
             success: (user) =>
                 @callbacks.loginSuccess? user
 
-        @setContents new App.Views.Auth {callbacks}
+        @setContents new App.Views.Auth {@model, callbacks}
 
 
 class App.Views.RegistrationPopup extends App.Views.Popup

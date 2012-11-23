@@ -7,31 +7,37 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
     initialize: (options) ->
         console.debug "Initializing purchase wizard."
 
-        App.auth.events.on 'logout', ->
-            App.router.navigate "/boutiques/#{options.boutiqueCode}", {trigger: true}
+        {user, itemspot} = options
+        addresses = (user.get 'account').get 'addresses'
 
-        super _.extend options,
+        App.auth.events.on 'logout', ->
+            App.router.navigate itemspot.getRouterUrl(), {trigger: true}
+
+        super
             steps: [
-                # {
-                #     title: 'PayPal'
-                #     icon: 'tag'
-                #     view: new App.Views.PaypalBilling options
-                # }
                 {
                     title: '1. Shipping'
                     icon: 'house'
-                    viewClass: App.Views.Shipping
+                    view: (options) ->
+                        new App.Views.Shipping _.extend options,
+                            collection: addresses
                 }
                 {
                     title: '2. Billing'
                     icon: 'tag'
-                    viewClass: App.Views.StripeBilling
+                    view: (options) ->
+                        new App.Views.StripeBilling options
                 }
                 {
                     title: '3. Confirm'
                     icon: 'user'
-                    viewClass: App.Views.Confirm
+                    view: (options) ->
+                        new App.Views.Confirm options
                 }
             ]
+
+    cleanup: ->
+        console.debug "Cleaning up purchase wizard view."
+        App.auth.events.off null, null, @
 
 

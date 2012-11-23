@@ -36,4 +36,7 @@ class App.Models.Boutique extends Backbone.RelationalModel
         "/boutiques/#{@id}"
 
     url: ->
-        "#{App.config.urls.api}/boutiques/#{@id}/?format=json"
+        "#{App.config.urls.api}/boutiques/#{@id}/"
+
+
+App.Models.Boutique.setup()

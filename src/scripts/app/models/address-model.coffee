@@ -1,5 +1,5 @@
 
-class App.Models.Address extends Backbone.Model
+class App.Models.Address extends Backbone.RelationalModel
 
     defaults:
         firstName: null
@@ -8,3 +8,5 @@ class App.Models.Address extends Backbone.Model
         # city: 'Orleans'
         # province: 'Ontario'
         postalCode: null
+
+App.Models.Address.setup()

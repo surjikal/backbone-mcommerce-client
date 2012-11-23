@@ -60,11 +60,6 @@ class App.Views.Wizard extends Backbone.LayoutView
 
     template: 'wizard'
 
-    # events:
-        # 'click #cancel-wizard': 'cancelWizardClicked'
-        # 'click .wizard-list-item': 'listItemClicked'
-        # 'click #wizard-next-step': 'showNextStep'
-
     data: []
 
     initialize: (options) ->
@@ -72,7 +67,7 @@ class App.Views.Wizard extends Backbone.LayoutView
 
         @steps = _.map options.steps, (step, index) =>
             step.index = index
-            step.view = new step.viewClass (_.extend options, {@dispatcher, step})
+            step.view = step.view {@dispatcher, step}
             step
 
         @stepList = new App.Views.WizardStepList {@steps, @dispatcher}
