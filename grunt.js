@@ -69,6 +69,11 @@ module.exports = function(grunt) {
           "build/assets/js/libs/": "client_libs/**"
         }
       },
+      savedclientlibs: {
+        files: {
+          "build/assets/js/libs/": "src/scripts/libs/**"
+        }
+      },
       csslibs: {
         files: {
           "build/assets/css/libs/": "src/styles/libs/**"
