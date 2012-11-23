@@ -6,10 +6,16 @@ class App.Views.PasswordWidget extends App.Views.FormView
     events:
         'click #toggle-password-display-checkbox': 'togglePasswordDisplay'
 
+    initialize: (options) ->
+        @placeholderText = options.placeholderText or 'Password'
+
     togglePasswordDisplay: ->
         $passwordFields = @$ 'input.password'
         $passwordFields.val $passwordFields.not('.hidden').val()
         $passwordFields.toggleClass 'hidden'
+
+    serialize: ->
+        {@placeholderText}
 
 
 # TODO: Refactor this so that some code can be shared with registration form.
@@ -55,7 +61,7 @@ class App.Views.Auth extends App.Views.FormView
         password = @getFieldValue 'password'
 
         if not email or not password
-            return callbacks.error? "Fill in all fields"
+            return callbacks.error? 'Fill in all fields'
 
         # TODO: validate email address against some regex
 
@@ -63,6 +69,9 @@ class App.Views.Auth extends App.Views.FormView
 
     login: (email, password) ->
         App.auth.login email, password,
+            success: (user) =>
+                console.debug "Logged in successfully!"
+                @callbacks.success? user
             incorrect: =>
                 @errorAlert "You've supplied invalid credentials. Try again :)"
                 (@callbacks.incorrect or @callbacks.error)?()
@@ -73,9 +82,6 @@ class App.Views.Auth extends App.Views.FormView
                 @errorAlert "Something went wrong with the login request. Try again :)"
                 console.error "Unhandled error during login request:\n#{arguments}"
                 @callbacks.error?()
-            success: (user) =>
-                console.debug "Logged in successfully!"
-                @callbacks.success? user  # FIXME: For now..
 
     serialize: ->
         buttonText: 'Login'
@@ -85,7 +91,7 @@ class App.Views.Auth extends App.Views.FormView
 class App.Views.Registration extends App.Views.FormView
 
     template: 'registration'
-    className: 'content auth'
+    className: 'auth'
 
     events:
         'click button':  'submitButtonClicked'
@@ -98,8 +104,13 @@ class App.Views.Registration extends App.Views.FormView
     initialize: (options) ->
         console.log 'Initializing auth view.'
         @callbacks = options.callbacks or {}
-        @setView '.password-widget', new App.Views.PasswordWidget()
+        @initializePasswordWidget()
         @performValidation()
+
+    initializePasswordWidget: ->
+        passwordWidget = new App.Views.PasswordWidget
+            placeholderText: 'Password (optional)'
+        @setView '.password-widget', passwordWidget
 
     submitButtonClicked: (event) ->
         event.preventDefault()
@@ -125,7 +136,7 @@ class App.Views.Registration extends App.Views.FormView
         email    = @getFieldValue 'email'
         password = @getFieldValue 'password'
 
-        return callbacks.error? "Please enter your email" if not email
+        return callbacks.error? 'Please enter your email' if not email
 
         # TODO: validate email address against some regex
 
@@ -137,7 +148,7 @@ class App.Views.Registration extends App.Views.FormView
                 @errorAlert "That email address is already in use."
                 (@callbacks.alreadyInUse or @callbacks.error)?()
             error: =>
-                @errorAlert "Something went wrong with the registration request. Try again :)"
+                @errorAlert 'Something went wrong with the registration request. Try again :)'
                 console.error "Unhandled error during registration request:\n#{arguments}"
                 @callbacks.error?()
             success: (user) =>
@@ -155,12 +166,11 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
     events:
         'click #new-user-button':      'newUserButtonClicked'
         'click #existing-user-button': 'loginButtonClicked'
-        'click #cancel-button':        'cancelButtonClicked'
+        'click .close':                'close'
 
     initialize: (options) ->
-        @callbacks = options.callbacks
-        super
-            title: 'Yo! Before we begin, are you a...'
+        super _.extend options,
+            title: 'Before we begin, are you a...'
             contents: new App.Views.LoginOrNewUser()
 
     newUserButtonClicked: ->
@@ -169,21 +179,22 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
 
     loginButtonClicked: ->
         console.debug "Login button clicked."
+        @setLoginView()
+        @render()
+
+    setLoginView: ->
         @setTitle 'Welcome back!'
 
-        _.extend @callbacks,
+        callbacks = _.extend @callbacks,
             success: (user) =>
                 @callbacks.loginSuccess? user
 
-        @setContents new App.Views.Auth {@callbacks}
-        @render()
-
-    cancelButtonClicked: ->
-        # go back to itemspot view
+        @setContents new App.Views.Auth {callbacks}
 
 
 class App.Views.RegistrationPopup extends App.Views.Popup
 
     initialize: (options) ->
-        super
-            title: 'One last thing!'
+        super _.extend options,
+            title: 'Oh! One last thing...'
+            contents: new App.Views.Registration()

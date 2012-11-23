@@ -1,16 +1,16 @@
 
 form(method="post", action=".")
 
-    .instructions
-        | Please enter your email address so we can send you your receipt.
+    label.instructions(for='user-email')
+        | What's your contact email address?
 
     input#user-email(type='email', name='email', placeholder='Email Address')
 
     //- D:
     br
 
-    .instructions
-        | For a faster checkout, create an account by entering a password
+    label.instructions(for='user-password')
+        | Speed up your next checkout! Create an account by entering a password.
         | (optional)
 
     .password-widget.section
