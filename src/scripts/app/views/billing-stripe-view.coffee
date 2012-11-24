@@ -1,23 +1,20 @@
 
-MockStripeAPI = 
+Stripe =
     setPublishableKey: ->
     validateCardNumber: (x) -> x
 
-    validateExpiry: (month, year) -> 
+    validateExpiry: (month, year) ->
         month and year
 
     validateCVC: (cvc) -> cvc
 
-    cardType: (cardNumber) -> 
+    cardType: (cardNumber) ->
         return "MasterCard" if cardNumber.match /^(51|52|53|54|55)/
         return "Visa" if cardNumber.match /^4/
         'Unknown'
 
     createToken: (options, callback) ->
         callback null, 'debug_stripe_token'
-
-
-Stripe = if App.config.debug.mockStripeAPI then MockStripeAPI else Stripe
 
 
 class App.Views.StripeBilling extends App.Views.WizardStep

@@ -1,16 +1,6 @@
 
 App =
 
-    config:
-        urls:
-            root: '/'
-            api: '/api'
-            static: '/static'
-
-        debug:
-            mockStripeAPI: true
-
-
     initialize: ->
         console.debug 'Initializing the app.'
 
@@ -46,6 +36,9 @@ App =
     layouts: {}
     models: {}
     views: {}
+
+    # Initialized in the index file.
+    config: {}
 
 
 exports = exports ? this

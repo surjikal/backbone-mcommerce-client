@@ -71,8 +71,11 @@ html
             mixin app-collection('boutique')
             mixin app-collection('address')
 
+        script
+            App.config = !{JSON.stringify(config, null, 2)};
 
     body
+
         #popup
 
         .banner

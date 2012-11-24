@@ -1,4 +1,24 @@
 
+require('coffee-script');
+
+
+function resolveAppConfig(grunt) {
+
+  function getAppConfig(path) {
+    try {
+      return require('./config/'+path);
+    } catch(e) {
+      grunt.log.writeln("\nCould not find config '" + path + "'\n");
+    }
+  }
+
+  var defaultConfig = getAppConfig('default') || {};
+  var localConfig   = getAppConfig('local')   || {};
+
+  return grunt.utils._.extend(defaultConfig, localConfig);
+}
+
+
 module.exports = function(grunt) {
 
   [ "grunt-jade"
@@ -16,8 +36,6 @@ module.exports = function(grunt) {
       tmp: "tmp"
     },
 
-    // Compile CoffeeScript files to JavaScript
-    // https://github.com/avalade/grunt-coffee
     coffee: {
       app: {
         src:  'src/scripts/app/**/*.coffee',
@@ -31,12 +49,18 @@ module.exports = function(grunt) {
     },
 
     jade: {
-
       index: {
         src:  'src/jade/index.jade',
         dest: 'build/',
         options: {
-          client: false
+          client: false,
+          pretty: true,
+          locals: function() {
+            var config = resolveAppConfig(grunt);
+            grunt.log.writeln('Resolved app config:');
+            grunt.log.writeln(JSON.stringify(config, null, 2));
+            return {config:config};
+          }
         }
       },
 
@@ -103,7 +127,12 @@ module.exports = function(grunt) {
 
     watch: {
       all: {
-        files: ["grunt.js", "src/**/*"],
+        files: [
+          "grunt.js",
+          "src/**/*",
+          "config/default.coffee",
+          "config/local.coffee"
+        ],
         tasks: "default"
       }
     }
