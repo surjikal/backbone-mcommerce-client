@@ -52,10 +52,10 @@ class App.Views.Header extends Backbone.LayoutView
     className: 'header'
 
     events:
-        'click .left-action':  'backButtonClicked'
-        'click .right-action': 'toggleMenu'
+        'vclick .left-action':  'backButtonClicked'
+        'vclick .right-action': 'toggleMenu'
         # Close the menu when a menu item is clicked.
-        'click .menu.active':  'closeMenu'
+        'vclick .menu.active':  'closeMenu'
 
     initialize: ->
         console.debug 'Initializing header.'

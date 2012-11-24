@@ -5,7 +5,7 @@ class App.Views.Confirm extends App.Views.FormView
     className: 'content confirm'
 
     events:
-        'click #wizard-next-step': 'wizardNextStepClicked'
+        'vclick #wizard-next-step': 'wizardNextStepClicked'
 
     wizardNextStepClicked: ->
         return false

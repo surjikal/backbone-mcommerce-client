@@ -36,7 +36,7 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         'keydown  #billing-card-number': 'cardNumberDigitEntered'
         'keydown  #billing-expiry':      'formatExpiry'
         'keypress #billing-cvc':         'restrictNumber'
-        'click #wizard-next-step':       'wizardNextStepClicked'
+        'vclick #wizard-next-step':       'wizardNextStepClicked'
 
 
     cardTypes:

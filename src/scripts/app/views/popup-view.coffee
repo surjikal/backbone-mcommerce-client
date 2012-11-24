@@ -5,7 +5,7 @@ class App.Views.Popup extends Backbone.LayoutView
     className: 'dim-overlay'
 
     events:
-        'click .close': 'close'
+        'vclick .close': 'close'
 
     initialize: (options) ->
         @title        = options.title

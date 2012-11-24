@@ -5,14 +5,14 @@ class App.Views.BoutiqueSelect extends Backbone.LayoutView
     className: 'content home'
 
     events:
-        'click #navigate-to-boutique-button': 'navigateToBoutique'
+        'vclick #navigate-to-boutique-button': 'navigateToBoutique'
 
     onEmptyBoutiqueCode: ->
         alert "Please enter a boutique code."
 
     onBoutiqueCodeNotFound: (boutiqueCode) ->
         alert "Boutique '#{boutiqueCode}' wasn't found. Try again :)"
-    
+
     getBoutiqueCode: ->
         (@$el.find '#boutique-code').val()
 
@@ -124,7 +124,7 @@ class App.Views.BoutiqueSelect extends Backbone.LayoutView
     #         modal.show()
 
 
-    #     $('#boutique-code-button').on 'click', ->
+    #     $('#boutique-code-button').on 'vclick', ->
     #         code = $('#id_code').val()
 
     #         if not code

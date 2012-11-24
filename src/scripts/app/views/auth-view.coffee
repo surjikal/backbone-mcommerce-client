@@ -4,7 +4,7 @@ class App.Views.PasswordWidget extends App.Views.FormView
     template: 'password-widget'
 
     events:
-        'click #toggle-password-display-checkbox': 'togglePasswordDisplay'
+        'vclick #toggle-password-display-checkbox': 'togglePasswordDisplay'
 
     initialize: (options) ->
         @placeholderText = options.placeholderText or 'Password'
@@ -25,7 +25,7 @@ class App.Views.Auth extends App.Views.FormView
     className: 'content auth'
 
     events:
-        'click button':  'submitButtonClicked'
+        'vclick button':  'submitButtonClicked'
         'keydown input': 'performValidation'
 
     fields:
@@ -95,7 +95,7 @@ class App.Views.Registration extends App.Views.FormView
     className: 'auth'
 
     events:
-        'click button':  'submitButtonClicked'
+        'vclick button':  'submitButtonClicked'
         'keydown input': 'performValidation'
 
     fields:
@@ -165,9 +165,9 @@ class App.Views.LoginOrNewUser extends Backbone.LayoutView
 class App.Views.LoginOrNewUserPopup extends App.Views.Popup
 
     events:
-        'click #new-user-button':      'newUserButtonClicked'
-        'click #existing-user-button': 'loginButtonClicked'
-        'click .close':                'close'
+        'vclick #new-user-button':      'newUserButtonClicked'
+        'vclick #existing-user-button': 'loginButtonClicked'
+        'vclick .close':                'close'
 
     initialize: (options) ->
 
