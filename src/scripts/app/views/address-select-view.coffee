@@ -9,9 +9,6 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
 
     selectedAddressView: null
 
-    initialize: (options) ->
-        @addresses = options.addresses
-
     selectAddressView: (addressView) ->
         @selectedAddressView?.deselect()
         @selectedAddressView = addressView
@@ -28,7 +25,7 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
         @render()
 
     beforeRender: ->
-        @addresses.each (address, index) =>
+        @collection.each (address, index) =>
             firstAddress = index is 0
 
             addressView = new AddressListItemView

@@ -36,7 +36,11 @@ class App.Router extends Backbone.Router
         console.debug "Routing to login. Params: #{params}"
         next = params?.next or '/'
         model = App.models.user
-        App.views.main.setPageView new App.Views.Auth {next, model}
+        App.views.main.setPageView new App.Views.Auth {
+            model,
+            callbacks: success: (user) ->
+                App.model.user = user
+        }
 
 
     logout: ->
@@ -72,8 +76,9 @@ class App.Router extends Backbone.Router
                     showPurchaseWizard user
                 # The user logs in.
                 loginSuccess: (user) ->
+                    App.models.user = user
                     App.views.main.removePopup()
-                    fetchAddresses user
+                    fetchUser user
                 # The popup is cancelled, i.e. the 'x' button is clicked.
                 closed: ->
                     App.router.navigate "boutiques/#{boutiqueCode}/items/#{index}", {trigger: true}
@@ -83,12 +88,12 @@ class App.Router extends Backbone.Router
                     model: App.models.user
                     callbacks: popupCallbacks
 
-            fetchAddresses = (user) ->
+            fetchUser = (user) ->
                 user.fetch success: ->
                     showPurchaseWizard user
 
             return showLoginOrNewUserPopup() if not App.auth.isLoggedIn
-            fetchAddresses App.models.user
+            fetchUser App.models.user
 
 
     thanks: (boutiqueCode, index) ->

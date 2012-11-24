@@ -21,14 +21,16 @@ App =
         App.collections.boutiques = new App.Collections.Boutique()
         App.models.user           = new App.Models.User()
 
-        App.auth.initialize()
         @initializeApi()
-
+        @loginFromSavedCredentials()
 
     initializeApi: ->
         rootUrl = App.config.urls.api
         App.api.auth = new App.Api.Auth rootUrl
 
+    loginFromSavedCredentials: ->
+        {email, password} = App.auth.loadCredentials()
+        App.models.user.login email, password if (email and password)
 
     Templates: Handlebars.templates
 

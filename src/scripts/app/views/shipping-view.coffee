@@ -15,10 +15,8 @@ class App.Views.Shipping extends App.Views.WizardStep
 
     initialize: (options) ->
         super
-        @addresses = @collection
-
-        @addresses.on 'remove', =>
-            @render() if @addresses.isEmpty()
+        @collection.on 'remove', =>
+            @render() if @collection.isEmpty()
 
         @addressModeSetters =
             'create': @setAddressCreateView
@@ -27,54 +25,35 @@ class App.Views.Shipping extends App.Views.WizardStep
         @setAddressSelectMode()
 
     performValidation: (event) -> _.defer =>
-        $button = $('#wizard-next-step')
+        $button = @$ '#wizard-next-step'
         @currentAddressModeView.validateForm
-
             error: (message) ->
                 $button.text message
                 $button.attr 'disabled', true
-
             success: (cleanedFields) ->
                 $button.text 'Continue'
                 $button.attr 'disabled', false
 
     wizardNextStepClicked: (event) ->
         event.preventDefault()
+        return false if @pending
 
-        if not @pending
-            @enablePending()
-            @currentAddressModeView.validateForm
-
-                error: ->
-                    console.error "Form validation error."
-
-                success: (cleanedFields) =>
-                    addressesWasEmpty =  @addresses.isEmpty()
-                    @currentAddressModeView.submitForm cleanedFields,
-                        error: =>
-                            console.debug "Form submit failed."
-                            @disablePending()
-                        success: (address) =>
-                            @disablePending()
-                            @setAddressSelectMode() if addressesWasEmpty
-                            @completed {address}
+        @enablePending()
+        @currentAddressModeView.validateForm
+            success: (cleanedFields) =>
+                addressesWasEmpty =  @collection.isEmpty()
+                @currentAddressModeView.submitForm cleanedFields,
+                    error: =>
+                        console.debug "Form submit failed."
+                        @disablePending()
+                    success: (address) =>
+                        @disablePending()
+                        @setAddressSelectMode() if addressesWasEmpty
+                        @completed address
         return false
 
-    enablePending: ->
-        @pendingTimer = setTimeout( =>
-            @pending = true
-            $button = $('#wizard-next-step')
-            $button.addClass 'loading'
-        , 500)
-
-    disablePending: ->
-        clearTimeout @pendingTimer
-        @pending = false
-        $button = $('#wizard-next-step')
-        $button.removeClass 'loading'
-
     beforeRender: ->
-        if @addresses.isEmpty()
+        if @collection.isEmpty()
             console.debug "Addresses empty."
             @setAddressCreateMode()
 
@@ -96,12 +75,12 @@ class App.Views.Shipping extends App.Views.WizardStep
     setAddressCreateView: ->
         console.debug 'Setting address create view.'
         @setAddressCreateMode()
-        @setAddressView new App.Views.AddressCreate {@addresses}
+        @setAddressView new App.Views.AddressCreate {@collection}
 
     setAddressSelectView: ->
         console.debug 'Setting address select view.'
         @setAddressSelectMode()
-        @setAddressView new App.Views.AddressSelect {@addresses}
+        @setAddressView new App.Views.AddressSelect {@collection}
 
     setAddressView: (addressModeView) ->
         @currentAddressModeView = addressModeView

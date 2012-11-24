@@ -42,3 +42,19 @@ class App.Views.FormView extends Backbone.LayoutView
 
     errorAlert: (message) ->
         _.defer -> alert message
+
+    getSubmitButton: ->
+        @$ 'button[type="submit"]'
+
+    enablePending: ->
+        @pendingTimer = setTimeout( =>
+            @pending = true
+            $button = @getSubmitButton()
+            $button.addClass 'loading'
+        , 500)
+
+    disablePending: ->
+        clearTimeout @pendingTimer
+        @pending = false
+        $button = @getSubmitButton()
+        $button.removeClass 'loading'

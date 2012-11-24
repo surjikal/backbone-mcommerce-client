@@ -1,17 +1,14 @@
 
 
 class App.Views.AddressCreate extends App.Views.AddressModeView
-    template: 'address-create'
+    template:  'address-create'
     className: 'address-create'
 
     fields:
         postalCode: '#shipping-postalcode'
-        firstName: '#shipping-firstname'
-        lastName: '#shipping-lastname'
-        street: '#shipping-street'
-
-    initialize: (options) ->
-        @addresses = options.addresses
+        firstName:  '#shipping-firstname'
+        lastName:   '#shipping-lastname'
+        street:     '#shipping-street'
 
     validateForm: (callbacks) ->
         fieldValues = @getFieldValues()
@@ -29,11 +26,11 @@ class App.Views.AddressCreate extends App.Views.AddressModeView
         callbacks.success? fieldValues
 
     submitForm: (cleanedFields, callbacks) ->
-        model = @addresses.add cleanedFields
+        model = @collection.add cleanedFields
         callbacks.success model
 
     serialize: ->
-        showCancelButton: not ((_.isUndefined @addresses) or @addresses.isEmpty())
+        showCancelButton: not @collection.isEmpty()
 
 # TODO: need to port this..
 PostalCodeUtils = do ->

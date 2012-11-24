@@ -98,7 +98,7 @@ class App.Views.Wizard extends Backbone.LayoutView
 
     handleStepCompleted: (message) ->
         index = message.step.index
-        @data[index] = message
+        @data[index] = message.data
         @showStep index+1
 
     _setStepIndex: (stepIndex) ->

@@ -6,9 +6,6 @@ class App.Auth
     constructor: ->
         @events = _.extend {}, Backbone.Events
 
-    initialize: ->
-        @_loginFromSavedCredentials()
-
     login: (email, password, callbacks = {}) ->
         callbacks.success = _.wrap callbacks.success, (success) =>
             @_login email, password
@@ -32,10 +29,6 @@ class App.Auth
         App.models.user.clear()
         App.models.user = new App.Models.User()
 
-    _loginFromSavedCredentials: ->
-        {email, password} = @_loadCredentials()
-        @_login email, password if (email and password)
-
     _login: (email, password) ->
         console.debug "Logging in user #{email}."
         @_saveCredentials email, password
@@ -47,7 +40,7 @@ class App.Auth
         localStorage.setItem 'email', email
         localStorage.setItem 'password', password
 
-    _loadCredentials: ->
+    loadCredentials: ->
         email    = localStorage.getItem 'email'
         password = localStorage.getItem 'password'
         if (email and password) then {email, password} \
