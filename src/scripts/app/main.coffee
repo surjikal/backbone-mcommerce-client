@@ -1,8 +1,8 @@
-$ ->
-    main()
 
+App.events.on 'ready', ->
 
-main = ->
+    console.debug 'Main called.'
+
     _.mixin
         # _.objMap
         # _.map for objects, keeps key/value associations

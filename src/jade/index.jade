@@ -32,11 +32,11 @@ html
         block app-core
             mixin app-core('templates')
             mixin app-core('app')
-            mixin app-core('main')
             mixin app-core('utils')
             mixin app-core('router')
             mixin app-core('auth')
             mixin app-core('api')
+            mixin app-core('main')
 
         block app-models
             mixin app-model('address')
@@ -71,8 +71,31 @@ html
             mixin app-collection('boutique')
             mixin app-collection('address')
 
-        script
-            App.config = !{JSON.stringify(config, null, 2)};
+
+        //- If we were given a config object, inject it in the App
+        //- Otherwise, panic!
+        if locals.config
+            - var config = JSON.stringify(locals.config, null, 2)
+            - console.log('Using app config:\n' + config)
+            script
+                App.config = !{config};
+        else
+            != console.error('ERROR: App config is undefined!')
+            != console.error(config) //- Causes an exception, stops compilation
+
+
+        //- If this is a phonegap build, init app after 'deviceready'
+        //- Otherwise, do it after the document is ready.
+        if locals.phonegap
+            - console.log('Compiling phonegap version.')
+            :coffeescript
+                $(document).on 'deviceready', ->
+                    App.events.trigger 'ready'
+        else
+            - console.log('Compiling website version.')
+            :coffeescript
+                $ ->
+                    App.events.trigger 'ready'
 
     body
 

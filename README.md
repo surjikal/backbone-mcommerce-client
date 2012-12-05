@@ -1,7 +1,8 @@
 
 # Virtual Plaza Client
 
-## Dependencies
+
+## Main Dependencies
 
 name          | url
 --------------|-----------------------------------
@@ -15,40 +16,39 @@ Grunt         | https://github.com/gruntjs/grunt
 
 1. Install **Node.js** and **Compass**.
 2. Run `npm install grunt -g` to install **Grunt**.
-3. Run `npm install coffee-script -g` to install **CoffeeScript**.
-4. Run `npm install -d` to install the node dependencies.
+4. Run `npm install -d` to install the dependencies.
 5. Run `./fetch-libs.sh` to fetch the third party client-side JS libraries.
 6. Run `grunt` to compile and package up the application.
-7. Done!
+7. ???
+8. PROFIT!
 
 
-## Running the app
+## Running the client
 
 To run the application, use the `grunt run` command. This will open up a
-server listening on port 8000, and will recompile the app when you change
-a source file.
+server listening on `port 8000`, and will rebuild the app when you change
+a source file. This runs the `website` build.
 
 
-## Misc
+## Configuration
 
-### Grunt Server Middleware Hack
+### Grunt
 
-Include this middleware in the grunt server (`/node_modules/grunt/tasks/server.js`)
-to let our app router handle requests as opposed to the node server. More concretely,
-say you navigate to `/boutiques/vipl` instead of `/`. Instead of showing you a `404`,
-this middleware will serve the index file, which lets the backbone router handle the url.
+### App
 
-It needs to be the **first** item in the `middleware` list. You'll have to close and reopen
-grunt after adding the middleware.
 
-    function(req, res, next) {
-        var isAjaxRequest  = 'x-requested-with' in req.headers;
-        var requestingRoot = (req.url === '/');
-        var isAssetRequest = /\/assets\/.*/.test(req.url);
 
-        if (!(isAjaxRequest || requestingRoot || isAssetRequest)) {
-            req.url = '/';
-        }
+## Building the app
 
-        return next();
-    }
+### Website
+
+The default grunt task builds the website version of the client.
+
+If you want to build it manually, run `grunt build:website`.
+
+### Phonegap
+
+This builds the phonegap version of the client. The reason it is a separate build
+is that the phonegap calls are added in during compilation.
+
+To build this version, run `grunt build:phonegap`.

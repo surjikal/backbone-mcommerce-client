@@ -24,6 +24,8 @@ App =
 
     Templates: Handlebars.templates
 
+    events: _.extend {}, Backbone.Events
+
     Api: {}
     Collections: {}
     Layouts: {}

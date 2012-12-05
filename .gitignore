@@ -6,11 +6,16 @@ node_modules/
 *.sublime-project
 *.sublime-workspace
 
-build/
-tmp/
-
-# Third party client side libraries
-client_libs/
+#  Fetched client side libs
+.fetched-libs/
 
 # Local configuration file
 config/local.coffee
+
+# Phonegap build
+phonegap/www
+
+# Website build
+build/
+
+tmp/
