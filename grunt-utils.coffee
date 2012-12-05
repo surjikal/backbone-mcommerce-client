@@ -15,12 +15,13 @@ makeConfigResolver = (baseDir, configNameTemplate) ->
 
         for configName in configNames
 
-            path   = "#{baseDir}/#{getFullConfigName grunt, configName}"
+            fullConfigName = getFullConfigName grunt, configName
+            path   = "#{baseDir}/#{fullConfigName}"
             config = getConfig path
 
             # The config doesn't exist, so we're informing the user.
             if not config
-                grunt.log.error "Could not find config '#{configName}' in '#{baseDir}'."
+                grunt.log.error "Could not find config '#{fullConfigName}' in '#{baseDir}'."
                 continue
 
             config
