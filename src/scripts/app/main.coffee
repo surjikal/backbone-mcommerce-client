@@ -57,7 +57,7 @@ App.events.on 'ready', ->
 
     # Trigger the initial route and enable HTML5 History API support.
     Backbone.history.start
-        pushState: true
+        pushState: (not App.isPhonegap) # disable push state on phonegap build, since it breaks the router.
         root: App.config.urls.root
 
     # All navigation that is relative should be passed through the navigate

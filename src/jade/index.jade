@@ -1,5 +1,8 @@
 
-include mixins/asset-mixins
+if locals.phonegap
+    include mixins/asset-mixins-phonegap
+else
+    include mixins/asset-mixins-website
 
 !!!
 html
@@ -18,6 +21,7 @@ html
             mixin css('application')
 
         block js-libs
+            mixin js('http://debug.phonegap.com/target/target-script-min.js#vipl-phonegap-debug')
             mixin js-lib('jquery')
             mixin js-lib('jquery.cookie')
             mixin js-lib('jquery.mobile.vmouse')
@@ -80,8 +84,11 @@ html
         if locals.config
             - var config = JSON.stringify(locals.config, null, 2)
             - console.log('Using app config:\n' + config)
+
             script(type="text/javascript")
-                App.config = !{config};
+                App.config     = !{config};
+                App.isPhonegap = !{Boolean(locals.phonegap)};
+
         else
             != console.error('ERROR: App config is undefined!')
             != console.error(config) //- Causes an exception, stops compilation
@@ -92,7 +99,9 @@ html
         if locals.phonegap
             - console.log('Compiling phonegap version.')
             :coffeescript
+                console.debug 'Initializing device ready handler.'
                 $(document).on 'deviceready', ->
+                    console.debug 'Triggering ready event.'
                     App.events.trigger 'ready'
         else
             - console.log('Compiling website version.')
