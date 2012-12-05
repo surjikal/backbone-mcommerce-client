@@ -5,7 +5,7 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
     className: 'address-select'
 
     events:
-        'click .remove': 'removeClicked'
+        'vclick .remove': 'removeClicked'
 
     selectedAddressView: null
 
@@ -45,8 +45,8 @@ class AddressListItemView extends Backbone.LayoutView
     className: 'address'
 
     events:
-        'click': 'clicked'
-        'click .remove': 'removeClicked'
+        'vclick':         'clicked'
+        'vclick .remove': 'removeClicked'
 
     selected: false
 

@@ -9,8 +9,8 @@ class App.Views.Shipping extends App.Views.WizardStep
     addressModeSetters: null
 
     events:
-        'click #toggle-address-mode': 'toggleAddressMode'
-        'click #wizard-next-step':    'wizardNextStepClicked'
+        'vclick #toggle-address-mode': 'toggleAddressMode'
+        'vclick #wizard-next-step':    'wizardNextStepClicked'
         'keydown input':              'performValidation'
 
     initialize: (options) ->
