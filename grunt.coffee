@@ -147,15 +147,28 @@ module.exports = (grunt) ->
 
         # Rebuild everything when something changes
         watch:
-            all:
+            website:
                 files: [
                     'grunt.js'
                     'src/**/*'
                     'config/app/default.coffee'
                     'config/app/local.coffee'
                 ]
-                tasks: 'default'
+                tasks: 'build:website'
+            phonegap:
+                files: [
+                    'grunt.js'
+                    'src/**/*'
+                    'config/app/default.coffee'
+                    'config/app/local.coffee'
+                ]
+                tasks: 'build:phonegap'
 
+
+    utils.registerGruntTask grunt, 'build', [
+        'build:phonegap'
+        'build:website'
+    ]
 
     utils.registerGruntTask grunt, 'build:phonegap', [
         'configContext:phonegap'
@@ -181,20 +194,28 @@ module.exports = (grunt) ->
         'clean:tmp_directory'
     ]
 
-    utils.registerGruntTask grunt, 'build', [
-        'build:phonegap'
-        'build:website'
-    ]
-
     utils.registerGruntTask grunt, 'default', [
         'build:website'
     ]
+
 
     utils.registerGruntTask grunt, 'run', [
         'default'
         'connect'
         'watch'
     ]
+
+    utils.registerGruntTask grunt, 'run:website', [
+        'build:website'
+        'connect'
+        'watch:website'
+    ]
+
+    utils.registerGruntTask grunt, 'run:phonegap', [
+        'build:phonegap'
+        'watch:phonegap'
+    ]
+
 
 
     # TODO: It would be cool if the `fetch-libs.sh` script was ported to a grunt task.

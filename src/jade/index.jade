@@ -29,6 +29,10 @@ html
             mixin js-lib('backbone.basicauth')
             mixin js-lib('handlebars.runtime')
 
+            //- Include the cordova/phonegap library if this is a phonegap build
+            if locals.phonegap
+                mixin js-lib('cordova')
+
         block app-core
             mixin app-core('templates')
             mixin app-core('app')
@@ -71,13 +75,12 @@ html
             mixin app-collection('boutique')
             mixin app-collection('address')
 
-
         //- If we were given a config object, inject it in the App
         //- Otherwise, panic!
         if locals.config
             - var config = JSON.stringify(locals.config, null, 2)
             - console.log('Using app config:\n' + config)
-            script
+            script(type="text/javascript")
                 App.config = !{config};
         else
             != console.error('ERROR: App config is undefined!')
@@ -85,7 +88,7 @@ html
 
 
         //- If this is a phonegap build, init app after 'deviceready'
-        //- Otherwise, do it after the document is ready.
+        //- If this is a normal build, do it after the document is ready.
         if locals.phonegap
             - console.log('Compiling phonegap version.')
             :coffeescript
@@ -94,8 +97,8 @@ html
         else
             - console.log('Compiling website version.')
             :coffeescript
-                $ ->
-                    App.events.trigger 'ready'
+                $ -> App.events.trigger 'ready'
+
 
     body
 
