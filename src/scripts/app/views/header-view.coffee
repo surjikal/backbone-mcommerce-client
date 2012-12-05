@@ -13,12 +13,19 @@ class App.Views.MenuItem extends Backbone.LayoutView
 
 class App.Views.AuthMenuItem extends App.Views.MenuItem
 
+    events:
+        'vclick': 'clicked'
+
     initialize: ->
         console.debug 'Initializing auth menu item.'
         if App.auth.isLoggedIn then @setLogoutMode() \
                                else @setLoginMode()
+
         App.auth.events.on 'login', @onLogin
         App.auth.events.on 'logout', @onLogout
+
+    clicked: =>
+        App.auth.logout() if @mode is 'logout'
 
     onLogin: =>
         @setLogoutMode()
@@ -29,10 +36,12 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
         @render()
 
     setLoginMode: ->
+        @mode = 'login'
         @title = 'Login'
         @url   = '/login'
 
     setLogoutMode: ->
+        @mode = 'logout'
         @title = 'Logout'
         @url   = '/logout'
 

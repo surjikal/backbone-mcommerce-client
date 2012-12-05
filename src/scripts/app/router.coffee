@@ -43,12 +43,6 @@ class App.Router extends Backbone.Router
         }
 
 
-    logout: ->
-        # TODO: This shouldn't be a route, because it doesn't show a view.
-        console.debug "Logging out user."
-        App.auth.logout()
-
-
     boutique: (code) ->
         console.debug 'Routing to boutique.'
         getBoutiqueOrShowNotFound code, (boutique) ->
@@ -81,7 +75,7 @@ class App.Router extends Backbone.Router
                     fetchUser user
                 # The popup is cancelled, i.e. the 'x' button is clicked.
                 closed: ->
-                    App.router.navigate "boutiques/#{boutiqueCode}/items/#{index}", {trigger: true}
+                    window.history.back()
 
             showLoginOrNewUserPopup = ->
                 App.views.main.showPopup new App.Views.LoginOrNewUserPopup
