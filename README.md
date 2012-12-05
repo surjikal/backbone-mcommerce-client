@@ -34,8 +34,17 @@ a source file. This runs the `website` build.
 
 ### Grunt
 
+Located at: `/config/grunt`
+
+This is where you set up the **compile-time** configuration.
+
+
 ### App
 
+Located at: `/config/app`
+
+This is where you set up the **run-time** configuration. It is injected into the `App` object as the
+`config` property.
 
 
 ## Building the app

@@ -29,8 +29,8 @@ module.exports = (grunt) ->
 
         # Defines the set of configs to be used.
         configContext:
-            phonegap: ['phonegap', 'local']
-            website:  ['website',  'local']
+            website:  ['website',  'local-website']
+            phonegap: ['phonegap', 'local-phonegap']
 
         #config: gets created by the configContext task
 
@@ -149,18 +149,18 @@ module.exports = (grunt) ->
         watch:
             website:
                 files: [
+                    'grunt.coffee'
                     'grunt.js'
                     'src/**/*'
-                    'config/app/default.coffee'
-                    'config/app/local.coffee'
+                    'config/**/*.coffee'
                 ]
                 tasks: 'build:website'
             phonegap:
                 files: [
+                    'grunt.coffee'
                     'grunt.js'
                     'src/**/*'
-                    'config/app/default.coffee'
-                    'config/app/local.coffee'
+                    'config/**/*.coffee'
                 ]
                 tasks: 'build:phonegap'
 
