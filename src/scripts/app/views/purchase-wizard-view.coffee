@@ -6,8 +6,8 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
 
     initialize: (options) ->
         console.debug "Initializing purchase wizard."
-
         {user, itemspot} = options
+
         addresses = (user.get 'account').get 'addresses'
 
         App.auth.events.on 'logout', ->
@@ -19,14 +19,21 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
                     title: '1. Shipping'
                     icon: 'house'
                     view: (options) ->
+                        console.debug options
                         new App.Views.Shipping _.extend options,
                             collection: addresses
                 }
+                # {
+                #     title: '2. Billing'
+                #     icon: 'tag'
+                #     view: (options) ->
+                #         new App.Views.StripeBilling options
+                # }
                 {
                     title: '2. Billing'
                     icon: 'tag'
                     view: (options) ->
-                        new App.Views.StripeBilling options
+                        new App.Views.PaypalBilling _.extend options, {user, itemspot}
                 }
                 {
                     title: '3. Confirm'

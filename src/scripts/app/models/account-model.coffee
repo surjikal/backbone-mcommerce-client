@@ -13,7 +13,7 @@ class App.Models.Account extends Backbone.RelationalModel
     }]
 
     initialize: (options) ->
-        console.debug 'Initializing user model.'
+        console.debug 'Initializing account model.'
         @addresses = new App.Collections.Address()
 
     isLoggedIn: ->

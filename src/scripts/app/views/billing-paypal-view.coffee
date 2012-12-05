@@ -1,31 +1,21 @@
 
-class App.Views.PaypalBilling extends Backbone.LayoutView
+class App.Views.PaypalBilling extends App.Views.WizardStep
 
     template: 'billing-paypal'
     className: 'content billing-paypal'
 
-    # afterRender: ->
+    events:
+        'click button': 'buttonClicked'
 
-    #     opts =
-    #         lines: 9
-    #         length: 2
-    #         width: 3
-    #         radius: 7
-    #         corners: 1
-    #         rotate: 0
-    #         color: '#000'
-    #         speed: 1
-    #         trail: 60
-    #         shadow: false
-    #         hwaccel: true
-    #         className: 'spinner'
-    #         zIndex: 2e9
-    #         top: 'auto'
-    #         left: 'auto'
+    initialize: (options) ->
+        {@user, @itemspot} = options
 
-    #     target = @$el.find('button')
-    #     spinner = new Spinner(opts).spin(target)
-    #     target.append spinner.el
-    #     console.debug target
+    buttonClicked: ->
+        {address} = @data
+        email = @user.get 'email'
+        App.api.purchase.getToken {email, address, @itemspot},
+            success: (token) ->
+                console.debug arguments
+            error: ->
+                console.debug arguments
 
-    #     

@@ -1,4 +1,5 @@
 
+# If you add an API here, initialize it in `app.coffee`.
 
 class Api
 
@@ -23,3 +24,12 @@ class App.Api.Auth extends Api
     register: (email, password, callbacks) ->
         data = {email, password}
         @post 'register', data, callbacks
+
+
+class App.Api.Purchase extends Api
+
+    resource: 'purchase'
+
+    getToken: (email, address, itemspot, callbacks) ->
+        data = {email, address, itemspot}
+        @post 'get_token', data, callbacks

@@ -186,10 +186,11 @@ h1 {
                 background-color: #fefefe;
             }
 
-            a {
+            a, span {
                 display: block;
                 padding: 0.5em 0.4em;
                 text-decoration: none;
+                cursor: pointer;
             }
         }
     }
@@ -497,7 +498,7 @@ h1 {
 }
 
 
-.item-header { 
+.item-header {
     width: 100%;
     background: #f7f7f7;
     color: #777;

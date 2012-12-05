@@ -35,7 +35,6 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         'keypress #billing-cvc':         'restrictNumber'
         'vclick #wizard-next-step':       'wizardNextStepClicked'
 
-
     cardTypes:
         'Visa':             'visa'
         'American Express': 'amex'
@@ -121,7 +120,7 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         event.preventDefault()
 
         if not @pending
-            @enablePending() 
+            @enablePending()
             @validateForm
 
                 error: (errorMessage) ->

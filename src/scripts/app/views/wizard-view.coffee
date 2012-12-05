@@ -49,6 +49,8 @@ class App.Views.WizardStep extends App.Views.FormView
         @step       = options.step
         @dispatcher = options.dispatcher
 
+    setData: (@data) ->
+
     cancelled: ->
         @dispatcher.trigger 'step:cancelled', {@step}
 
@@ -60,7 +62,7 @@ class App.Views.Wizard extends Backbone.LayoutView
 
     template: 'wizard'
 
-    data: []
+    data: {}
 
     initialize: (options) ->
         @initializeEventDispatcher()
@@ -73,7 +75,6 @@ class App.Views.Wizard extends Backbone.LayoutView
         @stepList = new App.Views.WizardStepList {@steps, @dispatcher}
         @_setStepIndex (options.initialStep or 0)
         @setView '#wizard-step-list', @stepList
-
         @initializeEventDispatcher()
 
     initializeEventDispatcher: ->
@@ -98,7 +99,7 @@ class App.Views.Wizard extends Backbone.LayoutView
 
     handleStepCompleted: (message) ->
         index = message.step.index
-        @data[index] = message.data
+        @data = _.extend @data, message.data
         @showStep index+1
 
     _setStepIndex: (stepIndex) ->
@@ -112,6 +113,5 @@ class App.Views.Wizard extends Backbone.LayoutView
         throw "Wizard step ##{stepIndex} not found." if not step
 
         step.state = 'active'
+        step.view.setData @data
         @setView '#wizard-step', step.view
-
-        step

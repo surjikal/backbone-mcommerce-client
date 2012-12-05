@@ -18,7 +18,8 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
         callbacks.success {}
 
     submitForm: (cleanedFields, callbacks) ->
-        callbacks.success @selectedAddressView.model
+        address = @selectedAddressView.model
+        callbacks.success {address}
 
     removeClicked: ->
         # The removal of the address model is done by the list item itself.

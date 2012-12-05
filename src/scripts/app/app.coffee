@@ -16,7 +16,8 @@ App =
 
     initializeApi: ->
         rootUrl = App.config.urls.api
-        App.api.auth = new App.Api.Auth rootUrl
+        App.api.auth     = new App.Api.Auth rootUrl
+        App.api.purchase = new App.Api.Purchase rootUrl
 
     loginFromSavedCredentials: ->
         {email, password} = App.auth.loadCredentials()

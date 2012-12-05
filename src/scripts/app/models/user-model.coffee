@@ -25,9 +25,6 @@ class App.Models.User extends Backbone.RelationalModel
     isLoggedIn: ->
         App.auth.isLoggedIn
 
-    parse: (response) ->
-        response.objects?[0]
-
     url: ->
         "#{App.config.urls.api}/users/"
 

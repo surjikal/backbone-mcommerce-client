@@ -4,7 +4,6 @@ class App.Router extends Backbone.Router
     routes:
         '':                                              'index'
         'login':                                         'login'
-        'logout':                                        'logout'
 
         'boutiques/:code':                               'boutique'
         'boutiques/:code/notFound':                      'boutiqueNotFound'
@@ -39,7 +38,7 @@ class App.Router extends Backbone.Router
         App.views.main.setPageView new App.Views.Auth {
             model,
             callbacks: success: (user) ->
-                App.model.user = user
+                App.models.user = user
         }
 
 
@@ -60,7 +59,6 @@ class App.Router extends Backbone.Router
         getItemSpotOrShowNotFound boutiqueCode, index, (itemspot) ->
 
             showPurchaseWizard = (user) ->
-                # TODO: Use itemspot as params to purchase wizard.
                 App.views.main.setPageView new App.Views.PurchaseWizard {itemspot, user}
 
             popupCallbacks =
@@ -82,12 +80,18 @@ class App.Router extends Backbone.Router
                     model: App.models.user
                     callbacks: popupCallbacks
 
-            fetchUser = (user) ->
-                user.fetch success: ->
-                    showPurchaseWizard user
+            fetchUser = (user, done) ->
+                user.fetch success: (user) ->
+                    console.debug user
+                    #user.fetchRelated('account')
+                    done user
 
-            return showLoginOrNewUserPopup() if not App.auth.isLoggedIn
-            fetchUser App.models.user
+            user = App.models.user
+
+            return showLoginOrNewUserPopup() if not user.isLoggedIn
+
+            fetchUser user, (user) ->
+                showPurchaseWizard user
 
 
     thanks: (boutiqueCode, index) ->

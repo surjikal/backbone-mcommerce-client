@@ -36,14 +36,14 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
         @render()
 
     setLoginMode: ->
-        @mode = 'login'
+        @mode  = 'login'
         @title = 'Login'
         @url   = '/login'
 
     setLogoutMode: ->
-        @mode = 'logout'
+        @mode  = 'logout'
         @title = 'Logout'
-        @url   = '/logout'
+        @url   = null
 
 
 class App.Views.Menu extends Backbone.LayoutView
