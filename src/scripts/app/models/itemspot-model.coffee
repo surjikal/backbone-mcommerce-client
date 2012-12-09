@@ -5,16 +5,19 @@ class App.Models.ItemSpot extends Backbone.RelationalModel
         boutique = @get 'boutique'
         boutique.get 'code'
 
-    toViewJSON: (boutiqueCode) ->
-        _.extend @toJSON(),
-            image: @getImageUrl()
-            url:   @getRouterUrl()
+    getCheckoutUrl: ->
+        "#{@getRouterUrl()}/checkout"
 
     getRouterUrl: ->
         index = @get 'index'
         code  = @getBoutiqueCode()
-        "/boutiques/#{code}/items/#{index}"
+        "boutiques/#{code}/items/#{index}"
 
     getImageUrl: ->
         item = @get 'item'
         "#{App.config.urls.static}/images/#{item.image}"
+
+    toViewJSON: (boutiqueCode) ->
+        _.extend @toJSON(),
+            image: @getImageUrl()
+            url:   @getRouterUrl()

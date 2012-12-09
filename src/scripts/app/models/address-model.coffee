@@ -9,4 +9,7 @@ class App.Models.Address extends Backbone.RelationalModel
         # province: 'Ontario'
         postalCode: null
 
+    urlRoot: ->
+        "#{App.config.urls.api}/addresses/"
+
 App.Models.Address.setup()

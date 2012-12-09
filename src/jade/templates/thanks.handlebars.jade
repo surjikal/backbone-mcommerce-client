@@ -1,8 +1,11 @@
-.info
-    h1 Awesome! Your shipment will arrive soon!
-    p You bought:
-    h2 {{item.name}}
 
-.thanks
+header.section
+    h1 Awesome! Your shipment will arrive soon!
+    .item-name {{itemspot.item.name}}
+
+.postit.section
     p Thank you from
         h2(style="font-family: 'FuturaFile';") ♥ VIRTUAL PLAZA
+
+.section
+    button.btn-big#back-to-boutique(type="submit") Back to Boutique

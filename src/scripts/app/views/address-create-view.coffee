@@ -26,11 +26,13 @@ class App.Views.AddressCreate extends App.Views.AddressModeView
         callbacks.success? fieldValues
 
     submitForm: (cleanedFields, callbacks) ->
-        model = @collection.add cleanedFields
-        callbacks.success model
+        @collection.create cleanedFields,
+                success: (address) ->
+                    callbacks.success {address}
 
     serialize: ->
         showCancelButton: not @collection.isEmpty()
+
 
 # TODO: need to port this..
 PostalCodeUtils = do ->

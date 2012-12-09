@@ -46,6 +46,13 @@ class App.Views.FormView extends Backbone.LayoutView
     getSubmitButton: ->
         @$ 'button[type="submit"]'
 
+    getSubmitButtonText: ->
+        @getSubmitButton().text()
+
+    setSubmitButtonText: (text) ->
+        $button = @getSubmitButton()
+        $button.text text
+
     enablePending: ->
         @pendingTimer = setTimeout( =>
             @pending = true

@@ -12,18 +12,20 @@ App =
         App.models.user           = new App.Models.User()
 
         @initializeApi()
-        @loginFromSavedCredentials()
+        App.auth.initialize()
+
 
     initializeApi: ->
         rootUrl = App.config.urls.api
-        App.api.auth     = new App.Api.Auth rootUrl
+        App.api.auth     = new App.Api.Auth     rootUrl
         App.api.purchase = new App.Api.Purchase rootUrl
 
-    loginFromSavedCredentials: ->
-        {email, password} = App.auth.loadCredentials()
-        App.models.user.login email, password if (email and password)
+    getAbsoluteUrl: (relativeUrl) ->
+        "#{App.location}/#{relativeUrl}"
 
-    Templates: Handlebars.templates
+    templates: Handlebars.templates
+
+    location: "#{location.protocol}//#{location.host}"
 
     events: _.extend {}, Backbone.Events
 

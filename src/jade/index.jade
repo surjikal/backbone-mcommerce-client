@@ -21,9 +21,7 @@ html
             mixin css('application')
 
         block js-libs
-            mixin js('http://debug.phonegap.com/target/target-script-min.js#vipl-phonegap-debug')
             mixin js-lib('jquery')
-            mixin js-lib('jquery.cookie')
             mixin js-lib('jquery.mobile.vmouse')
             mixin js-lib('lodash')
             mixin js-lib('backbone')
@@ -31,10 +29,11 @@ html
             mixin js-lib('backbone.relational')
             mixin js-lib('backbone.queryparams')
             mixin js-lib('backbone.basicauth')
+            mixin js-lib('backbone.localstorage')
             mixin js-lib('handlebars.runtime')
 
-            //- Include the cordova/phonegap library if this is a phonegap build
             if locals.phonegap
+                mixin js('http://debug.phonegap.com/target/target-script-min.js#vipl-phonegap-debug')
                 mixin js-lib('cordova')
 
         block app-core
@@ -97,11 +96,19 @@ html
         //- If this is a normal build, do it after the document is ready.
         if locals.phonegap
             - console.log('Compiling phonegap version.')
+
             :coffeescript
-                console.debug 'Initializing device ready handler.'
                 $(document).on 'deviceready', ->
-                    console.debug 'Triggering ready event.'
                     App.events.trigger 'ready'
+
+                    ref = window.open 'http://google.com', '_blank'
+                    ref.addEventListener 'loadstart', (event) ->
+                        alert(event.type + ' - ' + event.url)
+                    ref.addEventListener 'loadstop', (event) ->
+                        alert(event.type + ' - ' + event.url)
+                    ref.addEventListener 'exit', (event) ->
+                        alert(event.type)
+
         else
             - console.log('Compiling website version.')
             :coffeescript
@@ -121,4 +128,3 @@ html
         #header
 
         #page
-

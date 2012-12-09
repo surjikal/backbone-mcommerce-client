@@ -1,8 +1,9 @@
 
 App.events.on 'ready', ->
 
-    console.debug 'Main called.'
+    console.debug 'Initializing main.'
 
+    # Underscore mixins
     _.mixin
         # _.objMap
         # _.map for objects, keeps key/value associations
@@ -16,12 +17,19 @@ App.events.on 'ready', ->
     Backbone.LayoutManager.configure
 
         fetch: (name) ->
-            console.debug "Fetching template '#{name}'."
-            template = App.Templates[name]
+            # console.debug "Fetching template '#{name}'."
+            template = App.templates[name]
             return template
 
         render: (template, context) ->
             @el = template context
+
+    Backbone.getSyncMethod = (model) ->
+        if model.localStorage or (model.collection and model.collection.localStorage)
+            console.debug "Sync method called, using localstorage"
+            return Backbone.LocalStorage.sync
+        return Backbone.ajaxSync
+
 
     # Unbind event handlers on view close
     Backbone.View.prototype.close = ->
@@ -29,28 +37,6 @@ App.events.on 'ready', ->
         @beforeClose() if @beforeClose
         @remove()
         @unbind()
-
-    # Setup ajax status code handlers
-    $.ajaxSetup
-        statusCode:
-            500: (jqXHR) ->
-                errorMessage = "INTERNAL SERVER ERROR:\n\n"
-                try
-                    error = JSON.parse jqXHR.responseText
-                    errorMessage += "#{error.errorMessage}\n\n#{error.traceback}"
-                catch e
-                    console.debug "Server error is not a JSON object."
-                    errorMessage += jqXHR.responseText
-                console.error errorMessage
-
-            # 401: ->
-            #     App.router.navigate '/login', {trigger:true}
-
-            # 403: ->
-            #     App.router.navigate '/denied', {trigger:true}
-
-    # Configuring defaults for the jquery.cookie plugin
-    _.extend $.cookie.defaults, App.config.cookies
 
     # This line will initialize the app :D
     App.initialize()
@@ -68,7 +54,7 @@ App.events.on 'ready', ->
             prop: $(this).prop 'href'
             attr: $(this).attr 'href'
 
-        root = "#{location.protocol}//#{location.host}#{App.config.urls.root}"
+        root = "#{App.location}#{App.config.urls.root}"
 
         if href.prop[0..root.length-1] is root
             event.preventDefault()

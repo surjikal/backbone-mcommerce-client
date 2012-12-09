@@ -3,9 +3,6 @@ class App.Views.Main extends Backbone.LayoutView
 
     el: 'body'
 
-    initialize: ->
-        App.auth.events.on 'unauthorized', @showLoginPopup
-
     showLoginPopup: =>
         @showPopup new App.Views.LoginOrNewUserPopup()
 

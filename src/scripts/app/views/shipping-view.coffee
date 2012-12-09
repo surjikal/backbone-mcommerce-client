@@ -9,12 +9,13 @@ class App.Views.Shipping extends App.Views.WizardStep
     addressModeSetters: null
 
     events:
-        'vclick #toggle-address-mode': 'toggleAddressMode'
-        'vclick #wizard-next-step':    'wizardNextStepClicked'
-        'keydown input':              'performValidation'
+        _.extend {}, App.Views.WizardStep::events,
+            'vclick #toggle-address-mode': 'toggleAddressMode'
+            'keydown input':               'performValidation'
 
     initialize: (options) ->
-        super
+        super options
+
         @collection.on 'remove', =>
             @render() if @collection.isEmpty()
 
@@ -34,23 +35,21 @@ class App.Views.Shipping extends App.Views.WizardStep
                 $button.text 'Continue'
                 $button.attr 'disabled', false
 
-    wizardNextStepClicked: (event) ->
-        event.preventDefault()
-        return false if @pending
+    beforeNextStep: (done) ->
+        return if @pending
 
         @enablePending()
         @currentAddressModeView.validateForm
             success: (cleanedFields) =>
-                addressesWasEmpty =  @collection.isEmpty()
+                #addressesWasEmpty = @collection.isEmpty()
                 @currentAddressModeView.submitForm cleanedFields,
                     error: =>
-                        console.debug "Form submit failed."
                         @disablePending()
-                    success: (address) =>
+                    success: (data) =>
                         @disablePending()
-                        @setAddressSelectMode() if addressesWasEmpty
-                        @completed address
-        return false
+                        # @setAddressSelectMode() if addressesWasEmpty
+                        @_addUrlParameter 'address', (data.address.get 'id')
+                        done data
 
     beforeRender: ->
         if @collection.isEmpty()

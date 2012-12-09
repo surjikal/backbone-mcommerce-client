@@ -17,15 +17,12 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
         'vclick': 'clicked'
 
     initialize: ->
-        console.debug 'Initializing auth menu item.'
         if App.auth.isLoggedIn then @setLogoutMode() \
                                else @setLoginMode()
 
-        App.auth.events.on 'login', @onLogin
-        App.auth.events.on 'logout', @onLogout
-
     clicked: =>
         App.auth.logout() if @mode is 'logout'
+        return true
 
     onLogin: =>
         @setLogoutMode()
@@ -68,25 +65,32 @@ class App.Views.Header extends Backbone.LayoutView
 
     initialize: ->
         console.debug 'Initializing header.'
-        @setView '.menu', @createMenu()
-
-    createMenu: ->
-        new App.Views.Menu
-            items: [
-                {viewClass: App.Views.AuthMenuItem}
-                {title: 'Home', url: '/'}
-                {title: 'Profile', url: '/profile'}
-            ]
 
     backButtonClicked: ->
         @closeMenu()
         window.history.back()
 
     toggleMenu: ->
-        (@$el.find '.menu').toggleClass 'active'
+        if @menu then @_removeMenu() else @_createMenu()
+        @render()
 
     closeMenu: ->
-        (@$el.find '.menu').removeClass 'active'
+        if @menu
+            @_removeMenu()
+            @render()
+
+    _createMenu: ->
+        @menu = new App.Views.Menu
+            items: [
+                {viewClass: App.Views.AuthMenuItem}
+                {title: 'Home', url: '/'}
+                {title: 'Profile', url: '/profile'}
+            ]
+        @setView '.menu', @menu
+
+    _removeMenu: ->
+        @menu.remove()
+        @menu = null
 
     serialize: ->
         menuItems = []

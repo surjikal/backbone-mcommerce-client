@@ -26,7 +26,7 @@ class App.Views.BoutiqueSelect extends Backbone.LayoutView
             notFound: =>
                 @onBoutiqueCodeNotFound boutiqueCode
             success: (boutique) =>
-                App.router.navigate boutique.routerUrl(), {trigger:true}
+                App.router.navigate boutique.getRouterUrl(), {trigger:true}
 
         return false
 

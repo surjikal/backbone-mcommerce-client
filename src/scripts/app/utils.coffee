@@ -15,6 +15,10 @@ App.utils =
             throw "Missing url option."  if not options.url
             throw "Missing type option." if not options.type
 
+            if not options.callbacks
+                console.warn "No callbacks specified."
+                options.callbacks = {}
+
             $.ajax
                 url: options.url
                 type: options.type
@@ -23,22 +27,32 @@ App.utils =
                 data: (JSON.stringify options.data) if options.data
 
                 error: (jqXHR, textStatus, errorThrown) =>
-
-                    if jqXHR.status is 500
-                        # trigger an event?
-                        return @_handleInternalServerError jqXHR
-
                     response = @_parseReponseText jqXHR.responseText
-                    callback = options.callbacks[response?.reason or 'error']
+                    response = switch jqXHR.status
+                        when 500
+                            @_handleInternalServerError jqXHR
+                            response or {reason:'serverError'}
+                        when 401
+                            @_handleUnauthorizedError jqXHR
+                            response or {reason:'unauthorized'}
+                        else
+                            response
+
+                    reason = response?.reason
+                    callback = options.callbacks[response?.reason]
+
+                    if not callback and reason
+                        console.debug response
+                        console.debug "Error reason '#{reason}' unhandled. Reverting to 'error' callback (if any)."
+                        callback = options.callbacks.error
+
                     return callback?(jqXHR, textStatus, errorThrown)
 
                 success: (data) ->
                     options.callbacks.success data
 
         _parseReponseText: (responseText) ->
-            response = null
-            try response = JSON.parse responseText
-            return response
+            return try response = JSON.parse responseText
 
         _handleInternalServerError: (jqXHR) ->
             responseText = jqXHR.responseText
@@ -49,6 +63,9 @@ App.utils =
                                         else responseText
 
             console.error errorMessage
+
+        _handleUnauthorizedError: (jqXHR) ->
+            console.error "Unauthorized to make this ajax call."
 
 
     # Generate a pseudo-GUID by concatenating random hexadecimal.

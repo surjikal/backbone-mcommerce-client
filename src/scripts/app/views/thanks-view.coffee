@@ -1,12 +1,18 @@
 
 class App.Views.Thanks extends Backbone.LayoutView
+
     template: 'thanks'
     className: 'content thanks'
 
+    events:
+        'vclick #back-to-boutique': 'backToBoutiqueButtonClicked'
+
     initialize: (options) ->
-        @boutiqueCode = options.boutiqueCode
-        @index = options.index
+        {@itemspot} = options
+
+    backToBoutiqueButtonClicked: ->
+        boutique = @itemspot.get 'boutique'
+        App.router.navigate boutique.getRouterUrl(), {trigger: true}
 
     serialize: ->
-        item:
-            name: 'BaconSauce'
+        itemspot: @itemspot.toViewJSON()

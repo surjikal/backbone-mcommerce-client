@@ -4,6 +4,24 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
     template: 'address-select'
     className: 'address-select'
 
+    initialize: (options) ->
+        super
+        @addressListView = new AddressListView {@collection}
+        @setView '.container', @addressListView
+
+    validateForm: (callbacks) ->
+        callbacks.success {}
+
+    submitForm: (cleanedFields, callbacks) ->
+        address = @addressListView.selectedAddressView.model
+        callbacks.success {address}
+
+
+class AddressListView extends Backbone.LayoutView
+
+    tagName: 'ul'
+    className: 'addresses'
+
     events:
         'vclick .remove': 'removeClicked'
 
@@ -14,15 +32,7 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
         @selectedAddressView = addressView
         @selectedAddressView.select()
 
-    validateForm: (callbacks) ->
-        callbacks.success {}
-
-    submitForm: (cleanedFields, callbacks) ->
-        address = @selectedAddressView.model
-        callbacks.success {address}
-
     removeClicked: ->
-        # The removal of the address model is done by the list item itself.
         @render()
 
     beforeRender: ->
@@ -34,14 +44,13 @@ class App.Views.AddressSelect extends App.Views.AddressModeView
                 selected: firstAddress
                 model: address
 
-            if firstAddress
-                @selectedAddressView = addressView
-
-            @insertView '.addresses', addressView
+            @selectedAddressView = addressView if firstAddress
+            @insertView addressView
 
 
 class AddressListItemView extends Backbone.LayoutView
     template: 'address'
+
     tagName: 'li'
     className: 'address'
 
@@ -51,10 +60,7 @@ class AddressListItemView extends Backbone.LayoutView
 
     selected: false
 
-    keep: true # This makes things work.. WTF
-
     initialize: (options) ->
-        console.debug 'Initializing address view.'
         @parent = options.parent
         @select() if options.selected
 
@@ -70,9 +76,8 @@ class AddressListItemView extends Backbone.LayoutView
     toggleRemoveButton: ->
         @$el.find('.remove').toggle()
 
-    removeClicked: ->
+    removeClicked: (event) ->
         @model.destroy()
-        @remove()
         true
 
     select: ->

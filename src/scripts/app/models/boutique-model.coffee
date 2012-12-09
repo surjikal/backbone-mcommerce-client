@@ -21,22 +21,11 @@ class App.Models.Boutique extends Backbone.RelationalModel
         itemSpots = @get 'itemSpots'
         itemSpots.at index-1
 
-    # addItemSpot: (itemSpot) ->
-    #     itemSpots = @get 'itemSpots'
-    #     itemSpots = @createItemSpotCollection() if not itemSpots
-    #     boutiqueCode = @get 'id'
-    #     itemSpot.set 'boutiqueCode', boutiqueCode
-
-    # createItemSpotCollection: ->
-    #     itemSpots = new App.Collections.ItemSpot()
-    #     @set 'itemSpots', itemSpots
-    #     itemSpots
-
-    routerUrl: ->
+    getRouterUrl: ->
         "/boutiques/#{@id}"
 
-    url: ->
-        "#{App.config.urls.api}/boutiques/#{@id}/"
+    urlRoot: ->
+        "#{App.config.urls.api}/boutiques"
 
 
 App.Models.Boutique.setup()
