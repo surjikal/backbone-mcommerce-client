@@ -150,8 +150,13 @@ getBoutiqueOrShowNotFound = (boutiqueCode, success) ->
             App.router.navigate "/boutiques/#{boutiqueCode}/notFound", {trigger: true}
     }
 
+
 getItemSpotOrShowNotFound = (boutiqueCode, index, success) ->
     getBoutiqueOrShowNotFound boutiqueCode, (boutique) ->
-        itemSpot = boutique.getItemSpotFromIndex index
-        return (success itemSpot) if itemSpot
-        App.router.navigate "/boutiques/#{boutiqueCode}/items/#{index}/notFound", {trigger: true}
+        itemspot = boutique.getItemSpotFromIndex index
+
+        if not itemspot
+            return App.router.navigate "/boutiques/#{boutiqueCode}/items/#{index}/notFound", {trigger: true}
+
+        itemspot.fetch success: (itemspot) =>
+            success itemspot

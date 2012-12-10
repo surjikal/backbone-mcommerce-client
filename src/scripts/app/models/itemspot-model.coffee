@@ -21,3 +21,8 @@ class App.Models.ItemSpot extends Backbone.RelationalModel
         _.extend @toJSON(),
             image: @getImageUrl()
             url:   @getRouterUrl()
+
+    url: ->
+        index = @get 'index'
+        code  = @getBoutiqueCode()
+        "#{App.config.urls.api}/boutiques/#{code}/itemspots/#{index}"
