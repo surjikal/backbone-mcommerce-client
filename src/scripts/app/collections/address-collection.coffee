@@ -5,11 +5,11 @@ class App.Collections.Address extends Backbone.Collection
 
     initialize: ->
         console.debug 'Initializing address collection.'
-        App.auth.events.on 'logout', @onLogout
+        App.auth.events.on 'logout', @onLogout, @
 
     onLogout: =>
         @reset()
-        App.auth.events.off()
+        App.auth.events.off null, null, @
 
     parse: (response) ->
         response.objects
