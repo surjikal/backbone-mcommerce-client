@@ -3,6 +3,7 @@
 class App.Views.MenuItem extends Backbone.LayoutView
     template: 'menu-list-item'
     tagName: 'li'
+    className: 'menu-item'
 
     initialize: (options) ->
         {@title, @url} = options
@@ -48,27 +49,36 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
 
 class App.Views.Menu extends Backbone.LayoutView
     tagName: 'ul'
+    className: 'menu-view'
+
+    events:
+        'vclick': 'close'
 
     initialize: (options) ->
         _.each (options.items or []), (item) =>
             ViewClass = item.viewClass or App.Views.MenuItem
             @insertView new ViewClass item
 
+    toggle: ->
+        @$el.toggleClass 'active'
+
+    close: ->
+        @$el.removeClass 'active'
+
 
 class App.Views.Header extends Backbone.LayoutView
 
     template: 'header'
-    className: 'header'
+    className: 'header-view'
 
     events:
-        'vclick .left-action':  'backButtonClicked'
+        'vclick .left-action':  'goBack'
         'vclick .right-action': 'toggleMenu'
-        # Close the menu when a menu item is clicked.
-        'vclick .menu.active':  'closeMenu'
 
     initialize: ->
         console.debug 'Initializing header.'
-        @setView '.menu', @createMenu()
+        @menu = @createMenu()
+        @setView '.menu', @menu
 
     createMenu: ->
         new App.Views.Menu
@@ -78,15 +88,15 @@ class App.Views.Header extends Backbone.LayoutView
                 {title: 'Profile', url: '/profile'}
             ]
 
-    backButtonClicked: ->
-        @closeMenu()
+    goBack: ->
+        @menu.close()
         window.history.back()
 
     toggleMenu: ->
-        (@$el.find '.menu').toggleClass 'active'
+        @menu.toggle()
 
     closeMenu: ->
-        (@$el.find '.menu').removeClass 'active'
+        @menu.close()
 
     serialize: ->
         menuItems = []

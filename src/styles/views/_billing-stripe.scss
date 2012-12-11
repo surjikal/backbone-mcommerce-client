@@ -3,6 +3,7 @@
 
 $images-dir: 'billing/stripe';
 
+
 .billing-stripe {
   @include box-sizing(border-box);
   display: block;
@@ -23,7 +24,6 @@ $images-dir: 'billing/stripe';
   &.unknown {
     background-image: inline-image($images-dir+'/generic.png','image/png');
   }
-
   &.visa {
     background-image: inline-image($images-dir+'/visa.png','image/png');
   }

@@ -1,0 +1,121 @@
+// THIS IS STILL WIP
+
+
+@media only screen and (min-width: 960px) {
+
+}
+
+// Smartphones (portrait and landscape)
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Styles */
+
+}
+
+// Smartphones (landscape)
+@media only screen
+and (min-width : 321px) {
+
+}
+
+// Smartphones (portrait)
+@media only screen
+and (max-width : 320px) {
+}
+
+// iPads (portrait and landscape)
+@media only screen
+and (min-width : 768px) {
+//and (max-device-width : 1024px) {
+    body {
+        font-size: 26px;
+    }
+    .restrict-width {
+        width: 768px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .content {
+        width: 768px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .item {
+        .pricing {
+            width: normal;
+        }
+    }
+    input {
+        height: 60px;
+    }
+    .ad {
+        .items {
+            .row {
+                li {
+                    footer {
+                        .title {
+                            margin-top: 10px;
+                            font-size: 70%;
+                            @include text-shadow(
+                                0px 1px 0px white
+                            );
+                        }
+                        .bottom-bar {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    .navigation-bar.black {
+        .back {
+            border-left: 1px solid rgba(black, 0.4);
+        }
+    }
+
+}
+
+
+
+.spinner {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+// iPads (landscape)
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+}
+
+// iPads (portrait)
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+}
+
+// Desktops and laptops
+@media only screen and (min-width: 960px) {
+//and (min-width : 1224px) {
+
+}
+
+// Large screens
+@media only screen
+and (min-width : 1824px) {
+/* Styles */
+}
+
+// iPhone 4
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+
+}

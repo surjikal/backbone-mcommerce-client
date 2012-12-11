@@ -21,8 +21,8 @@ class App.Views.PasswordWidget extends App.Views.FormView
 # TODO: Refactor this so that some code can be shared with registration form.
 class App.Views.Auth extends App.Views.FormView
 
-    template: 'auth'
-    className: 'content auth'
+    template: 'auth-login'
+    className: 'content auth-view auth-login-view'
 
     events:
         'vclick #login-button': 'submitButtonClicked'
@@ -92,8 +92,8 @@ class App.Views.Auth extends App.Views.FormView
 
 class App.Views.Registration extends App.Views.FormView
 
-    template: 'registration'
-    className: 'auth'
+    template: 'auth-register'
+    className: 'content auth-view auth-register-view'
 
     events:
         'vclick  #register-button': 'submitButtonClicked'
@@ -169,7 +169,7 @@ class App.Views.Registration extends App.Views.FormView
 class App.Views.LoginOrNewUser extends Backbone.LayoutView
 
     template: 'login-or-new-user'
-    className: 'login-or-new-user'
+    className: 'login-or-new-user-view'
 
 
 class App.Views.LoginOrNewUserPopup extends App.Views.Popup

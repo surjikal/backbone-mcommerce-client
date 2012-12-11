@@ -1,10 +1,10 @@
 
 fieldset.address-create
 
-    .instructions.section Enter your shipping info by filling in this form.
+    .instructions.section Enter your shipping info in the form below.
 
-    input#shipping-firstname(name="shipping[firstname]", type="text", placeholder="First", autocomplete="off")
-    input#shipping-lastname(name="shipping[lastname]",  type="text", placeholder="Last", autocomplete="off")
+    input#shipping-firstname(name="shipping[firstname]", type="text", placeholder="First Name", autocomplete="off")
+    input#shipping-lastname(name="shipping[lastname]",  type="text", placeholder="Last Name", autocomplete="off")
     input#shipping-street(name="shipping[street]", type="text", placeholder="Street Address", autocomplete="off")
 
     table.postalcode
@@ -30,7 +30,7 @@ fieldset.address-create
     //-     option(value="Quebec") Quebec
     //-     option(value="Saskatchewan") Saskatchewan
     //-     option(value="Yukon") Yukon
-    
+
     {{#if showCancelButton}}
     button#toggle-address-mode.btn.bs-big(type='button') Nevermind :D
     {{/if}}

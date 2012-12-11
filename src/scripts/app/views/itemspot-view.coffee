@@ -2,10 +2,10 @@
 class App.Views.ItemSpot extends Backbone.LayoutView
 
     template: 'itemspot'
-    className: 'content item'
+    className: 'content itemspot-view'
 
     events:
-        'vclick button': 'navigateToCheckout'
+        'vclick #checkout-button': 'navigateToCheckout'
 
     navigateToCheckout: ->
         App.router.navigate @model.getCheckoutUrl(), {trigger: true}

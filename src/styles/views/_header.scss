@@ -1,0 +1,47 @@
+
+$header-height: 40px;
+$header-background-color: #f7f7f7;
+
+$action-width: 40px;
+$action-font-color: #bbb;
+
+
+.header-view {
+
+    .navigation-bar {
+        height:      $header-height;
+        line-height: $header-height + 1px;
+        z-index: 20;
+
+        border-bottom: 1px solid #ddd;
+        @include box-shadow(0px 1px 0px #fdfdfd);
+
+        .logo {
+            position: absolute;
+            left: $action-width;
+            right: $action-width;
+        }
+
+        .action {
+            color: $action-font-color;
+            height: $header-height;
+            position: absolute;
+            text-align: center;
+
+            &:active {
+                color: darken($action-font-color, 15%);
+            }
+        }
+
+        .left-action {
+            width: $action-width;
+            top: 1px;
+        }
+
+        .right-action {
+            font-size: 31px;
+            right: 1px;
+            width: $action-width;
+        }
+    }
+}

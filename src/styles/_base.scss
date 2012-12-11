@@ -1,68 +1,97 @@
 
-//@import url(http://fonts.googleapis.com/css?family=Oswald:300,400);
-//@import url(http://fonts.googleapis.com/css?family=Duru+Sans|Gudea|Cantarell|Open+Sans);
+$body-background-color: #f7f7f7;
 
-@import "compass/css3";
-@import "compass/css3/user-interface";
-@import "compass/reset";
-@import "compass/layout/stretching";
-@import "compass/utilities/general/clearfix";
+$font-color-normal: #444;
+$font-color-light:  #888;
+$font-base-size: 20px;
 
+$font-stack: "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
+$logo-font-stack: "FuturaFile", sans-serif;
 
-@mixin debug($color: red) {
-    @include box-sizing(border-box);
-    border: 1px solid $color;
-}
+$anchor-color-normal: #555;
+$anchor-color-hover:  #222;
 
-@mixin emulate-device($width, $height) {
-    body {
-        @include box-sizing(border-box);
-        border: 1px solid #444;
-        height: $height;
-        width: $width;
-    }
-}
+$banner-height: 4px;
+$header-height: 40px;
+
+$input-focus-border-color: rgba(82, 168, 236, 0.8);
 
 
 * {
+    // Prevents the 'save image' dialog when a user holds a link or image
+    -webkit-touch-callout: none;
+
+    // Prevents link highlighting
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    // Prevent safari from resizing our text
+    -webkit-text-size-adjust: none;
+}
+
+:not(input)
+{
     @include user-select(none);
 }
 
-.hidden {
-    display: none !important;
-}
-
-input {
-    @include user-select(text);
+body {
+    background-color: $body-background-color;
+    color: $font-color-normal;
+    font:  $font-base-size $font-stack;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
 }
 
 a {
-    text-decoration: none !important;
-    color: #555;
+    color: $anchor-color-normal;
+    cursor: pointer;
+    text-decoration: none;
 
     &:hover {
-        color: #222;
+        color: $anchor-color-hover;
     };
 }
 
-.light {
-    color: #888;
-    &:hover {
-        color: #444;
+hr {
+    height: 0;
+    border: 0;
+    border-top:    1px solid #ddd;
+    border-bottom: 1px solid #fdfdfd;
+}
+
+.logo {
+    text-align: center;
+    font-family: $logo-font-stack;
+}
+
+.price {
+    color: #666;
+
+    .dollar {
+        font-size: 60%;
+        left: -1px;
+        top: -6px;
+        position: relative;
+
+        &:before {
+            color: #777;
+            content: '$';
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            padding-left: 1px;
+        }
     }
 }
 
-.table {
-    display: table;
-    margin: 0 !important;
+.instructions {
+    color: $font-color-light;
+    font-style: italic;
+    text-align: center;
+    font-size: 70%;
+    display: inline-block;
+    width: 100%;
 }
 
-.table-row {
-    display: table-row !important;
+.hint {
+    font-size: 70%;
+    color: $font-color-light;
+    font-style: italic;
 }
-
-.table-cell {
-    display: table-cell !important;
-}
-
-

@@ -1,0 +1,39 @@
+
+.itemspot-view {
+
+    .item-image {
+        max-height: 300px;
+        display: block;
+        position: relative;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .item-info {
+        margin-top: 0.5em;
+
+        .item-name {
+            font-size: 100%;
+            display: inline-block;
+            width: 75%;
+        }
+
+        .item-price {
+            float: right;
+        }
+
+        .item-details {
+            margin: 1em 0 2em 0;
+            font-size: 65%;
+            color: #666;
+            text-align: justify;
+        }
+    }
+
+    #checkout-button {
+        width: 100%;
+        clear: both;
+        display: block;
+        margin: 0 auto;
+    }
+}

@@ -103,10 +103,6 @@ module.exports = (grunt) ->
             js_libs:
                 files: '<%= config.build_directory %>/assets/js/libs/':  'src/scripts/libs/**'
 
-            # Copy the css libraries (e.g. bootstrap)
-            css_libs:
-                files: '<%= config.build_directory %>/assets/css/libs/': 'src/styles/libs/**'
-
             # Copy the images
             images:
                 files: '<%= config.build_directory %>/assets/images/':   'src/images/**'

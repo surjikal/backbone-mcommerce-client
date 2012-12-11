@@ -2,7 +2,7 @@
 class App.Views.BoutiqueSelect extends Backbone.LayoutView
 
     template: 'boutique-select'
-    className: 'content home'
+    className: 'content boutique-select-view'
 
     events:
         'vclick #navigate-to-boutique-button': 'navigateToBoutique'

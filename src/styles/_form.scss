@@ -44,7 +44,9 @@
     }
 
     &:active:not(:disabled),
+    &:active:not(.disabled),
     &.active:not(:disabled),
+    &.active:not(.disabled)
     &:active:not(.loading),
     &.active:not(.loading) {
         border-bottom-width: 0px;
@@ -53,7 +55,7 @@
     }
 
     &:disabled, &.disabled {
-        @include button-color(darken(whitesmoke, 20%), white);
+        @include button-color(darken(whitesmoke, 20%), #f7f7f7);
     }
 }
 
@@ -62,6 +64,7 @@
     float: none;
     width: 100%;
     padding: 0.6em 0;
+    @include button-color(whitesmoke, #444);
 }
 
 input::-moz-placeholder,
@@ -86,10 +89,7 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-    @include border-radius(0px);
     @include box-sizing(border-box);
-    @include box-shadow(none !important);
-    @include transition(none !important);
 
     border: 1px solid #eee;
     border-bottom-color: #e7e7e7;
@@ -104,7 +104,10 @@ input[type="color"],
     font-weight: normal;
     outline: none;
     font: 20px "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
+
+    &:focus {
+        border-color: $input-focus-border-color;
+    }
 }
 
 input[type="text"],

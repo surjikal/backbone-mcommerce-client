@@ -1,0 +1,120 @@
+
+$boutique-grid-size: 1%;
+
+
+.boutique-view {
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+    .items {
+        display: table;
+        width: 100%;
+
+        .table-row {
+            display: table-row;
+
+            li {
+                @include box-sizing(border-box);
+                list-style: none outside none;
+                padding: $boutique-grid-size;
+                width: 33.33333333%;
+                vertical-align: top;
+                margin: 0 !important;
+                position: relative;
+                display: table-cell;
+
+                .image {
+                    @include background-size(contain);
+                    @include box-shadow(0 0px -2px 0px black);
+                    @include box-sizing(border-box);
+                    background-color: white;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    display: block;
+                    overflow: hidden;
+                    height: 0;
+                    padding-bottom: 100%;
+                }
+
+                footer {
+                    @include box-sizing(border-box);
+                    @include box-shadow(
+                        inset 0px 2px 40px rgba(white, 0.1),
+                        inset 0px 0px 1px rgba(white, 0.6)
+                    );
+
+                    clear: both;
+                    background: #ddd;
+                    font-size: 70%;
+                    overflow: hidden;
+                    padding: 3px 5px;
+                    position: relative;
+                    border: 1px solid #dadada;
+                    border-top-color: #cfcfcf;
+
+                    .title {
+                        font-size: 60%;
+                        color: #888;
+                        width: 100%;
+                        min-height: 35px;
+                    }
+
+                    .bottom-bar {
+                        @include box-sizing(border-box);
+                        vertical-align: bottom;
+                        width: 100%;
+                        right: 0;
+
+                        .price {
+                            float: right;
+                            position: relative;
+                            top: 2px;
+
+                            .dollar {
+
+                                &:before {
+                                    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+                                    color: #777;
+                                    content: '$';
+                                    padding-left: 1px;
+                                }
+
+                                position: relative;
+                                top: -4px;
+                                left: -1px;
+                                font-size: 70%;
+                            }
+                        }
+
+                        .buy-button {
+                            @include box-sizing(border-box);
+
+                            display: block;
+                            font-size: 70%;
+                            text-align: center;
+                            padding-top: 1px;
+                            padding-bottom: 3px;
+                            width: 40px;
+                            margin: 0;
+
+                            color: #666;
+                            background-color: whitesmoke;
+
+                            border-top:    1px solid rgba(0, 0, 0, 0.0976562);
+                            border-right:  1px solid rgba(0, 0, 0, 0.0976562);
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.246094);
+                            border-left:   1px solid rgba(0, 0, 0, 0.0976562);
+
+                            &:active, &.active {
+                                background-color: darken(whitesmoke, 5%);
+                                border-top-color: darken(whitesmoke, 15%);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
