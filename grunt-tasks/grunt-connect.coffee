@@ -7,6 +7,7 @@ module.exports = (grunt) ->
   DEFAULTS =
       port: 8000
       path: '.'
+      host: '127.0.0.1'
 
   TASKNAME = 'connect'
 
@@ -16,6 +17,7 @@ module.exports = (grunt) ->
   grunt.registerTask TASKNAME, 'Start a static web server.', ->
       port = (getConfigValue 'port') or DEFAULTS.port
       base = (getConfigValue 'base') or DEFAULTS.path
+      host = (getConfigValue 'host') or DEFAULTS.host
       base = base grunt if grunt.utils._.isFunction base
 
       middleware  = (getConfigValue 'middleware')? grunt, connect, base
@@ -32,5 +34,5 @@ module.exports = (grunt) ->
           ).magenta
           middleware.unshift (connect.logger 'grunt')
 
-      grunt.log.writeln "Starting static web server on port '#{port}'."
-      (connect middleware...).listen port
+      grunt.log.writeln "Starting static web server on #{host}:#{port}."
+      (connect middleware...).listen port, host
