@@ -14,11 +14,11 @@ class App.Models.User extends Backbone.RelationalModel
         console.debug 'Initializing user model.'
         @set 'account', new App.Models.Account()
 
-    login: (email, password, callbacks = {}) ->
-        App.auth.login email, password, callbacks
-
     getAddresses: ->
         (@get 'account').get 'addresses'
+
+    login: (email, password, callbacks = {}) ->
+        App.auth.login email, password, callbacks
 
     isLoggedIn: ->
         App.auth.isLoggedIn

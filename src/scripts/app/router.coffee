@@ -65,13 +65,16 @@ class App.Router extends Backbone.Router
             # If we have a step parameter, we are resuming the wizard.
             # resumingWizard = Boolean step
 
-            showPurchaseWizard = (user) ->
-                App.views.main.setPageView new App.Views.PurchaseWizard {user, itemspot, step, params}
+            showPurchaseWizard = (user, done) ->
+                App.views.main.setPageView new App.Views.PurchaseWizard {user, itemspot, step, params, done}
+
+            purchaseWizardCompleted = ->
+                App.router.navigate "#{itemspot.getRouterUrl()}/thanks", {trigger: true}
 
             showNewUserPurchaseWizard = (user) ->
                 addresses = user.getAddresses()
                 addresses.localStorage = new Backbone.LocalStorage 'AddressCollection'
-                addresses.url = null
+                #addresses.url = null
 
                 # FIXME: There's a problem with this... Here's how to reproduce:
                 #
@@ -86,11 +89,13 @@ class App.Router extends Backbone.Router
                 # Not sure how to fix it, so the workaround is to refresh the app when logging
                 # out.
                 addresses.fetch success: ->
-                    showPurchaseWizard user
+                    showPurchaseWizard user, ->
+                        purchaseWizardCompleted()
 
             fetchUserAndShowPurchaseWizard = (user) ->
                 user.fetch success: (user) ->
-                    showPurchaseWizard user
+                    showPurchaseWizard user, ->
+                        purchaseWizardCompleted()
 
             return fetchUserAndShowPurchaseWizard App.auth.user if App.auth.user.isLoggedIn()
             return showNewUserPurchaseWizard App.auth.user      # if resumingWizard and App.auth.user.isNew()
@@ -136,9 +141,6 @@ class App.Router extends Backbone.Router
             return @navigate route[..-2], {trigger: true}
         console.debug "Route '#{route}' not found."
 
-    __debug_registration: ->
-        console.debug App.Views
-        App.views.main.showPopup new App.Views.RegistrationPopup()
 
 
 # Some helpers

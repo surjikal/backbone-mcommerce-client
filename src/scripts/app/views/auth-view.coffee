@@ -25,8 +25,8 @@ class App.Views.Auth extends App.Views.FormView
     className: 'content auth'
 
     events:
-        'vclick button':  'submitButtonClicked'
-        'keydown input': 'performValidation'
+        'vclick #login-button': 'submitButtonClicked'
+        'keydown input':        'performValidation'
 
     fields:
         'email':    '#user-email'
@@ -80,7 +80,8 @@ class App.Views.Auth extends App.Views.FormView
                 (@callbacks.disabled or @callbacks.error)?()
             error: =>
                 @errorAlert "Something went wrong with the login request. Try again :)"
-                console.error "Unhandled error during login request:\n", arguments
+                console.error "Unhandled error during login request."
+                console.error arguments
                 @callbacks.error?()
 
     serialize: ->
@@ -95,15 +96,15 @@ class App.Views.Registration extends App.Views.FormView
     className: 'auth'
 
     events:
-        'vclick button':  'submitButtonClicked'
-        'keydown input': 'performValidation'
+        'vclick  #register-button': 'submitButtonClicked'
+        'keydown input':            'performValidation'
 
     fields:
         'email':    '#user-email'
         'password': '#user-password'
 
     initialize: (options) ->
-        console.log 'Initializing auth view.'
+        console.log 'Initializing registration view.'
         @callbacks = options.callbacks or {}
         @initializePasswordWidget()
         @performValidation()
@@ -119,6 +120,7 @@ class App.Views.Registration extends App.Views.FormView
             error: (message) ->
                 @errorAlert message
             success: (email, password) =>
+                return @skipped email if not password
                 @register email, password
 
     performValidation: -> _.defer =>
@@ -144,16 +146,24 @@ class App.Views.Registration extends App.Views.FormView
         callbacks.success? email, password
 
     register: (email, password) ->
-        App.auth.register email, password,
+        App.api.auth.register email, password,
             alreadyInUse: =>
                 @errorAlert "That email address is already in use."
-                (@callbacks.alreadyInUse or @callbacks.error)?()
+                (@callbacks.alreadyInUse or @callbacks.error)? email, password
+            invalid: =>
+                @errorAlert 'The email address you entered is invalid.'
+                (@callbacks.invalid or @callbacks.error)? email, password
             error: =>
                 @errorAlert 'Something went wrong with the registration request. Try again :)'
                 console.error "Unhandled error during registration request:\n#{arguments}"
-                @callbacks.error?()
-            success: (user) =>
-                @callbacks.success? user
+                @callbacks.error? email, password
+            success: =>
+                @callbacks.success?()
+
+    # The user didn't enter a password.
+    skipped: (email) ->
+        @model.set 'email', email
+        @callbacks.skipped? email
 
 
 class App.Views.LoginOrNewUser extends Backbone.LayoutView
@@ -165,19 +175,15 @@ class App.Views.LoginOrNewUser extends Backbone.LayoutView
 class App.Views.LoginOrNewUserPopup extends App.Views.Popup
 
     events:
-        'vclick #new-user-button':      'newUserButtonClicked'
-        'vclick #existing-user-button': 'loginButtonClicked'
-        'vclick .close':                'close'
+        _.extend {}, App.Views.Popup::events,
+            'vclick #new-user-button':      'newUserButtonClicked'
+            'vclick #existing-user-button': 'loginButtonClicked'
+
+    title: 'Before we begin, are you a...'
 
     initialize: (options) ->
-
-        contents = new App.Views.LoginOrNewUser
-            model: options.model
-
-        super _.extend options, {
-            title: 'Before we begin, are you a...'
-            contents
-        }
+        super
+        @setContents new App.Views.LoginOrNewUser {model: options.model}
 
     newUserButtonClicked: ->
         console.debug "New user button clicked."
@@ -191,16 +197,16 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
     setLoginView: ->
         @setTitle 'Welcome back!'
 
-        callbacks = _.extend @callbacks,
-            success: (user) =>
-                @callbacks.loginSuccess? user
+        callbacks = _.extend @callbacks, success: (user) =>
+            @callbacks.loginSuccess? user
 
         @setContents new App.Views.Auth {@model, callbacks}
 
 
 class App.Views.RegistrationPopup extends App.Views.Popup
 
+    title: 'Oh! One last thing...'
+
     initialize: (options) ->
-        super _.extend options,
-            title: 'Oh! One last thing...'
-            contents: new App.Views.Registration()
+        super
+        @setContents new App.Views.Registration options

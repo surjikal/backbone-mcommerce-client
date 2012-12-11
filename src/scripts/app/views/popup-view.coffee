@@ -5,17 +5,24 @@ class App.Views.Popup extends Backbone.LayoutView
     className: 'dim-overlay'
 
     events:
-        'vclick .close': 'close'
+        'vclick .close': 'closeButtonClicked'
 
     initialize: (options) ->
-        @title        = options.title
+        @title        = @title        or options.title
+        @instructions = @instructions or options.instructions
         @callbacks    = options.callbacks
-        @instructions = options.instructions
+        @initializeContents options
 
-        @setContents options.contents if options.contents
+    initializeContents: (options) ->
+        contents = @contents or options.contents
+        contents = contents? options
+        @setContents contents if contents
 
     close: ->
         App.views.main.removePopup()
+
+    closeButtonClicked: ->
+        @close()
         @callbacks.closed?()
 
     setTitle: (@title) ->

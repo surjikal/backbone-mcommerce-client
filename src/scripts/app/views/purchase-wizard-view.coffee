@@ -5,8 +5,8 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
 
     initialize: (options) ->
         console.debug "Initializing purchase wizard."
-        {@itemspot, user, params} = options
-        addresses = user.getAddresses()
+        {@itemspot, @user, @done, params} = options
+        addresses = @user.getAddresses()
 
         App.auth.events.on 'logout', =>
             App.router.navigate @itemspot.getRouterUrl(), {trigger: true}
@@ -50,17 +50,34 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
             }
         ]
 
-
-        super options
+        super
 
     getStepUrl: (stepId) ->
         "#{@itemspot.getCheckoutUrl()}/#{stepId}"
 
     completed: (wizardData) ->
         console.debug 'Purchase wizard has been completed.'
-        console.debug wizardData
-        # Commit purchase here
-        App.router.navigate "#{@itemspot.getRouterUrl()}/thanks", {trigger: true}
+
+        finish = =>
+            # TODO: Commit purchase here...
+            @done wizardData
+
+        return finish() if @user.isLoggedIn()
+        @_showRegistrationPopup finish
+
+    _showRegistrationPopup: (done) ->
+        popup = new App.Views.RegistrationPopup
+            model: @user
+            callbacks:
+                skipped: =>
+                    console.debug "Registration was skipped."
+                    popup.close()
+                    done()
+                success: =>
+                    console.debug "Registration was a success."
+                    popup.close()
+                    done()
+        App.views.main.showPopup popup
 
     cleanup: ->
         console.debug "Cleaning up purchase wizard view."
