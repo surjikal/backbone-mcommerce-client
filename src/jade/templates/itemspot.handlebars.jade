@@ -1,14 +1,19 @@
 
 img.item-image(src="{{image}}")
 
-.item-info
-    h1.item-name {{item.name}}
+.item-info.content
+    header.content-fixed
+        h1.item-name {{item.name}}
 
-    .price.item-price
-        span.dollar
-        {{itemPrice}}
+        .price.item-price {{itemPrice}}
 
-    p.item-details {{item.details}}
+        button.btn-big#buy-button Buy
 
+        .item-stats
+            .views-icon
+            .views-count {{item.stats.views}}
+            .likes-icon
+            .likes-count {{item.stats.likes}}
 
-button.btn-big#checkout-button Checkout
+    .item-details
+        p {{item.details}}

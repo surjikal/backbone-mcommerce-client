@@ -10,30 +10,74 @@
     }
 
     .item-info {
+        position: relative;
         margin-top: 0.5em;
+        color: #232323;
+        font-weight: bold;
+        background-color: #eee;
 
         .item-name {
-            font-size: 100%;
             display: inline-block;
             width: 75%;
         }
 
         .item-price {
-            float: right;
+            background: rgba(white, 0.6);
+            margin: 0 auto;
+            min-width: 85px;
+            color: #232323;
+            right: 0;
+            top: 70px;
+            position: absolute;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.4em;
+            padding: 0.6em 0.8em;
         }
 
         .item-details {
-            margin: 1em 0 2em 0;
             font-size: 65%;
             color: #666;
-            text-align: justify;
+
+            p {
+                font-size: 120%;
+                line-height: 1.6em;
+                padding: 20px;
+                text-align: justify;
+            }
+        }
+
+        .item-stats {
+            overflow: hidden;
+            margin: 20px 0 0 0;
+
+            .views-icon {
+                position: relative;
+                width: 20px;
+                height: 20px;
+                background: red;
+                margin: 0 10px 0 0;
+            }
+
+            .views-count, .likes-count {
+                font-size: 1.2em;
+                color: #999;
+                margin-right: 30px;
+            }
+
+            .likes-icon {
+                position: relative;
+                width: 20px;
+                height: 20px;
+                background: red;
+                margin: 0 10px 0 0;
+            }
         }
     }
 
-    #checkout-button {
-        width: 100%;
-        clear: both;
-        display: block;
-        margin: 0 auto;
+    #buy-button {
+        width: 85px;
+        font-weight: bold;
+        float: right;
     }
 }

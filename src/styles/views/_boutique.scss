@@ -100,7 +100,7 @@ $boutique-grid-size: 1%;
                             margin: 0;
 
                             color: #666;
-                            background-color: whitesmoke;
+                            background-color: #f5f5f5;
 
                             border-top:    1px solid rgba(0, 0, 0, 0.0976562);
                             border-right:  1px solid rgba(0, 0, 0, 0.0976562);
@@ -108,8 +108,8 @@ $boutique-grid-size: 1%;
                             border-left:   1px solid rgba(0, 0, 0, 0.0976562);
 
                             &:active, &.active {
-                                background-color: darken(whitesmoke, 5%);
-                                border-top-color: darken(whitesmoke, 15%);
+                                background-color: darken(#f5f5f5, 5%);
+                                border-top-color: darken(#f5f5f5, 15%);
                             }
                         }
                     }

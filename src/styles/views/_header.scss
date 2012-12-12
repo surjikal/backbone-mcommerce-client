@@ -1,6 +1,7 @@
 
-$header-height: 40px;
-$header-background-color: #f7f7f7;
+$navbar-height: 40px;
+$navbar-vertical-padding: 5px;
+$header-height: $navbar-height + $navbar-vertical-padding;
 
 $action-width: 40px;
 $action-font-color: #bbb;
@@ -9,17 +10,18 @@ $action-font-color: #bbb;
 .header-view {
 
     .navigation-bar {
-        height:      $header-height;
-        line-height: $header-height + 1px;
-        z-index: 20;
+        padding: $navbar-vertical-padding 0;
+        height: $navbar-height;
+        line-height: $navbar-height + 1px;
+        z-index: 100;
 
         border-bottom: 1px solid #ddd;
-        @include box-shadow(0px 1px 0px #fdfdfd);
 
         .logo {
             position: absolute;
             left: $action-width;
             right: $action-width;
+            font-size: 0.5 * $navbar-height;
         }
 
         .action {
@@ -34,12 +36,12 @@ $action-font-color: #bbb;
         }
 
         .left-action {
+            font-size: 0.5 * $navbar-height;
             width: $action-width;
-            top: 1px;
         }
 
         .right-action {
-            font-size: 31px;
+            font-size: 0.8 * $navbar-height;
             right: 1px;
             width: $action-width;
         }

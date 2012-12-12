@@ -2,4 +2,4 @@
 @import "fonts/typicons";
 
 @include font-face("FuturaFile", inline-font-files('futura-md-bt-medium.ttf', truetype));
-// @include font-face("LatoLightItalic", inline-font-files('lato-light.ttf', truetype));
+@include font-face("Source Sans Pro", inline-font-files('source-sans-pro/SourceSansPro-Regular.ttf', truetype));

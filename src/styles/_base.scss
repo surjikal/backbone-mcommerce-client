@@ -4,14 +4,15 @@ $body-background-color: #f7f7f7;
 $font-color-normal: #444;
 $font-color-light:  #888;
 $font-base-size: 20px;
+$font-weight: 300;
+$font-stack: "Source Sans Pro", "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
 
-$font-stack: "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
 $logo-font-stack: "FuturaFile", sans-serif;
 
 $anchor-color-normal: #555;
 $anchor-color-hover:  #222;
 
-$banner-height: 4px;
+$banner-height: 0px;
 $header-height: 40px;
 
 $input-focus-border-color: rgba(82, 168, 236, 0.8);
@@ -36,8 +37,8 @@ $input-focus-border-color: rgba(82, 168, 236, 0.8);
 body {
     background-color: $body-background-color;
     color: $font-color-normal;
-    font:  $font-base-size $font-stack;
-    font-weight: 300;
+    font: $font-base-size $font-stack;
+    font-weight: $font-weight;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -48,7 +49,7 @@ a {
 
     &:hover {
         color: $anchor-color-hover;
-    };
+    }
 }
 
 hr {
@@ -64,20 +65,8 @@ hr {
 }
 
 .price {
-    color: #666;
-
-    .dollar {
-        font-size: 60%;
-        left: -1px;
-        top: -6px;
-        position: relative;
-
-        &:before {
-            color: #777;
-            content: '$';
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            padding-left: 1px;
-        }
+    &:before {
+        content: '$';
     }
 }
 
