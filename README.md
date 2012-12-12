@@ -10,6 +10,7 @@ Node.js + NPM | http://nodejs.org/
 Compass       | http://compass-style.org/
 CoffeeScript  | http://coffeescript.org/
 Grunt         | https://github.com/gruntjs/grunt
+Nginx         | http://wiki.nginx.org/Install
 
 
 ### Installation
@@ -22,6 +23,11 @@ Grunt         | https://github.com/gruntjs/grunt
 7. ???
 8. PROFIT!
 
+## Nginx on Mac OS X
+
+`brew install nginx`
+`cp ops/nginx.conf /usr/local/etc/nginx/nginx.conf`
+`nginx -s reload`
 
 ## Running the client
 

@@ -1,6 +1,9 @@
 #!/bin/sh
 # Utility script to fetch your client-side libraries.
 
+# Checking if 'wget' is installed.
+command -v wget >/dev/null 2>&1 || { echo >&2 "This script needs 'wget' but it is not installed. Aborting."; exit 1; }
+
 
 LIBS_DIR="./.fetched-libs"
 
@@ -38,9 +41,11 @@ function fetch {
     fi
 }
 
+
 function remove_existing_libs {
     rm $LIBS_DIR/*.js 2> /dev/null
 }
+
 
 # ./fetch-libs.sh -c
 [[ $1 = "-c" || $1 = "--clean" ]] && remove_existing_libs
