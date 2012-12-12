@@ -11,17 +11,17 @@
 
 
 $logoFontStack: "FuturaFile", sans-serif;
-$fontStack:  "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
+$fontStack:  'Source Sans Pro', "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
 $serifStack: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
 
-$baseFontSize: 20px;
+$baseFontSize: 62.5%;
 
 $bodyColor: #f7f7f7;
 $fontColor: #444;
 $lightFontColor: #888;
 
 $logoColor: #333;
-$logoSize: 100%;
+$logoSize: 1.4em;
 
 $contentBackgroundColor: #f7f7f7;
 
@@ -63,34 +63,11 @@ h1 {
 // DEBUG
 // @include emulate-device(320px, 460px);
 
-.banner {
-    display: table;
+#header {
+    position: fixed;
     width: 100%;
-    height: $bannerHeight;
-    z-index: 30;
-
-    .spring {
-        display: table-cell;
-        background: rgb(78,205,196);
-        width: 25%;
-    }
-    .summer {
-        display: table-cell;
-        background: rgb(199,244,100);
-        width: 25%;
-    }
-    .fall {
-        background: rgb(255,107,107);
-        display: table-cell;
-        width: 25%;
-    }
-    .winter {
-        display: table-cell;
-        background: rgb(85,98,112);
-        width: 25%;
-    }
+    z-index: 999;
 }
-
 
 .logo {
     @include text-shadow(0px 1px 1px white);
@@ -197,7 +174,6 @@ h1 {
 }
 
 .content {
-    margin: 1em $gutterSize;
     position: relative;
 }
 
@@ -235,8 +211,13 @@ h1 {
     }
 }
 
+#fixed-content {
+    position: fixed;
+    width: 100%;
+    margin-top: 40px;
+}
+
 .item {
-    overflow: hidden;
 
     img {
         max-height: 300px;
@@ -246,22 +227,64 @@ h1 {
 
     header {
         border: none;
-        margin-top: 0.5em;
+        margin: 0;
+        background-color: #eee;
+        padding: 20px 0 20px 20px;
 
-        h1 {
-            font-size: 100%;
+        h1.item-name {
+            font-size: 2.2em;
+            width: 210px;
+            color: #232323;
+            font-weight: bold;
             display: inline-block;
         }
-        .price {
-            float: right;
+        
+        div.stats {
+            overflow: hidden;
+            margin: 20px 0 0 0;
+
+            div {
+                float: left;
+            }
+
+            .views-icon {
+                position: relative;
+                width: 20px;
+                height: 20px;
+                background: red;
+                margin: 0 10px 0 0;
+            }
+
+            .views-count, .likes-count {
+                font-size: 1.2em;
+                color: #999;
+                margin-right: 30px;
+            }
+
+            .likes-icon {
+                position: relative;
+                width: 20px;
+                height: 20px;
+                background: red;
+                margin: 0 10px 0 0;
+            }
         }
     }
 
-    p.details {
-        margin: 1em 0 2em 0;
-        font-size: 65%;
-        color: #666;
+    .details-container {
+        z-index: -1;
+        top: 470px;
+        position: absolute;
+        color: #999;
+        width: 100%;
+
+        .details {
+            font-size: 1.2em;
+            line-height: 1.6em;
+            padding: 20px;
+        }
     }
+
 
     .btn-big {
         width: 100%;
@@ -269,25 +292,31 @@ h1 {
         display: block;
         margin: 0 auto;
     }
+
+    #buy-btn {
+        width: 85px;
+        font-weight: bold;
+        float: right;
+    }
 }
 
 .price {
-    color: #666;
-    font-size: $priceFontSize;
-    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.6);
+    clear: both;
+    display: block;
+    margin: 0 auto;
+    width: 85px;
+    color: #232323;
+    right: 0;
+    top: 70px;
+    position: absolute;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.4em;
+    padding: 0.6em 0.8em;
 
-    .dollar {
-        font-size: 70%;
-        left: -1px;
-        top: -6px;
-        position: relative;
-
-        &:before {
-            color: #777;
-            content: '$';
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            padding-left: 1px;
-        }
+    &:before {
+        content: '$ ';
     }
 }
 
@@ -657,7 +686,7 @@ h1 {
                             margin: 0;
 
                             color: #666;
-                            background-color: whitesmoke;
+                            background-color: #f5f5f5;
 
                             border-top:    1px solid rgba(0, 0, 0, 0.0976562);
                             border-right:  1px solid rgba(0, 0, 0, 0.0976562);
@@ -764,9 +793,6 @@ and (max-width : 320px) {
 @media only screen
 and (min-width : 768px) {
 //and (max-device-width : 1024px) {
-    body {
-        font-size: 26px;
-    }
     .restrict-width {
         width: 768px;
         margin-left: auto;
