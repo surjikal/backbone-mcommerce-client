@@ -70,5 +70,13 @@ App.utils =
 
     # Generate a pseudo-GUID by concatenating random hexadecimal.
     guid: do ->
-        s4 = -> (((1+Math.random())*0x10000)|0).toString(16).substring(1)
+        S4 = -> (((1+Math.random())*0x10000)|0).toString(16).substring(1)
         -> "#{S4()}#{S4()}-#{S4()}-#{S4()}-#{S4()}#{S4()}#{S4()}"
+
+
+    getRandomNumber: (min, max) ->
+        Math.random() * (max - min + 1) + min
+
+
+    getRandomInteger: (min, max) ->
+        Math.floor (@getRandomNumber min, max)
