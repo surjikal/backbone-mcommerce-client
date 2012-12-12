@@ -9,47 +9,53 @@
         margin: 0 auto;
     }
 
-    .item-info {
+    .item-price {
+        background: rgba(white, 0.6);
+        margin: 0 auto;
+        min-width: 85px;
+        color: #232323;
+        right: 0;
+        top: 70px;
+        position: absolute;
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.4em;
+        padding: 0.6em 0.8em;
+    }
+
+
+    header {
         position: relative;
         margin-top: 0.5em;
         color: #232323;
         font-weight: bold;
         background-color: #eee;
+        padding: 20px 0 20px 20px;
+        z-index: 10;
+        @include box-shadow(0 0 15px 3px rgba(black, 0.2));
+
 
         .item-name {
             display: inline-block;
-            width: 75%;
+            width: 70%;
+            font-size: 2.2em;
         }
 
-        .item-price {
-            background: rgba(white, 0.6);
-            margin: 0 auto;
-            min-width: 85px;
-            color: #232323;
-            right: 0;
-            top: 70px;
-            position: absolute;
+
+        #buy-button {
+            width: 85px;
             font-weight: bold;
-            text-align: center;
-            font-size: 1.4em;
-            padding: 0.6em 0.8em;
+            float: right;
         }
 
-        .item-details {
-            font-size: 65%;
-            color: #666;
-
-            p {
-                font-size: 120%;
-                line-height: 1.6em;
-                padding: 20px;
-                text-align: justify;
-            }
-        }
 
         .item-stats {
             overflow: hidden;
             margin: 20px 0 0 0;
+
+            div {
+                float: left;
+            }
 
             .views-icon {
                 position: relative;
@@ -73,11 +79,20 @@
                 margin: 0 10px 0 0;
             }
         }
+
     }
 
-    #buy-button {
-        width: 85px;
-        font-weight: bold;
-        float: right;
+    .item-details {
+        position: relative;
+        color: #666;
+        background: #fff;
+        z-index: 20;
+
+        p {
+            font-size: 120%;
+            line-height: 1.6em;
+            padding: 20px;
+            text-align: justify;
+        }
     }
 }

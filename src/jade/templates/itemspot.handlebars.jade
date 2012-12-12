@@ -1,19 +1,18 @@
 
 img.item-image(src="{{image}}")
 
-.item-info.content
-    header.content-fixed
-        h1.item-name {{item.name}}
+h1.price.item-price {{itemPrice}}
 
-        .price.item-price {{itemPrice}}
+header
+    h1.item-name {{item.name}}
 
-        button.btn-big#buy-button Buy
+    button.btn-big#buy-button Buy
 
-        .item-stats
-            .views-icon
-            .views-count {{item.stats.views}}
-            .likes-icon
-            .likes-count {{item.stats.likes}}
+    .item-stats
+        .views-icon
+        .views-count {{item.stats.views}}
+        .likes-icon
+        .likes-count {{item.stats.likes}}
 
-    .item-details
-        p {{item.details}}
+.item-details
+    p {{item.details}}

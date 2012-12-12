@@ -70,21 +70,9 @@ $boutique-grid-size: 1%;
                         .price {
                             float: right;
                             position: relative;
-                            top: 2px;
 
-                            .dollar {
-
-                                &:before {
-                                    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-                                    color: #777;
-                                    content: '$';
-                                    padding-left: 1px;
-                                }
-
-                                position: relative;
-                                top: -4px;
-                                left: -1px;
-                                font-size: 70%;
+                            &:before {
+                                content: '$';
                             }
                         }
 

@@ -3,7 +3,7 @@ $body-background-color: #f7f7f7;
 
 $font-color-normal: #444;
 $font-color-light:  #888;
-$font-base-size: 20px;
+$font-base-size: 62.5%;
 $font-weight: 300;
 $font-stack: "Source Sans Pro", "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
 
@@ -11,9 +11,6 @@ $logo-font-stack: "FuturaFile", sans-serif;
 
 $anchor-color-normal: #555;
 $anchor-color-hover:  #222;
-
-$banner-height: 0px;
-$header-height: 40px;
 
 $input-focus-border-color: rgba(82, 168, 236, 0.8);
 
@@ -34,7 +31,14 @@ $input-focus-border-color: rgba(82, 168, 236, 0.8);
     @include user-select(none);
 }
 
+html {
+    width: 100%;
+    height: 100%;
+}
+
 body {
+    width: 100%;
+    height: 100%;
     background-color: $body-background-color;
     color: $font-color-normal;
     font: $font-base-size $font-stack;
@@ -61,13 +65,8 @@ hr {
 
 .logo {
     text-align: center;
-    font-family: $logo-font-stack;
-}
-
-.price {
-    &:before {
-        content: '$';
-    }
+    font-family: $font-stack;
+    @include text-shadow(0px 1px 1px white);
 }
 
 .instructions {
@@ -83,4 +82,10 @@ hr {
     font-size: 70%;
     color: $font-color-light;
     font-style: italic;
+}
+
+.price {
+    &:before {
+        content: '$';
+    }
 }

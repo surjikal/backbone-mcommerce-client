@@ -1,14 +1,25 @@
 
-$content-gutter-size: 4%;
+$header-height: 50px;
 
 
-.content {
-    padding: 1em $content-gutter-size;
-    position: relative;
+#header {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
 }
 
-.content-fixed {
-    position: fixed;
+#page {
+    width: 768px;
+    height: 100%;
+    margin: 0 auto;
+    padding: $header-height 0 0 0;
+}
+
+.content {
+    position: relative;
+    width: 768px;
+    height: 100%;
+    padding: $header-height 0 0 0;
 }
 
 .restrict-width {
