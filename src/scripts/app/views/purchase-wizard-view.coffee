@@ -10,6 +10,7 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
 
         App.auth.events.on 'logout', =>
             App.router.navigate @itemspot.getRouterUrl(), {trigger: true}
+        , @
 
         if params.address
             options.wizardData = {address: addresses.get params.address}
@@ -81,4 +82,4 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
 
     cleanup: ->
         console.debug "Cleaning up purchase wizard view."
-        App.auth.events.off()
+        App.auth.events.off null, null, @

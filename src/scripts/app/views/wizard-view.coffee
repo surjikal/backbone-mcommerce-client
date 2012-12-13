@@ -191,7 +191,6 @@ class App.Views.Wizard extends Backbone.LayoutView
     # Implement this in your derived class
     completed: (data) ->
         console.warn 'Wizard completed, but derived class is not handling it.'
-        console.debug data
 
     # Resetting all step states to be normal if they are not complete.
     _resetIncompleteStepStates: ->
