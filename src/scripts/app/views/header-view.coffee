@@ -20,9 +20,11 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
         console.debug 'Initializing auth menu item.'
         if App.auth.isLoggedIn then @setLogoutMode() \
                                else @setLoginMode()
+        @initEventListeners()
 
-        App.auth.events.on 'login', @onLogin
-        App.auth.events.on 'logout', @onLogout
+    initEventListeners: ->
+        App.auth.events.on 'login', @onLogin, @
+        App.auth.events.on 'logout', @onLogout, @
 
     clicked: =>
         App.auth.logout() if @mode is 'logout'
