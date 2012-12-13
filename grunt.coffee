@@ -18,6 +18,8 @@ TASKS = [
 
 module.exports = (grunt) ->
 
+    _ = grunt.utils._
+
     NPM_TASKS.forEach (task) ->
         grunt.loadNpmTasks task
 
@@ -62,7 +64,8 @@ module.exports = (grunt) ->
                     compileDebug: true
                     locals: ->
                         context = grunt.config.get 'configContext.website'
-                        config: (utils.resolveAppConfig grunt, context)
+                        _.extend (grunt.config.get 'config'),
+                            appConfig: (utils.resolveAppConfig grunt, context)
 
             # Compiles the index file of the phonegap version, adds the app config to locals
             phonegap_index:
@@ -74,8 +77,9 @@ module.exports = (grunt) ->
                     compileDebug: true
                     locals: ->
                         context = grunt.config.get 'configContext.phonegap'
-                        config: (utils.resolveAppConfig grunt, context)
-                        phonegap: true
+                        _.extend (grunt.config.get 'config'),
+                            appConfig: (utils.resolveAppConfig grunt, context)
+                            isPhonegapBuild: true
 
             # Compiles the handlebars templates to html
             handlebars:

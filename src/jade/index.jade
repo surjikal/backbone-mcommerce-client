@@ -1,5 +1,5 @@
 
-if locals.phonegap
+if locals.isPhonegapBuild
     include mixins/asset-mixins-phonegap
 else
     include mixins/asset-mixins-website
@@ -33,9 +33,17 @@ html
             mixin js-lib('handlebars.runtime')
             mixin js-lib('modernizr.touch')
 
-            if locals.phonegap
-                mixin js('http://debug.phonegap.com/target/target-script-min.js#vipl-phonegap-debug')
+            //- Configure remote debugging on phonegap build
+            if locals.isPhonegapBuild
                 mixin js-lib('cordova')
+                if locals.remote_debugging.enabled
+                    - var script_src    = locals.remote_debugging.script_url
+                    - var interface_url = locals.remote_debugging.interface_url
+                    - console.log('Remote debugging is ENABLED. Access the interface here:')
+                    - console.log(interface_url)
+                    mixin js(script_src)
+                else
+                    - console.log('Remote debugging is DISABLED.')
 
         block app-core
             mixin app-core('templates')
@@ -80,30 +88,25 @@ html
 
         //- If we were given a config object, inject it in the App
         //- Otherwise, panic!
-        if locals.config
-            - var config = JSON.stringify(locals.config, null, 2)
-            - console.log('Using app config:\n' + config)
+        if locals.appConfig
+            - var appConfig = JSON.stringify(locals.appConfig, null, 2)
+            - console.log('Using app config:\n' + appConfig)
 
             script(type="text/javascript")
-                App.config     = !{config};
-                App.isPhonegap = !{Boolean(locals.phonegap)};
-
+                App.config     = !{appConfig};
+                App.isPhonegap = !{Boolean(locals.isPhonegapBuild)};
         else
             != console.error('ERROR: App config is undefined!')
-            != console.error(config) //- Causes an exception, stops compilation
+            != console.error(derp) //- Causes an exception, stops compilation
 
 
         //- If this is a phonegap build, init app after 'deviceready'
         //- If this is a normal build, do it after the document is ready.
-        if locals.phonegap
-            - console.log('Compiling phonegap version.')
-
+        if locals.isPhonegapBuild
             :coffeescript
                 $(document).on 'deviceready', ->
                     App.events.trigger 'ready'
-
         else
-            - console.log('Compiling website version.')
             :coffeescript
                 $ -> App.events.trigger 'ready'
 
