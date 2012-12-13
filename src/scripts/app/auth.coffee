@@ -38,9 +38,9 @@ class App.Auth
         console.debug "Logging out user."
         @_resetUser()
         @isLoggedIn = false
-        # Workaround for the "missing url property" bug... see 'purchase wizard' route for details.
+        @events.trigger 'logout'
+        # FIXME: Workaround for the "missing url property" bug... see 'purchase wizard' route for details.
         window.location.href = window.location.href
-        # @events.trigger 'logout'
 
     _initializeUser: ->
         @user = new App.Models.User()
@@ -50,8 +50,8 @@ class App.Auth
     _resetUser: ->
         @user.clear()
         @credentialStore.clear()
+        localStorage.clear()
         Backbone.BasicAuth.clear()
-        @_clearSavedAddresses()
         @user = new App.Models.User()
 
     _login: (email, password) ->
@@ -62,18 +62,6 @@ class App.Auth
         @isLoggedIn = true
         @user.set 'email', email
         @events.trigger 'login'
-
-    # Hack: clears addresses saved by unregistered users. Can't think of a better way right now.
-    #       These were left by the backbone.localStorage plugin.
-    _clearSavedAddresses: ->
-        key = 'AddressCollection'
-        addresses = localStorage.getItem key
-        return if not addresses
-        addresses = addresses.split ','
-        for address in addresses
-            localStorage.removeItem "#{key}-#{address}"
-        localStorage.removeItem key
-
 
 
 class LocalStorageCredentialStore
