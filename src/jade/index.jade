@@ -101,14 +101,6 @@ html
                 $(document).on 'deviceready', ->
                     App.events.trigger 'ready'
 
-                    ref = window.open 'http://google.com', '_blank'
-                    ref.addEventListener 'loadstart', (event) ->
-                        alert(event.type + ' - ' + event.url)
-                    ref.addEventListener 'loadstop', (event) ->
-                        alert(event.type + ' - ' + event.url)
-                    ref.addEventListener 'exit', (event) ->
-                        alert(event.type)
-
         else
             - console.log('Compiling website version.')
             :coffeescript
