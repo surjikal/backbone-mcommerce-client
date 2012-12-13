@@ -24,15 +24,9 @@ App.events.on 'ready', ->
         render: (template, context) ->
             @el = template context
 
-    Backbone.getSyncMethod = (model) ->
-        if model.localStorage or (model.collection and model.collection.localStorage)
-            console.debug "Sync method called, using localstorage"
-            return Backbone.LocalStorage.sync
-        return Backbone.ajaxSync
-
 
     # Unbind event handlers on view close
-    Backbone.View.prototype.close = ->
+    Backbone.View::close = ->
         console.info "Closing view #{@}"
         @beforeClose() if @beforeClose
         @remove()
