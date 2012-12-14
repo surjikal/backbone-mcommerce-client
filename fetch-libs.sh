@@ -19,7 +19,7 @@ function fetch {
     url=$2
     filepath="$LIBS_DIR/$filename"
 
-    printf "$COLOR_PURPLE+ $COLOR_BRIGHT_PURPLE%-26s$COLOR_RESET " $filename
+    printf "$COLOR_BRIGHT_PURPLE%-26s$COLOR_RESET " $filename
 
     # Create the output directory if it doesn't exist.
     [ ! -d $LIBS_DIR ] && mkdir -p $LIBS_DIR
@@ -43,7 +43,8 @@ function fetch {
 
 
 function remove_existing_libs {
-    rm $LIBS_DIR/*.js 2> /dev/null
+    rm -rf $LIBS_DIR 2> /dev/null
+    mkdir $LIBS_DIR
 }
 
 
@@ -51,16 +52,12 @@ function remove_existing_libs {
 [[ $1 = "-c" || $1 = "--clean" ]] && remove_existing_libs
 
 
-fetch 'zepto.js'                    http://zeptojs.com/zepto.js
 fetch 'jquery.js'                  https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js
-fetch 'jquery.cookie.js'           https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js
-fetch 'jquery.base64.js'           https://raw.github.com/carlo/jquery-base64/master/jquery.base64.js
 fetch 'lodash.js'                  https://raw.github.com/bestiejs/lodash/v0.9.0/lodash.js
-fetch 'underscore.deferred.js'     https://raw.github.com/wookiehangover/underscore.deferred/master/underscore.deferred.js
 fetch 'backbone.js'                 http://backbonejs.org/backbone.js
 fetch 'backbone.layoutmanager.js'  https://raw.github.com/tbranyen/backbone.layoutmanager/master/backbone.layoutmanager.js
 fetch 'backbone.statemachine.js'   https://raw.github.com/sebpiq/backbone.statemachine/master/backbone.statemachine.js
-fetch 'backbone.relational.js'     https://raw.github.com/PaulUithol/Backbone-relational/master/backbone-relational.js
+fetch 'backbone.relational.js'     https://raw.github.com/philfreo/Backbone-relational/backbone-0.9.9/backbone-relational.js
 fetch 'backbone.queryparams.js'    https://raw.github.com/jhudson8/backbone-query-parameters/master/backbone.queryparams.js
 fetch 'backbone.basicauth.js'      https://raw.github.com/fiznool/backbone.basicauth/master/backbone.basicauth.js
 fetch 'backbone.localstorage.js'   https://raw.github.com/jeromegn/Backbone.localStorage/master/backbone.localStorage.js
