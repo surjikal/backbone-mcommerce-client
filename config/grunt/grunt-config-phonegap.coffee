@@ -11,7 +11,7 @@ module.exports =
     remote_debugging:
 
         # Should we include code for remote debugging?
-        enabled: true
+        enabled: false
 
         # The location of the remote debugging script
         script_url: 'http://debug.phonegap.com/target/target-script-min.js#vipl-phonegap-debug'
