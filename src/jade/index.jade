@@ -91,24 +91,30 @@ html
         if locals.appConfig
             - var appConfig = JSON.stringify(locals.appConfig, null, 2)
             - console.log('Using app config:\n' + appConfig)
-
             script(type="text/javascript")
-                App.config     = !{appConfig};
-                App.isPhonegap = !{Boolean(locals.isPhonegapBuild)};
+
         else
             != console.error('ERROR: App config is undefined!')
             != console.error(derp) //- Causes an exception, stops compilation
 
 
+        script
+            function startApp() {
+                App.config = !{appConfig};
+                App.events.trigger('ready');
+            }
+
         //- If this is a phonegap build, init app after 'deviceready'
         //- If this is a normal build, do it after the document is ready.
         if locals.isPhonegapBuild
-            :coffeescript
-                $(document).on 'deviceready', ->
-                    App.events.trigger 'ready'
+            script
+                $(document).on('deviceready', function() {
+                    App.isPhonegap = !{Boolean(locals.isPhonegapBuild)};
+                    startApp();
+                });
         else
-            :coffeescript
-                $ -> App.events.trigger 'ready'
+            script
+                $(startApp);
 
 
     body
