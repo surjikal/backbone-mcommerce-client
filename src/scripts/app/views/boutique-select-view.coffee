@@ -1,5 +1,5 @@
 
-class App.Views.BoutiqueSelect extends Backbone.LayoutView
+class App.Views.BoutiqueSelect extends App.Views.FormView
 
     template: 'boutique-select'
     className: 'content home'
@@ -8,10 +8,10 @@ class App.Views.BoutiqueSelect extends Backbone.LayoutView
         'vclick #navigate-to-boutique-button': 'navigateToBoutique'
 
     onEmptyBoutiqueCode: ->
-        alert "Please enter a boutique code."
+        @errorAlert "Please enter a boutique code."
 
     onBoutiqueCodeNotFound: (boutiqueCode) ->
-        alert "Boutique '#{boutiqueCode}' wasn't found. Try again :)"
+        @errorAlert "Boutique '#{boutiqueCode}' wasn't found. Try again :)"
 
     getBoutiqueCode: ->
         (@$el.find '#boutique-code').val()
@@ -22,8 +22,10 @@ class App.Views.BoutiqueSelect extends Backbone.LayoutView
         boutiqueCode = @getBoutiqueCode()
         return @onEmptyBoutiqueCode() if not boutiqueCode
 
+        @enablePending()
         App.collections.boutiques.getOrCreateFromCode boutiqueCode,
             notFound: =>
+                @disablePending()
                 @onBoutiqueCodeNotFound boutiqueCode
             success: (boutique) =>
                 App.router.navigate boutique.getRouterUrl(), {trigger:true}
