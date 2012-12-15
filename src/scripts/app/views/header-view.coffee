@@ -52,18 +52,32 @@ class App.Views.Menu extends Backbone.LayoutView
     tagName: 'ul'
     className: 'menu'
 
+    events:
+        'vclick': 'close'
+
     initialize: (options) ->
         @initializeMenuItems options.items
 
+        # Close the menu whenever the page is changed.
+        App.router.on 'all', =>
+            _.defer =>
+                # For some reason, using `@close()` doesn't work.
+                @$el.removeClass 'active'
+
+    # A view item object can contain either:
+    #
+    # - {title, url} -> Creates a `App.Views.MenuItem` with the specified url and title
+    # OR
+    # - {viewClass}  -> Use custom view that extends `App.Views.MenuItem`
     initializeMenuItems: (items = []) ->
         _.each items, (item) =>
             ViewClass = item.viewClass or App.Views.MenuItem
             @insertView new ViewClass item
 
-    toggleVisibility: ->
+    toggleVisibility: =>
         @$el.toggleClass 'active'
 
-    close: ->
+    close: =>
         @$el.removeClass 'active'
 
 
@@ -75,8 +89,6 @@ class App.Views.Header extends Backbone.LayoutView
     events:
         'vclick .left-action':  'leftActionClicked'
         'vclick .right-action': 'rightActionClicked'
-        # Close the menu when a menu item is clicked.
-        'vclick .menu.active':  'closeMenu'
 
     initialize: ->
         console.debug 'Initializing header.'
@@ -94,5 +106,4 @@ class App.Views.Header extends Backbone.LayoutView
         @menu.toggleVisibility()
 
     leftActionClicked: =>
-        @menu.close()
         window.history.back()
