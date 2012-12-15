@@ -50,11 +50,21 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
 
 class App.Views.Menu extends Backbone.LayoutView
     tagName: 'ul'
+    className: 'menu'
 
     initialize: (options) ->
-        _.each (options.items or []), (item) =>
+        @initializeMenuItems options.items
+
+    initializeMenuItems: (items = []) ->
+        _.each items, (item) =>
             ViewClass = item.viewClass or App.Views.MenuItem
             @insertView new ViewClass item
+
+    toggleVisibility: ->
+        @$el.toggleClass 'active'
+
+    close: ->
+        @$el.removeClass 'active'
 
 
 class App.Views.Header extends Backbone.LayoutView
@@ -63,37 +73,26 @@ class App.Views.Header extends Backbone.LayoutView
     className: 'header'
 
     events:
-        'vclick .left-action':  'backButtonClicked'
-        'vclick .right-action': 'toggleMenu'
+        'vclick .left-action':  'leftActionClicked'
+        'vclick .right-action': 'rightActionClicked'
         # Close the menu when a menu item is clicked.
         'vclick .menu.active':  'closeMenu'
 
     initialize: ->
         console.debug 'Initializing header.'
-        @setView '.menu', @createMenu()
+        @setView '.menu-view', (@menu = @createMenu())
 
     createMenu: ->
         new App.Views.Menu
             items: [
                 {viewClass: App.Views.AuthMenuItem}
-                {title: 'Home', url: '/'}
+                {title: 'Home',    url: '/'}
                 {title: 'Profile', url: '/profile'}
             ]
 
-    backButtonClicked: ->
-        @closeMenu()
+    rightActionClicked: =>
+        @menu.toggleVisibility()
+
+    leftActionClicked: =>
+        @menu.close()
         window.history.back()
-
-    toggleMenu: ->
-        (@$el.find '.menu').toggleClass 'active'
-
-    closeMenu: ->
-        (@$el.find '.menu').removeClass 'active'
-
-    serialize: ->
-        menuItems = []
-        for title, href of @menuItems
-            href = href() if _.isFunction href
-            menuItems.push {title, href}
-
-        {menuItems}

@@ -173,25 +173,23 @@ h1 {
         //top: 0;
     }
 
-    ul {
-        li {
-            border-bottom: 1px solid #ddd;
-            height: 20%;
+    li {
+        border-bottom: 1px solid #ddd;
+        height: 20%;
 
-            &:first-child {
-                border-top: 1px solid $contentBackgroundColor;
-            }
+        &:first-child {
+            border-top: 1px solid $contentBackgroundColor;
+        }
 
-            &:hover {
-                background-color: #fefefe;
-            }
+        &:hover {
+            background-color: #fefefe;
+        }
 
-            a, span {
-                display: block;
-                padding: 0.5em 0.4em;
-                text-decoration: none;
-                cursor: pointer;
-            }
+        a, span {
+            display: block;
+            padding: 0.5em 0.4em;
+            text-decoration: none;
+            cursor: pointer;
         }
     }
 }
