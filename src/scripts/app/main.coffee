@@ -5,7 +5,6 @@ App.events.on 'ready', ->
 
     # Underscore mixins
     _.mixin
-        # _.objMap
         # _.map for objects, keeps key/value associations
         objMap: (input, mapper, context) ->
             cb = (obj, v, k) ->
@@ -13,7 +12,7 @@ App.events.on 'ready', ->
                 obj
             _.reduce input, cb, {}, context
 
-    # LayoutManager template hooks for precompiled handlebars templates.
+    # Adding support for our precompiled handlebars templates in Backbone.LayoutManager
     Backbone.LayoutManager.configure
 
         fetch: (name) ->
