@@ -10,7 +10,10 @@ node_modules/
 .fetched-libs/
 
 # Local configuration file
-config/local.coffee
+config/grunt/grunt-config-local*
+config/app/app-config-local*
+!config/grunt/*.example
+!config/app/*.example
 
 # Phonegap builds
 phonegap/iOS/www/
@@ -19,7 +22,6 @@ phonegap/iOS/www/
 build/
 
 tmp/
-
 
 # OSX turds
 .DS_Store
