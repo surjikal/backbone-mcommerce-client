@@ -142,21 +142,20 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         , complete)
 
     cardNumberDigitEntered: (event) ->
-        # @formatNumberField event, (digit = '') =>
 
-        #     if (Stripe.cardType cardNumber) is 'American Express'
-        #         lastDigitsRegex = /^(\d{4}|\d{4}\s\d{6})$/
-        #         maxlength = 16 # 14 digits + 2 spaces
-        #     else
-        #         lastDigitsRegex = /(?:^|\s)(\d{4})$/
-        #         maxlength = 19 # 16 digits + 3 spaces
+        @formatNumberField event, (digit = '') =>
 
-        #     rawCardNumber = (@getFieldValue 'cardNumber') + digit
-        #     cardNumber = @digitGroups ' ', /(\d{4})/g, rawCardNumber
+            rawCardNumber = (@getFieldValue 'cardNumber') + digit
+            cardNumber = @digitGroups ' ', /(\d{4})/g, rawCardNumber
 
-        #     @setFieldValue 'cardNumber', cardNumber if cardNumber.length <= maxlength
+            if (Stripe.cardType cardNumber) is 'American Express'
+                lastDigitsRegex = /^(\d{4}|\d{4}\s\d{6})$/
+                maxlength = 16 # 14 digits + 2 spaces
+            else
+                lastDigitsRegex = /(?:^|\s)(\d{4})$/
+                maxlength = 19 # 16 digits + 3 spaces
 
-        return true
+            @setFieldValue 'cardNumber', cardNumber if cardNumber.length <= maxlength
 
     formatExpiry: (event) ->
         @formatNumberField event, (digit = '') =>
