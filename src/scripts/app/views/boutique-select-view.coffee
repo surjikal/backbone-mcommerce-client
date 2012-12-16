@@ -5,7 +5,8 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
     className: 'content home'
 
     events:
-        'vclick #navigate-to-boutique-button': 'navigateToBoutique'
+        'vclick #navigate-to-boutique-button': 'navigateToBoutiqueButtonClicked'
+        'vclick #scan-button':                 'scanButtonClicked'
 
     onEmptyBoutiqueCode: ->
         @errorAlert "Please enter a boutique code."
@@ -16,144 +17,88 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
     getBoutiqueCode: ->
         (@$el.find '#boutique-code').val()
 
-    navigateToBoutique: (event) ->
+    navigateToBoutiqueButtonClicked: (event) ->
         event.preventDefault()
-
         boutiqueCode = @getBoutiqueCode()
         return @onEmptyBoutiqueCode() if not boutiqueCode
-
-        @enablePending()
-        App.collections.boutiques.getOrCreateFromCode boutiqueCode,
-            notFound: =>
-                @disablePending()
-                @onBoutiqueCodeNotFound boutiqueCode
-            success: (boutique) =>
-                App.router.navigate boutique.getRouterUrl(), {trigger:true}
-
+        @navigateToBoutique boutiqueCode
         return false
 
-# class App.Views.BoutiqueSelectBarcodeScanner extends Backbone.LayoutView
+    navigateToBoutique: (boutiqueCode) ->
+        @enablePending()
+        App.router.navigate "/boutiques/#{boutiqueCode}", {trigger: true}
+
+    navigateToItemspot: (boutiqueCode, itemspotIndex) ->
+        @enablePending()
+        App.router.navigate "/boutiques/#{boutiqueCode}/items/#{itemspotIndex}", {trigger: true}
+
+    scanButtonClicked: (event) =>
+        console.debug "Scan button clicked."
+        @enablePending '#scan-button', false
+        controller = new App.Controllers.BarcodeScanner()
+        controller.scan
+            success: (boutiqueCode, itemspotIndex) =>
+                @disablePending()
+                @navigateToItemspot boutiqueCode, itemspotIndex
+            cancelled: =>
+                @disablePending()
+                console.log "User cancelled barcode scanner."
+            scanError: (errorMessage) =>
+                @disablePending()
+                console.error "Scanner error:", errorMessage
+                @errorAlert "Something went wrong with the scanner. Please, try again!"
+            parseError: (scannedData) =>
+                @disablePending()
+                console.error "Could not parse scanned data. Data:", scannedData
+                @errorAlert "I couldn't read the barcode :(. Please, try again!"
+
+    serialize: ->
+        phonegap: App.isPhonegap
 
 
-    # :coffeescript
-    #     getBoutiqueExistsUrl = (boutiqueCode) ->
-    #         "/boutiques/" + boutiqueCode + "/exists/"
+class App.Controllers.BarcodeScanner
 
+    # Callbacks:
+    # - success:    scan & parse success, returns boutiqueCode and itemspotIndex
+    # - cancelled:  user cancelled the scan
+    # - scanError:  the plugin derped
+    # - parseError: the scanned data could not be parsed
+    scan: ({success, cancelled, parseError, scanError}) ->
+        @_scan {
+            cancelled,
+            error: scanError,
+            success: (data, type) ->
+                console.debug "Scan success (#{type}):", data
+                @_parseScannedData data, {success, parseError}
+        }
 
-    #     getBoutiqueUrl = (boutiqueCode) ->
-    #         "/boutiques/" + boutiqueCode
+    # Callbacks:
+    # - success:    scan success, returns data and type
+    # - cancelled:  user cancelled the scan
+    # - error:      the plugin derped
+    _scan: ({success, cancelled, error}) ->
 
+        onScanSuccess = (result) =>
+            return cancelled?() if result.cancelled
+            success? result.text, result.type
 
-    #     getAdspotUrl = (boutiqueCode, adspotIndex) ->
-    #         (getBoutiqueUrl boutiqueCode) + '/items/' + adspotIndex + '/'
+        onScanError = (errorMessage) ->
+            error? errorMessage
 
+        @_callScanPlugin onScanSuccess, onScanError
 
-    #     displayErrorMessage = (message) ->
-    #         $('.control-group').addClass 'error'
-    #         $('.error-message').text message
+    # Callbacks:
+    # - success: parse success, returns boutiqueCode and itemspotIndex
+    # - error:   the scanned data could not be parsed
+    _parseScannedData: (scannedData, {success, error}) ->
+        tokens = scannedData.split '#'
 
+        if tokens.length isnt 2
+            return error? scannedData
 
-    #     handleScannedItem = (data) ->
-    #         tokens = data.split '#'
+        [boutiqueCode, itemspotIndex] = tokens
+        success? boutiqueCode, itemspotIndex
 
-    #         if tokens.length isnt 2
-    #             return alert 'Could not parse the scanned data. Please try again.'
-
-    #         [boutiqueCode, adspotIndex] = tokens
-    #         adspotUrl = getAdspotUrl boutiqueCode, adspotIndex
-    #         console.log "Scan successful: BoutiqueCode[#{boutiqueCode}], AdspotIndex[#{adspotIndex}]"
-
-    #         $.ajax
-    #             type: 'GET'
-    #             url: adspotUrl
-    #             success: ->
-    #                 showLoadingModal 'Loading Boutique'
-    #                 window.location = adspotUrl
-    #             error: ->
-    #                 alert "Could not find scanned item. Please try again."
-
-
-    #     loadingModal = do ->
-
-    #         makeSpinner = ->
-    #             opts =
-    #                 lines: 9
-    #                 length: 3
-    #                 width: 3
-    #                 radius: 10
-    #                 corners: 1
-    #                 rotate: 0
-    #                 color: '#f2f2f2'
-    #                 speed: 1.4
-    #                 trail: 100
-    #                 shadow: false
-    #                 hwaccel: false
-    #                 className: 'spinner'
-    #                 zIndex: 2e9
-    #                 top: 'auto'
-    #                 left: 'auto'
-
-    #             spinner = (new Spinner opts)
-
-    #         (container, text) ->
-    #             $container = $(container)
-    #             throw "Invalid container " + container + "." if $container.length is 0
-
-    #             $container.empty()
-
-    #             $loadingModal = $('<div class="loading-modal" />')
-    #             $loadingModal.hide()
-
-    #             $text = $('<p class="text">' + text + '</p>')
-    #             $loadingModal.append $text
-
-    #             $spinWrap = $('<div class="spin-wrap" />')
-    #             $loadingModal.append $spinWrap
-
-    #             setTimeout(->
-    #                 spinner = makeSpinner()
-    #                 spinner.spin $spinWrap[0]
-    #             , 0)
-
-    #             $container.append $loadingModal
-
-    #             show: -> $loadingModal.show()
-    #             hide: -> $loadingModal.hide()
-
-
-    #     showLoadingModal = (text) ->
-    #         modal = (loadingModal '.loading-modal-wrapper', text)
-    #         modal.show()
-
-
-    #     $('#boutique-code-button').on 'vclick', ->
-    #         code = $('#id_code').val()
-
-    #         if not code
-    #             displayErrorMessage 'Whoops, you forgot to enter a code!'
-    #             return false
-
-    #         $('input:focus').blur()
-
-    #         $.ajax
-    #             type: 'GET'
-    #             url: getBoutiqueExistsUrl code
-    #             success: ->
-    #                 showLoadingModal 'Loading Boutique'
-    #                 window.location = getBoutiqueUrl code
-    #             error: ->
-    #                 displayErrorMessage "This code doesn't exist, please try again :)"
-
-    #         return false
-
-
-    #     $ ->
-    #         console.log $('.content').height()
-    #         if isPhonegap()
-    #             $('.phonegap-only').show()
-
-    #             $('#scan-barcode-button').click ->
-    #                 window.communicator.postMessage 'scanBarcode', (err, result) ->
-    #                     return alert "Scanning failed: #{err}" if err
-    #                     return alert 'The user cancelled the scan.' if result.cancelled
-    #                     handleScannedItem result.text
+    # Override this for testing
+    _callScanPlugin: ->
+        window.plugins.barcodeScanner.scan arguments...

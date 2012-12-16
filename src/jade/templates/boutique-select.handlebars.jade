@@ -1,11 +1,7 @@
 
-h1.logo: a(href="/boutiques/bacon") VIRTUAL PLAZA
+h1.logo VIRTUAL PLAZA
 
 hr
-
-//- - if message
-//-     .alert.alert-success
-//-         #{message}
 
 form#boutique-select-form(method='post', action='.')
 
@@ -15,7 +11,7 @@ form#boutique-select-form(method='post', action='.')
 
     button.btn-big#navigate-to-boutique-button(type="submit") Visit Boutique
 
-    //- .phonegap-only(style="display: none")
-    //-     .sep(style="color: #aaa; padding: 1em 0; clear: both; text-shadow: 0px 1px 0px white") or
-
-    //-     button.btn-big#scan-barcode-button(type="button") Scan Item
+    {{#if phonegap}}
+    .sep(style="color: #aaa; padding: 1em 0; clear: both; text-shadow: 0px 1px 0px white") or
+    button.btn-big#scan-button(type="button") Scan Item
+    {{/if}}
