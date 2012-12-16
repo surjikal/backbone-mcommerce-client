@@ -26,6 +26,7 @@ class App.Views.WizardStep extends App.Views.FormView
 
     events:
         'vclick #wizard-next-step': 'wizardNextStepClicked'
+        'submit': -> false
 
     constructor: ->
         # You need to put something with the id `wizard-next-step` in your template.
