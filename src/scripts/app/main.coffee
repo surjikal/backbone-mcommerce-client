@@ -12,6 +12,9 @@ App.events.on 'ready', ->
                 obj
             _.reduce input, cb, {}, context
 
+    if App.isPhonegap
+        window.onerror = (error) -> console.error error
+
     # Adding support for our precompiled handlebars templates in Backbone.LayoutManager
     Backbone.LayoutManager.configure
 
@@ -30,7 +33,6 @@ App.events.on 'ready', ->
         @beforeClose() if @beforeClose
         @remove()
         @unbind()
-
 
     # If touch events are supported, call `event.preventDefault()` on all `vclick`
     # events. The purpose of this is to prevent ghost click events.
