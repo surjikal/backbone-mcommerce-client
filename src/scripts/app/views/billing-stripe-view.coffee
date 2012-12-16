@@ -14,7 +14,7 @@ Stripe =
         'Unknown'
 
     createToken: (options, callback) ->
-        callback null, 'debug_stripe_token'
+        callback null, 'fake_stripe_token'
 
 
 class App.Views.StripeBilling extends App.Views.WizardStep
@@ -61,15 +61,8 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         'invalidCvc':          'cvc'
 
     initialize: (options) ->
-        super options
-        @key = options.key
-        @tokenName = options.tokenName
-
-    renderToken: (token) ->
-        @$token = $('<input type="hidden">');
-        @$token.attr 'name', @tokenName
-        @$token.val token
-        # append to form
+        super
+        @setKey options.key
 
     setKey: (key) ->
         @key = key
@@ -116,38 +109,22 @@ class App.Views.StripeBilling extends App.Views.WizardStep
                 $button.text 'Continue'
                 $button.attr 'disabled', false
 
-    wizardNextStepClicked: (event) ->
-        event.preventDefault()
+    beforeNextStep: (done) ->
+        return if @pending
 
-        if not @pending
-            @enablePending()
-            @validateForm
-
-                error: (errorMessage) ->
-                    console.error errorMessage
-                    @disablePending()
-
-                success: (cleanedFields) =>
-                    @disablePending()
-                    @createToken cleanedFields,
-                        error: (error) ->
-                            console.error error
-                        success: (response) =>
-                            console.debug "Stripe#createToken success:\n", response
-                            @completed {token: response}
-
-    enablePending: ->
-        @pendingTimer = setTimeout( =>
-            @pending = true
-            $button = $('#wizard-next-step')
-            $button.addClass 'loading'
-        , 500)
-
-    disablePending: ->
-        clearTimeout @pendingTimer
-        @pending = false
-        $button = $('#wizard-next-step')
-        $button.removeClass 'loading'
+        @enablePending()
+        @validateForm
+            error: (errorMessage) ->
+                console.error errorMessage
+                @disablePending()
+            success: (cleanedFields) =>
+                @disablePending()
+                @createToken cleanedFields,
+                    error: (error) ->
+                        console.error error
+                    success: (response) =>
+                        console.debug "Stripe#createToken success:\n", response
+                        done {token: response}
 
     createToken: (fieldValues, callbacks) ->
 
