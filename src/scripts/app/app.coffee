@@ -35,6 +35,7 @@ App =
     Models: {}
     Views:
         Utils: {}
+    Controllers: {}
 
     api: {}
     collections: {}
