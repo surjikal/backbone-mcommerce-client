@@ -20,6 +20,13 @@ html
             mixin css-lib('bootstrap.min')
             mixin css('application')
 
+        if locals.isPhonegapBuild && locals.remote_debugging.enabled
+            - var script_src    = locals.remote_debugging.script_url
+            - var interface_url = locals.remote_debugging.interface_url
+            - console.log('\nRemote debugging is ENABLED. Access the interface here:')
+            - console.log(interface_url + '\n')
+            mixin js(script_src)
+
         block js-libs
             mixin js-lib('jquery')
             mixin js-lib('jquery.mobile.vmouse')
@@ -33,17 +40,9 @@ html
             mixin js-lib('handlebars.runtime')
             mixin js-lib('modernizr.touch')
 
-            //- Configure remote debugging on phonegap build
-            if locals.isPhonegapBuild
-                mixin js-lib('cordova')
-                if locals.remote_debugging.enabled
-                    - var script_src    = locals.remote_debugging.script_url
-                    - var interface_url = locals.remote_debugging.interface_url
-                    - console.log('Remote debugging is ENABLED. Access the interface here:')
-                    - console.log(interface_url)
-                    mixin js(script_src)
-                else
-                    - console.log('Remote debugging is DISABLED.')
+        if locals.isPhonegapBuild
+            mixin phonegap-js-lib('cordova')
+            mixin phonegap-js-lib('barcodescanner')
 
         block app-core
             mixin app-core('templates')
@@ -86,13 +85,10 @@ html
             mixin app-collection('boutique')
             mixin app-collection('address')
 
-        //- If we were given a config object, inject it in the App
-        //- Otherwise, panic!
+        //- If we were given a config object, inject it in the App, otherwise panic!
         if locals.appConfig
             - var appConfig = JSON.stringify(locals.appConfig, null, 2)
             - console.log('Using app config:\n' + appConfig)
-            script(type="text/javascript")
-
         else
             != console.error('ERROR: App config is undefined!')
             != console.error(derp) //- Causes an exception, stops compilation
@@ -103,6 +99,7 @@ html
                 App.config = !{appConfig};
                 App.events.trigger('ready');
             }
+
 
         //- If this is a phonegap build, init app after 'deviceready'
         //- If this is a normal build, do it after the document is ready.

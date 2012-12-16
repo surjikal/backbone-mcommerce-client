@@ -10,10 +10,6 @@ mixin css(name)
     link(href='assets/css/'+name+'.css', rel='stylesheet')
 
 
-mixin js-asset(name)
-    script(src='assets/js/'+name+'.js', type='text/javascript')
-
-
 mixin css-lib(name)
     link(href='assets/css/libs/'+name+'.css', rel='stylesheet')
 
@@ -40,3 +36,7 @@ mixin app-layout(name)
 
 mixin js-lib(name)
     script(src='assets/js/libs/'+name+'.js', type='text/javascript')
+
+
+mixin phonegap-js-lib(name)
+    script(src='assets/js/libs/phonegap/'+name+'.js', type='text/javascript')
