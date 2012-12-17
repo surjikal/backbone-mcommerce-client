@@ -34,7 +34,7 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
 
     scanButtonClicked: (event) =>
         console.debug "Scan button clicked."
-        @enablePending '#scan-button', false
+        @enablePending '#scan-button', 0
         controller = new App.Controllers.BarcodeScanner()
         controller.scan
             success: (boutiqueCode, itemspotIndex) =>
@@ -67,7 +67,7 @@ class App.Controllers.BarcodeScanner
         @_scan {
             cancelled,
             error: scanError,
-            success: (data, type) ->
+            success: (data, type) =>
                 console.debug "Scan success (#{type}):", data
                 @_parseScannedData data, {success, parseError}
         }
@@ -85,7 +85,8 @@ class App.Controllers.BarcodeScanner
         onScanError = (errorMessage) ->
             error? errorMessage
 
-        @_callScanPlugin onScanSuccess, onScanError
+        _.defer =>
+            @_callScanPlugin onScanSuccess, onScanError
 
     # Callbacks:
     # - success: parse success, returns boutiqueCode and itemspotIndex
