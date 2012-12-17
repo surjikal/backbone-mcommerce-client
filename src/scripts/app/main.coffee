@@ -16,9 +16,7 @@ App.events.on 'ready', ->
     Backbone.LayoutManager.configure
 
         fetch: (name) ->
-            # console.debug "Fetching template '#{name}'."
-            template = App.templates[name]
-            return template
+            App.templates[name]
 
         render: (template, context) ->
             @el = template context
