@@ -3,6 +3,11 @@ App.events.on 'ready', ->
 
     console.debug 'Initializing main.'
 
+    if App.isPhonegap
+
+        # Global error handler to help with phonegap debugging
+        window.onerror = (error) -> console.error error
+
     # Underscore mixins
     _.mixin
         # _.map for objects, keeps key/value associations
@@ -12,8 +17,6 @@ App.events.on 'ready', ->
                 obj
             _.reduce input, cb, {}, context
 
-    if App.isPhonegap
-        window.onerror = (error) -> console.error error
 
     # Adding support for our precompiled handlebars templates in Backbone.LayoutManager
     Backbone.LayoutManager.configure
