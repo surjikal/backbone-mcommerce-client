@@ -19,8 +19,9 @@ function CardIO() {
  * @parameter appToken: a string; get it from https://www.card.io/.
  *
  * @parameter options: an object; may be {}. Sample options object:
- *  {"collect_expiry": true, "collect_cvv": false, "collect_zip": false,
- *   "shows_first_use_alert": true, "disable_manual_entry_buttons": false}
+ *  {"collectExpiry": true, "collectCvv": false, "collectZip": false,
+ *   "showsFirstUseAlert": true, "disableManualEntryButtons": false,
+ *   "scanningEnabled": false}
  * Omit any key from options to get the default value. For more detail on
  * each of the options, look at CardIOPaymentViewController.h.
  *
@@ -64,15 +65,11 @@ CardIO.prototype.version = function(callback) {
   Cordova.exec(callback, failureCallback, "CardIOPGPlugin", "version", []);
 };
 
-
 /**
  * Plugin setup boilerplate.
  */
-Cordova.addConstructor(function() {
-  if(!window.plugins) {
-    window.plugins = {};
-  }
-  if(!window.plugins.card_io) {
-    window.plugins.card_io = new CardIO();
-  }
-});
+if (!window.plugins) window.plugins = {}
+
+if (!window.plugins.card_io) {
+    window.plugins.card_io = new CardIO()
+}

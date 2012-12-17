@@ -29,31 +29,38 @@
 - (void)scan:(NSMutableArray *)args withDict:(NSMutableDictionary *)options {
   self.scanCallbackId = [args objectAtIndex:0];
   NSString *appToken = [args objectAtIndex:1];
+
+  NSNumber *scanningEnabled = [options objectForKey:@"scanningEnabled"];
   
-  self.paymentViewController = [[[CardIOPaymentViewController alloc] initWithPaymentDelegate:self] autorelease];
+  if (scanningEnabled) {
+    self.paymentViewController = [[[CardIOPaymentViewController alloc] initWithPaymentDelegate:self scanningEnabled:[scanningEnabled boolValue]] autorelease];
+  } else {
+    self.paymentViewController = [[[CardIOPaymentViewController alloc] initWithPaymentDelegate:self] autorelease];
+  }
+
   self.paymentViewController.appToken = appToken;
 
-  NSNumber *collectCVV = [options objectForKey:@"collect_cvv"];
+  NSNumber *collectCVV = [options objectForKey:@"collectCVV"];
   if(collectCVV) {
     self.paymentViewController.collectCVV = [collectCVV boolValue];
   }
 
-  NSNumber *collectZip = [options objectForKey:@"collect_zip"];
+  NSNumber *collectZip = [options objectForKey:@"collectZip"];
   if(collectZip) {
     self.paymentViewController.collectZip = [collectZip boolValue];
   }
 
-  NSNumber *collectExpiry = [options objectForKey:@"collect_expiry"];
+  NSNumber *collectExpiry = [options objectForKey:@"collectExpiry"];
   if(collectExpiry) {
     self.paymentViewController.collectExpiry = [collectExpiry boolValue];
   }
 
-  NSNumber *disableManualEntryButtons = [options objectForKey:@"disable_manual_entry_buttons"];
+  NSNumber *disableManualEntryButtons = [options objectForKey:@"disableManualEntryButtons"];
   if(disableManualEntryButtons) {
     self.paymentViewController.disableManualEntryButtons = [disableManualEntryButtons boolValue];
   }
 
-  NSNumber *showsFirstUseAlert = [options objectForKey:@"shows_first_use_alert"];
+  NSNumber *showsFirstUseAlert = [options objectForKey:@"showsFirstUseAlert"];
   if(showsFirstUseAlert) {
     self.paymentViewController.showsFirstUseAlert = [showsFirstUseAlert boolValue];
   }
@@ -96,13 +103,13 @@
 
   // Convert CardIOCreditCardInfo into dictionary for passing back to javascript
   NSMutableDictionary *response = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   info.cardNumber, @"card_number",
-                                   info.redactedCardNumber, @"redacted_card_number",
-                                   [CardIOCreditCardInfo displayStringForCardType:info.cardType], @"card_type",
+                                   info.cardNumber, @"cardNumber",
+                                   info.redactedCardNumber, @"redactedCardNumber",
+                                   [CardIOCreditCardInfo displayStringForCardType:info.cardType], @"cardType",
                                    nil];
   if(info.expiryMonth > 0 && info.expiryYear > 0) {
-    [response setObject:[NSNumber numberWithUnsignedInteger:info.expiryMonth] forKey:@"expiry_month"];
-    [response setObject:[NSNumber numberWithUnsignedInteger:info.expiryYear] forKey:@"expiry_year"];
+    [response setObject:[NSNumber numberWithUnsignedInteger:info.expiryMonth] forKey:@"expiryMonth"];
+    [response setObject:[NSNumber numberWithUnsignedInteger:info.expiryYear] forKey:@"expiryYear"];
   }
   if(info.cvv.length > 0) {
     [response setObject:info.cvv forKey:@"cvv"];
