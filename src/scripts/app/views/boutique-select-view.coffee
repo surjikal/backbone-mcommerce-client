@@ -5,7 +5,7 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
     className: 'content home'
 
     events:
-        'vclick #navigate-to-boutique-button': 'navigateToBoutique'
+        'click #navigate-to-boutique-button': 'navigateToBoutique'
 
     onEmptyBoutiqueCode: ->
         @errorAlert "Please enter a boutique code."

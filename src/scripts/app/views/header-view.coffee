@@ -14,7 +14,7 @@ class App.Views.MenuItem extends Backbone.LayoutView
 class App.Views.AuthMenuItem extends App.Views.MenuItem
 
     events:
-        'vclick': 'clicked'
+        'click': 'clicked'
 
     initialize: ->
         console.debug 'Initializing auth menu item.'
@@ -53,7 +53,7 @@ class App.Views.Menu extends Backbone.LayoutView
     className: 'menu'
 
     events:
-        'vclick': 'close'
+        'click': 'close'
 
     initialize: (options) ->
         @initializeMenuItems options.items
@@ -87,8 +87,8 @@ class App.Views.Header extends Backbone.LayoutView
     className: 'header'
 
     events:
-        'vclick .left-action':  'leftActionClicked'
-        'vclick .right-action': 'rightActionClicked'
+        'click .left-action':  'leftActionClicked'
+        'click .right-action': 'rightActionClicked'
 
     initialize: ->
         console.debug 'Initializing header.'

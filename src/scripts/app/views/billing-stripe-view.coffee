@@ -28,12 +28,12 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         'cvc':        '#billing-cvc'
 
     events:
-        'keydown input':                 'performValidation'
-        'keyup    #billing-card-number': 'changeCardType'
-        'keydown  #billing-card-number': 'cardNumberDigitEntered'
-        'keydown  #billing-expiry':      'formatExpiry'
-        'keypress #billing-cvc':         'restrictNumber'
-        'vclick #wizard-next-step':       'wizardNextStepClicked'
+        'keydown input':                  'performValidation'
+        'keyup    #billing-card-number':  'changeCardType'
+        'keydown  #billing-card-number':  'cardNumberDigitEntered'
+        'keydown  #billing-expiry':       'formatExpiry'
+        'keypress #billing-cvc':          'restrictNumber'
+        'click #wizard-next-step':       'wizardNextStepClicked'
 
     cardTypes:
         'Visa':             'visa'

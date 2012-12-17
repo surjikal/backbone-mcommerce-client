@@ -25,7 +25,7 @@ class App.Views.WizardStepListItem extends Backbone.LayoutView
 class App.Views.WizardStep extends App.Views.FormView
 
     events:
-        'vclick #wizard-next-step': 'wizardNextStepClicked'
+        'click #wizard-next-step': 'wizardNextStepClicked'
         'submit': -> false
 
     constructor: ->

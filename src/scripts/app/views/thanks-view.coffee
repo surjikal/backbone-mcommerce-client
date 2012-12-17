@@ -5,7 +5,7 @@ class App.Views.Thanks extends Backbone.LayoutView
     className: 'content thanks'
 
     events:
-        'vclick #back-to-boutique': 'backToBoutiqueButtonClicked'
+        'click #back-to-boutique': 'backToBoutiqueButtonClicked'
 
     initialize: (options) ->
         {@itemspot} = options

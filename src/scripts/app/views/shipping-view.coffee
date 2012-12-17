@@ -10,7 +10,7 @@ class App.Views.Shipping extends App.Views.WizardStep
 
     events:
         _.extend {}, App.Views.WizardStep::events,
-            'vclick #toggle-address-mode': 'toggleAddressMode'
+            'click #toggle-address-mode': 'toggleAddressMode'
             'keydown input':               'performValidation'
 
     initialize: (options) ->

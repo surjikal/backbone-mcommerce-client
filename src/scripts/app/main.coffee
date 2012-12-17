@@ -29,6 +29,9 @@ App.events.on 'ready', ->
         @remove()
         @unbind()
 
+    # Enable FastClick for fast buttons and input fields on touch-enabled browsers.
+    new FastClick document.body
+
     # This line will initialize the app :D
     App.initialize()
 
@@ -40,7 +43,7 @@ App.events.on 'ready', ->
     # All navigation that is relative should be passed through the navigate
     # method, to be processed by the router. If the link has a `data-bypass`
     # attribute, bypass the delegation completely.
-    $(document).on 'vclick', 'a[href]:not([data-bypass])', (event) ->
+    $(document).on 'click', 'a[href]:not([data-bypass])', (event) ->
         href =
             prop: $(this).prop 'href'
             attr: $(this).attr 'href'
