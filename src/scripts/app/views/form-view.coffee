@@ -53,13 +53,18 @@ class App.Views.FormView extends Backbone.LayoutView
         $button = @getSubmitButton()
         $button.text text
 
-    enablePending: (buttonSelector, delay = true) ->
-        @pendingTimer = setTimeout( =>
+    # TODO: refactor
+    enablePending: (buttonSelector, delay) ->
+
+        callback = =>
             @pending = true
             $button = if buttonSelector then (@$ buttonSelector) \
                                         else @getSubmitButton()
             $button.addClass 'loading'
-        , if delay then 500 else 0)
+
+        return callback() if delay is null
+
+        @pendingTimer = setTimeout callback, delay or 500
 
     disablePending: ->
         clearTimeout @pendingTimer
