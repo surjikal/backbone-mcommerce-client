@@ -19,9 +19,7 @@ App.events.on 'ready', ->
     Backbone.LayoutManager.configure
 
         fetch: (name) ->
-            # console.debug "Fetching template '#{name}'."
-            template = App.templates[name]
-            return template
+            App.templates[name]
 
         render: (template, context) ->
             @el = template context
@@ -34,48 +32,8 @@ App.events.on 'ready', ->
         @remove()
         @unbind()
 
-    # If touch events are supported, call `event.preventDefault()` on all `vclick`
-    # events. The purpose of this is to prevent ghost click events.
-    #
-    # This little bit of magic saves us from having to write the line:
-    # `event.preventDefault() if Modernizr.touch` on every single `vclick` event
-    # handler.
-    #
-    # See: "Canceling an element's default click behavior"
-    #      http://jquerymobile.com/test/docs/api/events.html
-    do ->
-        # This is the code that gets added to every `vclick` event handler
-        wrapEventHandler = (method) -> (event) ->
-            event.preventDefault() if Modernizr.touch
-            method.call @, event
-
-        # Taken from Backbone source
-        getValue = (object, prop) ->
-            return null if not (object and object[prop])
-            return if _.isFunction object[prop] then object[prop]() else object[prop]
-
-        # Taken from Backbone source
-        delegateEventSplitter = /^(\S+)\s*(.*)$/
-
-        # Extending `Backbone.View.delegateEvents`
-        originalDelegateEvents = Backbone.View::delegateEvents
-        Backbone.View::delegateEvents = (events) ->
-            return if (not (events || (events = getValue(@, 'events'))))
-
-            for key, method of events
-                eventType = (key.match delegateEventSplitter)[1]
-                continue unless eventType is 'vclick'
-
-                if not _.isFunction method
-                    method = @[events[key]]
-                    method = wrapEventHandler method
-                    @[events[key]] = method
-                else
-                    method = wrapEventHandler method
-                    events[key] = method
-
-            # Calling original `delegateEvents` function
-            originalDelegateEvents.call @, events
+    # Enable FastClick for fast buttons and input fields on touch-enabled browsers.
+    new FastClick document.body
 
     # This line will initialize the app :D
     App.initialize()
@@ -88,8 +46,7 @@ App.events.on 'ready', ->
     # All navigation that is relative should be passed through the navigate
     # method, to be processed by the router. If the link has a `data-bypass`
     # attribute, bypass the delegation completely.
-    $(document).on 'vclick', 'a[href]:not([data-bypass])', (event) ->
-        event.preventDefault() if Modernizr.touch
+    $(document).on 'click', 'a[href]:not([data-bypass])', (event) ->
         href =
             prop: $(this).prop 'href'
             attr: $(this).attr 'href'

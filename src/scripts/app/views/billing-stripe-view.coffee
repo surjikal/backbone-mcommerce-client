@@ -14,7 +14,7 @@ Stripe =
         'Unknown'
 
     createToken: (options, callback) ->
-        callback null, 'debug_stripe_token'
+        callback null, 'fake_stripe_token'
 
 
 class App.Views.StripeBilling extends App.Views.WizardStep
@@ -28,12 +28,12 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         'cvc':        '#billing-cvc'
 
     events:
-        'keydown input':                 'performValidation'
-        'keyup    #billing-card-number': 'changeCardType'
-        'keydown  #billing-card-number': 'cardNumberDigitEntered'
-        'keydown  #billing-expiry':      'formatExpiry'
-        'keypress #billing-cvc':         'restrictNumber'
-        'vclick #wizard-next-step':       'wizardNextStepClicked'
+        'keydown input':                  'performValidation'
+        'keyup    #billing-card-number':  'changeCardType'
+        'keydown  #billing-card-number':  'cardNumberDigitEntered'
+        'keydown  #billing-expiry':       'formatExpiry'
+        'keypress #billing-cvc':          'restrictNumber'
+        'click #wizard-next-step':       'wizardNextStepClicked'
 
     cardTypes:
         'Visa':             'visa'
@@ -61,15 +61,8 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         'invalidCvc':          'cvc'
 
     initialize: (options) ->
-        super options
-        @key = options.key
-        @tokenName = options.tokenName
-
-    renderToken: (token) ->
-        @$token = $('<input type="hidden">');
-        @$token.attr 'name', @tokenName
-        @$token.val token
-        # append to form
+        super
+        @setKey options.key
 
     setKey: (key) ->
         @key = key
@@ -116,38 +109,22 @@ class App.Views.StripeBilling extends App.Views.WizardStep
                 $button.text 'Continue'
                 $button.attr 'disabled', false
 
-    wizardNextStepClicked: (event) ->
-        event.preventDefault()
+    beforeNextStep: (done) ->
+        return if @pending
 
-        if not @pending
-            @enablePending()
-            @validateForm
-
-                error: (errorMessage) ->
-                    console.error errorMessage
-                    @disablePending()
-
-                success: (cleanedFields) =>
-                    @disablePending()
-                    @createToken cleanedFields,
-                        error: (error) ->
-                            console.error error
-                        success: (response) =>
-                            console.debug "Stripe#createToken success:\n", response
-                            @completed {token: response}
-
-    enablePending: ->
-        @pendingTimer = setTimeout( =>
-            @pending = true
-            $button = $('#wizard-next-step')
-            $button.addClass 'loading'
-        , 500)
-
-    disablePending: ->
-        clearTimeout @pendingTimer
-        @pending = false
-        $button = $('#wizard-next-step')
-        $button.removeClass 'loading'
+        @enablePending()
+        @validateForm
+            error: (errorMessage) ->
+                console.error errorMessage
+                @disablePending()
+            success: (cleanedFields) =>
+                @disablePending()
+                @createToken cleanedFields,
+                    error: (error) ->
+                        console.error error
+                    success: (response) =>
+                        console.debug "Stripe#createToken success:\n", response
+                        done {token: response}
 
     createToken: (fieldValues, callbacks) ->
 
@@ -165,21 +142,20 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         , complete)
 
     cardNumberDigitEntered: (event) ->
-        # @formatNumberField event, (digit = '') =>
 
-        #     if (Stripe.cardType cardNumber) is 'American Express'
-        #         lastDigitsRegex = /^(\d{4}|\d{4}\s\d{6})$/
-        #         maxlength = 16 # 14 digits + 2 spaces
-        #     else
-        #         lastDigitsRegex = /(?:^|\s)(\d{4})$/
-        #         maxlength = 19 # 16 digits + 3 spaces
+        @formatNumberField event, (digit = '') =>
 
-        #     rawCardNumber = (@getFieldValue 'cardNumber') + digit
-        #     cardNumber = @digitGroups ' ', /(\d{4})/g, rawCardNumber
+            rawCardNumber = (@getFieldValue 'cardNumber') + digit
+            cardNumber = @digitGroups ' ', /(\d{4})/g, rawCardNumber
 
-        #     @setFieldValue 'cardNumber', cardNumber if cardNumber.length <= maxlength
+            if (Stripe.cardType cardNumber) is 'American Express'
+                lastDigitsRegex = /^(\d{4}|\d{4}\s\d{6})$/
+                maxlength = 16 # 14 digits + 2 spaces
+            else
+                lastDigitsRegex = /(?:^|\s)(\d{4})$/
+                maxlength = 19 # 16 digits + 3 spaces
 
-        return true
+            @setFieldValue 'cardNumber', cardNumber if cardNumber.length <= maxlength
 
     formatExpiry: (event) ->
         @formatNumberField event, (digit = '') =>

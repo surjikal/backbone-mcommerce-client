@@ -23,7 +23,7 @@ class AddressListView extends Backbone.LayoutView
     className: 'addresses'
 
     events:
-        'vclick .remove': 'removeClicked'
+        'click .remove': 'removeClicked'
 
     selectedAddressView: null
 
@@ -55,8 +55,8 @@ class AddressListItemView extends Backbone.LayoutView
     className: 'address'
 
     events:
-        'vclick':         'clicked'
-        'vclick .remove': 'removeClicked'
+        'click':         'clicked'
+        'click .remove': 'removeClicked'
 
     selected: false
 

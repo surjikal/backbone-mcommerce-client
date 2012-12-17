@@ -4,7 +4,7 @@ class App.Views.PasswordWidget extends App.Views.FormView
     template: 'password-widget'
 
     events:
-        'vclick #toggle-password-display-checkbox': 'togglePasswordDisplay'
+        'click #toggle-password-display-checkbox': 'togglePasswordDisplay'
 
     initialize: (options) ->
         @placeholderText = options.placeholderText or 'Password'
@@ -25,7 +25,7 @@ class App.Views.Auth extends App.Views.FormView
     className: 'content auth'
 
     events:
-        'vclick #login-button': 'submitButtonClicked'
+        'click #login-button': 'submitButtonClicked'
         'keydown input':        'performValidation'
 
     fields:
@@ -96,7 +96,7 @@ class App.Views.Registration extends App.Views.FormView
     className: 'auth'
 
     events:
-        'vclick  #register-button': 'submitButtonClicked'
+        'click  #register-button': 'submitButtonClicked'
         'keydown input':            'performValidation'
 
     fields:
@@ -176,8 +176,8 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
 
     events:
         _.extend {}, App.Views.Popup::events,
-            'vclick #new-user-button':      'newUserButtonClicked'
-            'vclick #existing-user-button': 'loginButtonClicked'
+            'click #new-user-button':      'newUserButtonClicked'
+            'click #existing-user-button': 'loginButtonClicked'
 
     title: 'Before we begin, are you a...'
 
