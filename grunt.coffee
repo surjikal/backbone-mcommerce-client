@@ -153,6 +153,7 @@ module.exports = (grunt) ->
                     'grunt.js'
                     'src/**/*'
                     'config/**/*.coffee'
+                    '.fetched-libs/**/*'
                 ]
                 tasks: 'build:website'
             phonegap:
@@ -161,6 +162,7 @@ module.exports = (grunt) ->
                     'grunt.js'
                     'src/**/*'
                     'config/**/*.coffee'
+                    '.fetched-libs/**/*'
                 ]
                 tasks: 'build:phonegap'
 
