@@ -4,8 +4,12 @@ class App.Views.PaypalBilling extends App.Views.WizardStep
     template: 'billing-paypal'
     className: 'content billing-paypal'
 
+    dependencies: [
+        'address'
+    ]
+
     initialize: (options) ->
-        super options
+        super
         {@itemspot, user, params} = options
         {@address} = options.wizardData
 
