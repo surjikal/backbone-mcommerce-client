@@ -28,22 +28,16 @@ class App.Views.WizardStep extends App.Views.FormView
         'click #wizard-next-step': 'wizardNextStepClicked'
         'submit': -> false
 
-    constructor: ->
-        # You need to put something with the id `wizard-next-step` in your template.
-        super
-
     initialize: (options) ->
-        super options
+        super
         @step            = options._step
         @eventDispatcher = options._eventDispatcher
 
-        # If the step defines dependencies, throw an error when the options don't
-        # contain them. This is for a runtime assertion, aka when the developer is testing.
+        # If the step defines dependencies, and the are not in wizardData, trigger an event.
         if @dependencies
-            availableData = (key for key, value of options.wizardData when Boolean(value))
-            unmetDependencies = _.difference @dependencies, availableData
-            if not _.isEmpty unmetDependencies
-                throw new Error "Dependencies '[#{unmetDependencies.join(', ')}]' not met for wizard step '#{@step.id}'."
+             unmetDependencies = @_checkForUnmetDependencies options.wizardData, @dependencies
+             if not _.isEmpty unmetDependencies
+                @eventDispatcher.trigger 'step:unmetDependencies', {@step, unmetDependencies}
 
     wizardNextStepClicked: (event) ->
         event.preventDefault()
@@ -51,8 +45,12 @@ class App.Views.WizardStep extends App.Views.FormView
             @completed data
         return false
 
+    _checkForUnmetDependencies: (wizardData, dependencies) ->
+        availableData = (key for key, value of wizardData when Boolean(value))
+        return _.difference dependencies, availableData
+
     _addUrlParameter: (key, value) ->
-        @eventDispatcher.trigger 'addUrlParameter', {@step, parameter:{key, value}}
+        @eventDispatcher.trigger 'step:addUrlParameter', {@step, parameter:{key, value}}
 
     beforeNextStep: (done) ->
         done()
@@ -129,12 +127,23 @@ class App.Views.Wizard extends Backbone.LayoutView
     # Creates an events object which will be passed to all wizard steps.
     initializeEventDispatcher: ->
         @eventDispatcher = _.extend {}, Backbone.Events
-        @eventDispatcher.on 'step:completed', ({data, step}) =>
-            @stepCompleted data, step
-        @eventDispatcher.on 'addUrlParameter', ({step, parameter}) =>
-            search = window.location.search
-            separator = if not search then '?' else '&'
-            @_setUrl "#{@getStepUrl step.id}#{window.location.search}#{separator}#{parameter.key}=#{parameter.value}"
+        @eventDispatcher.on 'step:completed',         @onStepCompleted
+        @eventDispatcher.on 'step:addUrlParameter',   @onAddUrlParameter
+        @eventDispatcher.on 'step:unmetDependencies', @onUnmetDependencies
+
+    onStepCompleted: ({step, data}) =>
+        nextStepId = @getNextStepId step.id
+        @_data = _.extend @_data, data
+        return @setStep nextStepId, @_data, true if nextStepId
+        @completed @_data
+
+    onAddUrlParameter: ({step, parameter}) =>
+        search = window.location.search
+        separator = if not search then '?' else '&'
+        @_setUrl "#{@getStepUrl step.id}#{window.location.search}#{separator}#{parameter.key}=#{parameter.value}"
+
+    onUnmetDependencies: ({step, unmetDependencies}) =>
+        console.warn "Dependencies '[#{unmetDependencies.join(', ')}]' not met for wizard step '#{step.id}'."
 
     createSteps: (steps, eventDispatcher) ->
         _.map steps, (step, index) =>
@@ -182,12 +191,6 @@ class App.Views.Wizard extends Backbone.LayoutView
         stepView = step._createView data
         @setView '#wizard-step', stepView
         stepView.render() if render
-
-    stepCompleted: (data, step) ->
-        nextStepId = @getNextStepId step.id
-        @_data = _.extend @_data, data
-        return @setStep nextStepId, @_data, true if nextStepId
-        @completed @_data
 
     # Implement this in your derived class
     completed: (data) ->

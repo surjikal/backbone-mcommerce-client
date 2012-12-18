@@ -30,7 +30,7 @@ App.utils =
                     response = @_parseReponseText jqXHR.responseText
                     response = switch jqXHR.status
                         when 500
-                            @_handleInternalServerError jqXHR
+                            #@_handleInternalServerError jqXHR
                             response or {reason:'serverError'}
                         when 401
                             @_handleUnauthorizedError jqXHR
@@ -59,8 +59,12 @@ App.utils =
             error = @_parseReponseText responseText
 
             errorMessage  = "Internal server error:\n\n"
-            errorMessage += if response then "#{error.errorMessage}\n\n#{error.traceback}" \
-                                        else responseText
+
+            if error
+                errorMessage += "#{error.errorMessage}\n\n" if error.errorMessage
+                errorMessage += "#{error.traceback}"
+            else
+                errorMessage += responseText
 
             console.error errorMessage
 

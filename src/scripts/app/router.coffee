@@ -33,11 +33,9 @@ class App.Router extends Backbone.Router
     login: (params) ->
         console.debug "Routing to login. Params: #{params}"
         next = params?.next or '/'
-        model = App.models.user
         App.views.main.setPageView new App.Views.Auth {
-            model,
-            callbacks: success: (user) ->
-                App.models.user = user
+            callbacks: success: ->
+                alert "Login success!"
         }
 
 
@@ -73,21 +71,6 @@ class App.Router extends Backbone.Router
 
             showNewUserPurchaseWizard = (user) ->
                 addresses = user.getAddresses()
-                addresses.localStorage = new Backbone.LocalStorage 'AddressCollection'
-                #addresses.url = null
-
-                # FIXME: There's a problem with this... Here's how to reproduce:
-                #
-                # 0. Comment out the `window.location.href = ...` line in `App.auth._logout`
-                # 1. Log in
-                # 2. Log out
-                # 3. Go to this route (i.e. click the checkout button in item view)
-                #
-                # You'll get something like:
-                # 'Uncaught Error: A "url" property or function must be specified'
-                #
-                # Not sure how to fix it, so the workaround is to refresh the app when logging
-                # out.
                 addresses.fetch success: ->
                     showPurchaseWizard user, ->
                         purchaseWizardCompleted()
@@ -97,8 +80,9 @@ class App.Router extends Backbone.Router
                     showPurchaseWizard user, ->
                         purchaseWizardCompleted()
 
-            return fetchUserAndShowPurchaseWizard App.auth.user if App.auth.user.isLoggedIn()
-            return showNewUserPurchaseWizard App.auth.user      # if resumingWizard and App.auth.user.isNew()
+            user = App.auth.user
+            return fetchUserAndShowPurchaseWizard user if user.isLoggedIn()
+            return showNewUserPurchaseWizard user      # if resumingWizard and App.auth.user.isNew()
 
             # console.debug "Starting guest purchase wizard; showing popup."
 

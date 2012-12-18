@@ -6,19 +6,13 @@ App =
 
         App.auth       = new App.Auth()
         App.router     = new App.Router()
+        App.api        = new App.Api()
         App.views.main = new App.Views.Main()
 
         App.collections.boutiques = new App.Collections.Boutique()
-        App.models.user           = new App.Models.User()
 
-        @initializeApi()
+        App.api.initialize App.config.urls.api
         App.auth.initialize()
-
-
-    initializeApi: ->
-        rootUrl = App.config.urls.api
-        App.api.auth     = new App.Api.Auth     rootUrl
-        App.api.purchase = new App.Api.Purchase rootUrl
 
     getAbsoluteUrl: (relativeUrl) ->
         "#{App.location}/#{relativeUrl}"

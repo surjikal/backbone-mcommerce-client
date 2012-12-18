@@ -10,7 +10,7 @@ fieldset.address-create
     table.postalcode
         tr
             td
-                input#shipping-postalcode(name="shipping[postalcode]", type="text", placeholder="Postal Code", autocomplete="off")
+                input#shipping-postalcode(name="shipping[postalcode]", type="text", placeholder="Postal Code", autocomplete="off", autocapitalize="on")
             td.hint X0X 0X0 or X0X0X0
 
     //- input#shipping-city(name="shipping[city]", type="text", placeholder="City", autocomplete="off")
@@ -30,7 +30,7 @@ fieldset.address-create
     //-     option(value="Quebec") Quebec
     //-     option(value="Saskatchewan") Saskatchewan
     //-     option(value="Yukon") Yukon
-    
+
     {{#if showCancelButton}}
     button#toggle-address-mode.btn.bs-big(type='button') Nevermind :D
     {{/if}}

@@ -1,12 +1,20 @@
 
 # If you add an API here, initialize it in `app.coffee`.
 
+
+class App.Api
+
+    initialize: (@baseUrl) ->
+        @auth     = new App.Api.Auth     @baseUrl
+        @purchase = new App.Api.Purchase @baseUrl
+
+
 class Api
 
-    constructor: (@rootUrl) ->
+    constructor: (@baseUrl) ->
 
     url: (action) ->
-        "#{@rootUrl}/#{@resource}/#{action}/"
+        "#{@baseUrl}/#{@resource}/#{action}/"
 
     post: (action, data, callbacks) ->
         url = @url action

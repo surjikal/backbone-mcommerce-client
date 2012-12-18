@@ -68,10 +68,9 @@ class App.Views.Auth extends App.Views.FormView
         callbacks.success? email, password
 
     login: (email, password) ->
-        @model.login email, password,
-            success: =>
-                console.debug "Logged in successfully!"
-                @callbacks.success? @model
+        App.auth.login email, password,
+            success: (user) =>
+                @callbacks.success? user
             incorrect: =>
                 @errorAlert "You've supplied invalid credentials. Try again :)"
                 (@callbacks.incorrect or @callbacks.error)?()
@@ -87,7 +86,7 @@ class App.Views.Auth extends App.Views.FormView
     serialize: ->
         buttonText: 'Login'
         instructions: 'Enter your login info below :)'
-        user: @model.toJSON()
+        user: App.auth.user.toJSON()
 
 
 class App.Views.Registration extends App.Views.FormView
@@ -146,7 +145,9 @@ class App.Views.Registration extends App.Views.FormView
         callbacks.success? email, password
 
     register: (email, password) ->
-        App.api.auth.register email, password,
+        App.auth.register email, password,
+            success: (user) =>
+                @callbacks.success? user
             alreadyInUse: =>
                 @errorAlert "That email address is already in use."
                 (@callbacks.alreadyInUse or @callbacks.error)? email, password
@@ -157,12 +158,10 @@ class App.Views.Registration extends App.Views.FormView
                 @errorAlert 'Something went wrong with the registration request. Try again :)'
                 console.error "Unhandled error during registration request:\n#{arguments}"
                 @callbacks.error? email, password
-            success: =>
-                @callbacks.success?()
 
     # The user didn't enter a password.
     skipped: (email) ->
-        @model.set 'email', email
+        App.auth.user.set 'email', email
         @callbacks.skipped? email
 
 

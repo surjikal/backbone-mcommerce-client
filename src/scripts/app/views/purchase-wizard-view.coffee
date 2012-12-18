@@ -56,6 +56,10 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
     getStepUrl: (stepId) ->
         "#{@itemspot.getCheckoutUrl()}/#{stepId}"
 
+    onUnmetDependencies: (message) ->
+        super
+        App.router.navigate "#{@itemspot.getRouterUrl()}", {trigger:true, replace:true}
+
     completed: (wizardData) ->
         console.debug 'Purchase wizard has been completed.'
 
