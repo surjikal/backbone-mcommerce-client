@@ -9,7 +9,7 @@ class App.Views.Confirm extends App.Views.WizardStep
     ]
 
     initialize: (options) ->
-        super options
+        super
         console.debug 'Initializing confirm wizard step.'
         {@itemspot} = options
         {@address}  = options.wizardData
@@ -18,9 +18,10 @@ class App.Views.Confirm extends App.Views.WizardStep
         done()
 
     getPricingInfo: ->
-        shipping: 0
-        tax: 10
-        total: 12
+        item  = parseFloat (@itemspot.get 'itemPrice')
+        tax   = item * 0.13
+        total = tax + item
+        {item, tax, total, shipping: 'free!'}
 
     serialize: ->
         console.debug "Serializing confirm view."
