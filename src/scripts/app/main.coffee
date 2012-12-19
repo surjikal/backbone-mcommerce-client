@@ -32,6 +32,9 @@ App.events.on 'ready', ->
     # Enable FastClick for fast buttons and input fields on touch-enabled browsers.
     new FastClick document.body
 
+    # Initializing handlebars helpers
+    (Handlebars.registerHelper name, fn) for name, fn of HandlebarsHelpers
+
     # This line will initialize the app :D
     App.initialize()
 
@@ -53,3 +56,11 @@ App.events.on 'ready', ->
         if href.prop[0..root.length-1] is root
             event.preventDefault()
             Backbone.history.navigate href.attr, true
+
+
+HandlebarsHelpers =
+
+    formatPrice: (price) ->
+        price = parseFloat price
+        decimalPlaces = if (Math.round price) == price then 0 else 2
+        (new Number price).toFixed decimalPlaces
