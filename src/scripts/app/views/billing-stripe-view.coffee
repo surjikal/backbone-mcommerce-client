@@ -241,11 +241,18 @@ class App.Views.StripeBilling extends App.Views.WizardStep
             collectExpiry: true
             collectCVV: true
 
-        controller.scan scanOptions,
-            success: ({cardNumber, expiryMonth, expiryYear, cvv}) ->
-                @setFieldValue 'cardNumber', cardNumber
-                @setFieldValue 'expiry', "#{expiryMonth} / #{expiryYear}"
-                @setFieldValue 'cvc', cvv
+        controller.scan scanOptions, success: @onCreditCardScanSuccess
+
+    onCreditCardScanSuccess: ({cardNumber, expiryMonth, expiryYear, cvv}) =>
+
+        formatExpiry = (expiryMonth, expiryYear) ->
+            expiryYear = String(expiryYear)[2..]
+            expiry = "#{expiryMonth} / #{expiryYear}"
+
+        @setFieldValue 'cardNumber', cardNumber
+        @setFieldValue 'expiry', formatExpiry expiryMonth, expiryYear
+        @setFieldValue 'cvc', cvv
+        @performValidation()
 
 
 class App.Controllers.CardIO
