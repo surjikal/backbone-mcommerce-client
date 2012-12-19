@@ -9,7 +9,7 @@ ul.items
         .bottom-bar
           p.price
             span.dollar
-            {{itemPrice}}
+            {{{formatPrice itemPrice}}}
           a.buy-button(href="{{url}}") Buy
     {{/each}}
   {{/each}}

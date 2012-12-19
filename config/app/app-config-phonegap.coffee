@@ -14,4 +14,7 @@ module.exports =
         # It will show a popup instead, and will move to the next wizard
         # step when you click the 'ok' button. This is useful when you
         # don't a paypal sandbox account.
-        useMockController: false
+        useMockController: true
+
+    stripe:
+        key: '12345'

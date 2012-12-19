@@ -3,8 +3,8 @@ module.exports =
 
     urls:
         root:   '/'
-        api:    'http://localhost:9000/api'
-        static: 'http://localhost:9000/static'
+        api:    'http://<vipl_server_host>:9000/static'
+        static: 'http://<vipl_server_host>:9000/static'
 
         paypal:
             base: 'https://www.sandbox.paypal.com'
@@ -15,3 +15,6 @@ module.exports =
         # step when you click the 'ok' button. This is useful when you
         # don't a paypal sandbox account.
         useMockController: true
+
+    stripe:
+        key: ''
