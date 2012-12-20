@@ -1,4 +1,7 @@
 
+PENDING_TIMEOUT = 8000
+
+
 class App.Views.FormView extends Backbone.LayoutView
 
     events:
@@ -53,20 +56,25 @@ class App.Views.FormView extends Backbone.LayoutView
         $button = @getSubmitButton()
         $button.text text
 
-    # TODO: refactor
-    enablePending: (buttonSelector, delay) ->
+    enablePending: (buttonSelector) ->
 
-        callback = =>
-            @pending = true
-            $button = if buttonSelector then (@$ buttonSelector) \
-                                        else @getSubmitButton()
+        showLoadingSpinner = =>
+            $button = if buttonSelector then (@$ buttonSelector) else @getSubmitButton()
             $button.addClass 'loading'
 
-        return callback() if delay is null
+        @pending = true
+        showLoadingSpinner()
+        @pendingTimer = setTimeout @onPendingTimeout, PENDING_TIMEOUT
 
-        @pendingTimer = setTimeout callback, delay or 500
+    onPendingTimeout: =>
+        @disablePending()
+        @errorAlert 'The server is not responding :(. Please try again.'
 
     disablePending: ->
         clearTimeout @pendingTimer
         @pending = false
         (@$ '.loading')?.removeClass 'loading'
+
+    cleanup: ->
+        console.debug 'Cleaning up form view.'
+        @disablePending()
