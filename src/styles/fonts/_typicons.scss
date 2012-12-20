@@ -2,10 +2,10 @@
 
 
 @include font-face('typicons', inline-font-files(
-    'typicons.woff', woff,
-    'typicons.ttf', ttf,
-    'typicons.svg', svg
-),  'typicons.eot');
+    'typicons/typicons.woff', woff,
+    'typicons/typicons.ttf', ttf,
+    'typicons/typicons.svg', svg
+),  'typicons/typicons.eot');
 
 
 /* Use the following CSS code if you want to have a class per icon */

@@ -1,6 +1,6 @@
 
 $complete-color: #5EC456;
-$active-color: #666;
+$active-color: darken(#666, 10%);
 $invalid-color: yellow;
 
 #wizard-step-list {
@@ -33,10 +33,10 @@ $invalid-color: yellow;
     }
 
     li.active {
-        color: darken($active-color, 10%);
-        background: #f7f7f7;
+        color: $active-color;
+        background: $body-background-color;
         border: 1px solid #ddd;
-        border-bottom-color: #f7f7f7;
+        border-bottom-color: $body-background-color;
         border-top-width: 0;
         @include box-sizing(border-box);
     }

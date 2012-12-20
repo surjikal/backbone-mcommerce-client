@@ -17,8 +17,7 @@ html
         //- link(rel='apple-touch-startup-image',    href='#{STATIC_URL}images/apple-startup-image.png')
 
         block stylesheets
-            mixin css-lib('bootstrap.min')
-            mixin css('application')
+            mixin css('main')
 
         if locals.isPhonegapBuild && locals.remote_debugging.enabled
             - var script_src    = locals.remote_debugging.script_url
@@ -118,12 +117,6 @@ html
     body
 
         #popup
-
-        .banner
-            .spring
-            .summer
-            .fall
-            .winter
 
         #header
 

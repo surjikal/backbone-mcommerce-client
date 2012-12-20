@@ -17,10 +17,16 @@ class App.Models.ItemSpot extends Backbone.RelationalModel
         item = @get 'item'
         "#{App.config.urls.static}/images/#{item.image}"
 
+    getStats: ->
+        views = App.utils.getRandomInteger 0, 10000
+        likes = App.utils.getRandomInteger 0, views
+        {views, likes}
+
     toViewJSON: (boutiqueCode) ->
         _.extend @toJSON(),
             image: @getImageUrl()
             url:   @getRouterUrl()
+            stats: @getStats()
 
     url: ->
         index = @get 'index'

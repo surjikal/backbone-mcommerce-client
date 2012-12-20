@@ -1,12 +1,17 @@
 
-img(src="{{image}}")
+img.item-image(src="{{image}}")
+
+h1.price.item-price {{{formatPrice itemPrice}}}
 
 header
-  h1 {{item.name}}
-  h1.price
-    span.dollar
-    {{{formatPrice itemPrice}}}
+    h1.item-name {{item.name}}
+    button.btn-big#buy-button Buy
 
-p.details {{item.details}}
+    .item-stats
+        .views-icon
+        .views-count {{stats.views}}
+        .likes-icon
+        .likes-count {{stats.likes}}
 
-button.btn-big Checkout
+.item-details
+    p {{item.details}}

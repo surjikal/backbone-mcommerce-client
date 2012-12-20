@@ -1,5 +1,28 @@
 
-@import "typicons";
+@import "fonts/typicons";
 
 @include font-face("FuturaFile", inline-font-files('futura-md-bt-medium.ttf', truetype));
-// @include font-face("LatoLightItalic", inline-font-files('lato-light.ttf', truetype));
+
+
+@include font-face(
+    "Source Sans Pro",
+    inline-font-files('source-sans-pro/SourceSansPro-Regular.ttf', truetype)
+);
+
+@include font-face(
+    "Source Sans Pro",
+    inline-font-files('source-sans-pro/SourceSansPro-Light.ttf', truetype),
+    $weight: 300
+);
+
+@include font-face(
+    "Source Sans Pro",
+    inline-font-files('source-sans-pro/SourceSansPro-ExtraLight.ttf', truetype),
+    $weight: 200
+);
+
+@include font-face(
+    "Source Sans Pro",
+    inline-font-files('source-sans-pro/SourceSansPro-Bold.ttf', truetype),
+    $weight: bold
+);

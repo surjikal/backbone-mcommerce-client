@@ -2,7 +2,7 @@
 class App.Views.BoutiqueSelect extends App.Views.FormView
 
     template: 'boutique-select'
-    className: 'content home'
+    className: 'content boutique-select-view'
 
     events:
         'click #navigate-to-boutique-button': 'navigateToBoutiqueButtonClicked'

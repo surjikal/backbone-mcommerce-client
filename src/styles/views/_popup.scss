@@ -43,12 +43,22 @@
     }
 
     .close {
+        $padding: 1em;
+
         cursor: pointer;
         position: absolute;
-        right: 0.5em;
-        top: 0.5em;
+
+        right: 0.5em - $padding;
+        top: 0.5em - $padding;
+        padding: $padding;
+
+        color: rgba(black, 0.3);
+
+        &:hover {
+            color: rgba(black, 0.45);
+        }
         &:active {
-            opacity: 0.6;
+            color: rgba(black, 0.6);
         }
     }
 }

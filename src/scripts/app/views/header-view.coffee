@@ -3,6 +3,7 @@
 class App.Views.MenuItem extends Backbone.LayoutView
     template: 'menu-list-item'
     tagName: 'li'
+    className: 'menu-item'
 
     initialize: (options) ->
         {@title, @url} = options
@@ -50,7 +51,7 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
 
 class App.Views.Menu extends Backbone.LayoutView
     tagName: 'ul'
-    className: 'menu'
+    className: 'menu-view'
 
     events:
         'click': 'close'
@@ -84,7 +85,7 @@ class App.Views.Menu extends Backbone.LayoutView
 class App.Views.Header extends Backbone.LayoutView
 
     template: 'header'
-    className: 'header'
+    className: 'header-view'
 
     events:
         'click .left-action':  'leftActionClicked'

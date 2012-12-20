@@ -1,0 +1,39 @@
+
+
+.menu-view {
+
+    display: none;
+    position: absolute;
+    right: 0;
+    top: $header-height + 1;
+    width: 50%;
+    text-align: right;
+    z-index: 1;
+
+    background: #fcfcfc;
+    @include box-shadow(0px 2px 4px rgba(black, 0.2));
+
+    &.active {
+        display: block;
+    }
+
+    li.menu-item {
+        height: 20%;
+        border-bottom: 1px solid #ddd;
+
+        &:first-child {
+            border-top: 1px solid $body-background-color;
+        }
+
+        &:hover {
+            background-color: #fefefe;
+        }
+
+        a, span {
+            display: block;
+            padding: 0.5em 0.4em;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+}

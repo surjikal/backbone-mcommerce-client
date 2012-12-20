@@ -1,0 +1,33 @@
+
+$header-height: 50px;
+
+
+#header {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+#page {
+    width: 768px;
+    height: 100%;
+    margin: 0 auto;
+    padding: $header-height 0 0 0;
+}
+
+.content {
+    position: relative;
+    width: 768px;
+    height: 100%;
+    padding: $header-height 0 0 0;
+}
+
+.restrict-width {
+    width: 100%;
+    position: relative;
+}
+
+.section {
+    margin-bottom: 1.5em;
+    clear: both;
+}

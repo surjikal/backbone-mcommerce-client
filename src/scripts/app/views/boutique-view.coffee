@@ -2,7 +2,7 @@
 class App.Views.Boutique extends Backbone.LayoutView
 
     template: 'boutique'
-    className: 'content ad'
+    className: 'content boutique-view'
 
     serialize: ->
         serializedItemSpots = @serializeItemSpotModels()

@@ -2,7 +2,7 @@
 class App.Views.Thanks extends Backbone.LayoutView
 
     template: 'thanks'
-    className: 'content thanks'
+    className: 'content thanks-view'
 
     events:
         'click #back-to-boutique': 'backToBoutiqueButtonClicked'

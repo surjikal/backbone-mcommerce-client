@@ -1,4 +1,21 @@
 
+.table {
+    display: table;
+    margin: 0 !important;
+}
+
+.table-row {
+    display: table-row !important;
+}
+
+.table-cell {
+    display: table-cell !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
 .loading-modal {
 
     position: fixed;

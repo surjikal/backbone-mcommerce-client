@@ -2,7 +2,7 @@
 class App.Views.Confirm extends App.Views.WizardStep
 
     template: 'confirm'
-    className: 'content confirm'
+    className: 'content confirm-view'
 
     dependencies: [
         'address'

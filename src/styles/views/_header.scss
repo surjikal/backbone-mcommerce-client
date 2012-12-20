@@ -1,0 +1,54 @@
+
+// Sets the percentage of the header height that will be vertical padding.
+$navbar-vertical-padding-ratio: 0.10;
+$navbar-vertical-padding: $header-height * $navbar-vertical-padding-ratio;
+$navbar-height:           $header-height - $navbar-vertical-padding;
+
+$action-width: 40px;
+$action-font-color: #bbb;
+
+// Set the size of the action icons
+$action-size: 0.9;
+
+
+.header-view {
+    background-color: #fff;
+    @include box-shadow(0 0 15px 3px rgba(black, 0.2));
+
+    .navigation-bar {
+        padding: $navbar-vertical-padding 0;
+        height: $navbar-height;
+        line-height: $navbar-height + 1px;
+
+        border-bottom: 1px solid #ddd;
+
+        .logo {
+            position: absolute;
+            left: $action-width;
+            right: $action-width;
+            font-size: 0.5 * $navbar-height;
+        }
+
+        .action {
+            color: $action-font-color;
+            height: $header-height;
+            position: absolute;
+            text-align: center;
+
+            &:active {
+                color: darken($action-font-color, 15%);
+            }
+        }
+
+        .left-action {
+            font-size: 0.5 * $action-size * $navbar-height;
+            width: $action-width;
+        }
+
+        .right-action {
+            font-size: 0.8 * $action-size * $navbar-height;
+            right: 1px;
+            width: $action-width;
+        }
+    }
+}

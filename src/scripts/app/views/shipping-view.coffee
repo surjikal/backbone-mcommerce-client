@@ -2,7 +2,7 @@
 class App.Views.Shipping extends App.Views.WizardStep
 
     template: 'shipping'
-    className: 'content address-list'
+    className: 'content shipping-view'
 
     currentAddressMode: null
     currentAddressModeView: null
