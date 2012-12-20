@@ -1,5 +1,5 @@
 
-PENDING_TIMEOUT = 8000
+PENDING_TIMEOUT = 5000
 
 
 class App.Views.FormView extends Backbone.LayoutView

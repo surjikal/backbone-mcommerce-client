@@ -4,14 +4,17 @@ class App.Collections.Boutique extends Backbone.Collection
     model: App.Models.Boutique
 
     getOrCreateFromCode: (boutiqueCode, callbacks) ->
-        normalizedBoutiqueCode = boutiqueCode.toLowerCase()
-        boutique = @get normalizedBoutiqueCode
+        boutiqueCode = boutiqueCode.toLowerCase()
+        boutique     = @get boutiqueCode
+
         return callbacks.success boutique if boutique
 
-        boutique = new App.Models.Boutique {code: normalizedBoutiqueCode}
+        boutique = new App.Models.Boutique {code: boutiqueCode}
         boutique.fetch
-            error: ->
+            error: =>
+                boutique.destroy()
                 callbacks.notFound boutiqueCode
+
             success: (boutique) =>
                 @push boutique
                 callbacks.success boutique
