@@ -96,18 +96,15 @@ class App.Views.StripeBilling extends App.Views.WizardStep
 
         callbacks.success fieldValues
 
-
     performValidation: (event) -> _.defer =>
         $button = $('#wizard-next-step')
         @validateForm
-
             error: (message) ->
                 $button.text message
                 $button.attr 'disabled', true
-
             success: (cleanedFields) ->
                 $button.text 'Continue'
-                $button.attr 'disabled', false
+                $button.removeAttr 'disabled'
 
     beforeNextStep: (done) ->
         return if @pending

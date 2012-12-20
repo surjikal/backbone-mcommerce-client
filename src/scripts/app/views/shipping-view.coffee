@@ -33,7 +33,7 @@ class App.Views.Shipping extends App.Views.WizardStep
                 $button.attr 'disabled', true
             success: (cleanedFields) ->
                 $button.text 'Continue'
-                $button.attr 'disabled', false
+                $button.removeAttr 'disabled'
 
     beforeNextStep: (done) ->
         return if @pending
