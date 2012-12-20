@@ -84,5 +84,4 @@ class App.Views.Shipping extends App.Views.WizardStep
     setAddressView: (addressModeView) ->
         @currentAddressModeView = addressModeView
         @setView '#address-mode', addressModeView
-        _.defer =>
-            @performValidation()
+        @performValidation()
