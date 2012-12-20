@@ -18,14 +18,23 @@ App.events.on 'ready', ->
             _.reduce input, cb, {}, context
 
 
-    # Adding support for our precompiled handlebars templates in Backbone.LayoutManager
     Backbone.LayoutManager.configure
 
+        # Adding support for our precompiled handlebars templates in Backbone.LayoutManager
         fetch: (name) ->
             App.templates[name]
 
         render: (template, context) ->
             @el = template context
+
+        # Delegating to `underscore.deferred`
+        deferred: _.Deferred
+        when:     _.when
+
+        # Impletementation taken from jQuery. Assumes browser supports `contain` node method.
+        contains: (a, b) ->
+            adown = if a.nodeType is 9 then a.documentElement else bup = b and b.parentNode
+            a is bup or !!(bup and bup.nodeType is 1 and adown.contains && adown.contains bup)
 
 
     # Unbind event handlers on view close

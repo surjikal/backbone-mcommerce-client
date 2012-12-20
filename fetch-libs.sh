@@ -52,10 +52,11 @@ function remove_existing_libs {
 [[ $1 = "-c" || $1 = "--clean" ]] && remove_existing_libs
 
 
-fetch 'jquery.js'                  https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js
+fetch 'zepto.js'                   http://zeptojs.com/zepto.js
 fetch 'fastclick.js'               https://raw.github.com/ftlabs/fastclick/master/lib/fastclick.js
 fetch 'async.js'                   https://raw.github.com/caolan/async/master/lib/async.js
 fetch 'lodash.js'                  https://raw.github.com/bestiejs/lodash/v0.9.0/lodash.js
+fetch 'underscore.deferred.js'     https://raw.github.com/wookiehangover/underscore.deferred/master/underscore.deferred.js
 # fetch 'backbone.js'                 http://backbonejs.org/backbone.js
 fetch 'backbone.layoutmanager.js'  https://raw.github.com/tbranyen/backbone.layoutmanager/master/backbone.layoutmanager.js
 fetch 'backbone.statemachine.js'   https://raw.github.com/sebpiq/backbone.statemachine/master/backbone.statemachine.js
