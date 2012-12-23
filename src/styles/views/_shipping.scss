@@ -1,6 +1,12 @@
-.shipping-view {
 
-    margin: 0 4%;
+.wizard-status-bar {
+    line-height: 2em;
+    a {
+        margin-left: 1em;
+    }
+}
+
+.shipping-view {
 
     #shipping-firstname,
     #shipping-lastname {

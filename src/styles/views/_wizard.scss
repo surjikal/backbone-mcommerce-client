@@ -3,12 +3,24 @@ $complete-color: $primary-color;
 $active-color: $font-color-normal;
 $invalid-color: yellow;
 
+.wizard-status-bar {
+    margin: 0 (-5%);
+    padding: 0.5em 5%;
+    background: white;
+    @include box-shadow(0px 1px 4px rgba(#333, 0.1));
+    @include box-sizing(content-box);
+}
+
+#wizard-step {
+    margin: 0 4%;
+}
+
 #wizard-step-list {
     text-align: center;
     clear: both;
     overflow: hidden;
-    margin-top: 0.5em;
-    line-height: 2em;
+    margin-top: 1em;
+    line-height: 1em;
 
     .wizard-step-list-item {
         float: left;
@@ -17,7 +29,7 @@ $invalid-color: yellow;
         color: $font-color-light;
         font-weight: normal;
 
-        &:after {
+        &:before {
             opacity: 0.4;
             content: '· · ·';
             display: inline;
@@ -32,6 +44,25 @@ $invalid-color: yellow;
 
         &.active {
             color: $active-color;
+
+            &:after {
+                content: '▲';
+                display: block;
+                color: white;
+                font-size: 20px;
+                position: relative;
+                z-index: 999;
+                bottom: -5px;
+                @include text-shadow(0px -1px 1px rgba(black, 0.1));
+                // border-left: 5px solid transparent;
+                // border-right: 5px solid transparent;
+                // border-bottom: 8px solid white;
+                // height: 0;
+                // width: 0;
+                // position: relative;
+                // left: 50%;
+                // @include box-shadow(0px -1px 1px rgba(black, 0.2));
+            }
         }
 
         &.complete {
@@ -54,7 +85,7 @@ $invalid-color: yellow;
         }
 
         &:last-child {
-            &:after {
+            &:before {
                 display: none !important;
             }
         }

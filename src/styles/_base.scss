@@ -11,9 +11,6 @@ $primary-color: #00ccc5;
 
 $logo-font-stack: "FuturaFile", sans-serif;
 
-$anchor-color-normal: #555;
-$anchor-color-hover:  #222;
-
 $input-focus-border-color: rgba(82, 168, 236, 0.8);
 
 
@@ -52,13 +49,10 @@ body {
 }
 
 a {
-    color: $anchor-color-normal;
+    color: $primary-color;
     cursor: pointer;
     text-decoration: none;
-
-    &:hover {
-        color: $anchor-color-hover;
-    }
+    font-weight: 600;
 }
 
 label {
