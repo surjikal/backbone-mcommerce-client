@@ -2,7 +2,7 @@
 $body-background-color: #f7f7f7;
 
 $font-color-normal: #444;
-$font-color-light:  #888;
+$font-color-light:  #999;
 $font-base-size: 16px;
 $font-weight: 300;
 $font-stack: "Source Sans Pro", "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
@@ -65,6 +65,10 @@ label {
     color: $font-color-light;
     display: block;
     font-weight: 500;
+}
+
+em {
+    font-weight: 600;
 }
 
 hr {
