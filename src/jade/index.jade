@@ -44,6 +44,13 @@ html
             mixin phonegap-js-lib('cordova')
             mixin phonegap-js-lib('barcodescanner')
 
+        if locals.show_baseline
+            mixin js('http://files.keyes.ie/baseliner-latest.min.js')
+            :coffeescript
+                $ ->
+                    console.debug 'Initializing `baseliner` lib.'
+                    window._baseliner = new Baseliner()
+
         block app-core
             mixin app-core('templates')
             mixin app-core('app')
