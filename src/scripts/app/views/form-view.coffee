@@ -4,15 +4,8 @@ PENDING_TIMEOUT = 5000
 
 class App.Views.FormView extends Backbone.LayoutView
 
-    events:
-        'change input': 'inputChanged'
-
     initiliaze: ->
         @fields = @fields or {}
-
-    inputChanged: (event) ->
-        $input = @$el.find event.target
-        $input.removeClass 'error'
 
     getField: (fieldName) ->
         selector = @fields[fieldName]
