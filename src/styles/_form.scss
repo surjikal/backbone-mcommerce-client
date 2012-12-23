@@ -68,10 +68,11 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"] {
+
     display: block;
-    border: 0.1em solid #ddd;
     font-size: 110%;
-    padding: 0.3em 0.6em;
+    border: 1px solid #ddd;
+    padding: 0.3em 10px;
     margin: 0.5em auto 0.7em auto;
     color: #555;
     width: 100%;
@@ -82,8 +83,8 @@ input[type="color"] {
 
     &:focus {
         border-color: $primary-color;
-        border-left-width: 0.2em;
-        padding-left: 0.5em;
+        border-left-width: 3px;
+        padding-left: 8px; // side padding - border left width + original border width
     }
 }
 
