@@ -1,5 +1,5 @@
 
-class App.Views.ItemSpot extends Backbone.LayoutView
+class App.Views.ItemSpot extends App.Views.FormView
 
     template: 'itemspot'
     className: 'itemspot-view'
@@ -13,6 +13,7 @@ class App.Views.ItemSpot extends Backbone.LayoutView
         , 10
 
     navigateToCheckout: ->
+        @enablePending 'button'
         App.router.navigate @model.getCheckoutUrl(), {trigger: true}
 
     serialize: ->
