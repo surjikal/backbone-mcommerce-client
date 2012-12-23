@@ -1,5 +1,7 @@
 .shipping-view {
 
+    margin: 0 4%;
+
     #shipping-firstname,
     #shipping-lastname {
         width: 50%;
@@ -7,37 +9,22 @@
     }
 
     #shipping-firstname {
-        border-right: 1px solid white;
-        &:focus {
-            border-right: 1px solid $input-focus-border-color;
-        }
+        border-right: 0;
     }
 
     #shipping-firstname:focus + input {
-        border-left: 1px solid white !important;
+        border-left: 1px solid $primary-color;
     }
 
-    .postalcode {
-        width: 100%;
-
-        .hint {
-            text-align: left;
-            padding-left: 1em;
-        }
-
-        input {
-            width: 100%;
-        }
+    header {
+        position: relative;
     }
 
-    .create-address-btn {
-        color: white;
-        font-size: 60%;
-        width: auto;
-        height: auto;
-        margin: 0 0;
-        line-height: 20px;
-        margin-bottom: 2em;
+    #toggle-address-mode {
+        float: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
 
     .addresses {

@@ -5,31 +5,19 @@
     background-color: $color;
     border: none;
 
-    // @include text-shadow(
-    //     0px -1px 0px darken($color, 20%)
-    // );
-
     -webkit-font-smoothing: antialiased;
-
-    // @include background(linear-gradient(
-    //     top,
-    //     #52A8E8 40%,
-    //     #377AD0 100%
-    // ));
 }
 
-.btn-big {
-    @include box-sizing(border-box);
-    @include button-color(#00ccc5, white);
-
+button {
     display: block;
-    font-size: 140%;
+    font-size: 120%;
     letter-spacing: 0.1em;
     padding: 0.6em 0.8em;
     text-align: center;
     text-transform: uppercase;
     width: 100%;
     cursor: pointer;
+    line-height: 1.5em;
 
     &.loading {
         background-image: inline-image('spinner.gif');
@@ -39,36 +27,30 @@
         white-space: nowrap;
     }
 
-    &:active:not(:disabled),
-    &:active:not(.disabled),
-    &.active:not(:disabled),
-    &.active:not(.disabled)
-    &:active:not(.loading),
-    &.active:not(.loading) {
-        border-bottom-width: 0px;
-        position: relative;
-        -moz-box-shadow: inset 0 0 5px #888;
-        -webkit-box-shadow: inset 0 0 5px #888;
-        box-shadow: inner 0 0 5px #888;
+}
+
+button.button-secondary {
+    @include button-color(#888, white);
+    font-size: 60%;
+    width: auto;
+    text-transform: lowercase;
+}
+
+button.button-primary, .btn-big {
+    @include button-color($primary-color, white);
+
+    &:disabled {
+        @include button-color(darken(#f5f5f5, 20%), #f7f7f7);
     }
 
-    &:disabled, &.disabled {
-        @include button-color(darken(#f5f5f5, 20%), #f7f7f7);
+    &:active:not(:disabled), &:active:not(.loading) {
+        @include box-shadow(inset 0 0 5px #888);
     }
 }
 
 .btn.bs-big {
-    font-size: 60%;
-    float: none;
-    width: 100%;
-    padding: 0.6em 0;
-    @include button-color(#f5f5f5, #444);
-}
 
-input::-moz-placeholder,
-input::-webkit-input-placeholder {
-    color: #ccc;
-    line-height: normal;
+    @include button-color(#f5f5f5, #444);
 }
 
 select, textarea,
@@ -85,28 +67,26 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"],
-.uneditable-input {
-    @include box-sizing(border-box);
-
-    border: 1px solid #eee;
-    border-bottom-color: #e7e7e7;
-    font-size: 90%;
-    margin: 0.5em auto 0.5em auto;
-    padding: 0.3em 0 0.3em 0.6em;
+input[type="color"] {
     display: block;
-    height: 2em;
-    width: 100%;
-    margin: 0 0 0.3em 0;
+    border: 0.1em solid #ddd;
+    font-size: 110%;
+    padding: 0.3em 0.6em;
+    margin: 0.5em auto 0.7em auto;
     color: #555;
-    font-weight: normal;
+    width: 100%;
     outline: none;
-    font: 20px "Helvetica Neue", sans-serif;
+
+    @include box-shadow(inset 0px 2px 2px rgba(black, 0.05),
+                              0px 0px 0px rgba(white, 0.1));
 
     &:focus {
-        border-color: $input-focus-border-color;
+        border-color: $primary-color;
+        border-left-width: 0.2em;
+        padding-left: 0.5em;
     }
 }
+
 
 input[type="text"],
 input[type="password"],
@@ -142,10 +122,19 @@ input.error {
     border-color: rgb(185, 74, 72);
 }
 
+
+input::-moz-placeholder,
+input::-webkit-input-placeholder {
+    color: #ccc;
+    line-height: normal;
+}
+
+
 input.error::-moz-placeholder,
 input.error::-webkit-input-placeholder {
     color: rgb(185, 74, 72);
 }
+
 
 input.error:focus::-moz-placeholder,
 input.error:focus::-webkit-input-placeholder {

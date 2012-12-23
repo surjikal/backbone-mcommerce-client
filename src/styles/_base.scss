@@ -61,6 +61,12 @@ a {
     }
 }
 
+label {
+    color: $font-color-light;
+    display: block;
+    font-weight: 500;
+}
+
 hr {
     height: 0;
     border: 0;
@@ -70,6 +76,22 @@ hr {
 
 #page {
     background-color: rgb(232,232,232);
+
+
+    h1, header {
+        margin-bottom: 1.0em;
+        margin-top: 0.5em;
+    }
+
+    h1 {
+        font-weight: 600;
+        font-size: 120%;
+        line-height: 1.5em;
+    }
+
+    header > h1 {
+        margin: 0;
+    }
 }
 
 .logo {

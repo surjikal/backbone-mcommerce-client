@@ -2,7 +2,7 @@
 class App.Views.Shipping extends App.Views.WizardStep
 
     template: 'shipping'
-    className: 'content shipping-view'
+    className: 'shipping-view'
 
     currentAddressMode: null
     currentAddressModeView: null
@@ -11,7 +11,7 @@ class App.Views.Shipping extends App.Views.WizardStep
     events:
         _.extend {}, App.Views.WizardStep::events,
             'click #toggle-address-mode': 'toggleAddressMode'
-            'keydown input':               'performValidation'
+            'keydown input':              'performValidation'
 
     initialize: (options) ->
         super options
@@ -64,9 +64,11 @@ class App.Views.Shipping extends App.Views.WizardStep
 
     setAddressCreateMode: ->
         @currentAddressMode = 'create'
+        @$('#toggle-address-mode').text 'cancel'
 
     setAddressSelectMode: ->
         @currentAddressMode = 'select'
+        @$('#toggle-address-mode').text '+ address'
 
     getNextAdddressMode: ->
         if @currentAddressMode is 'create' then 'select' else 'create'
@@ -85,3 +87,7 @@ class App.Views.Shipping extends App.Views.WizardStep
         @currentAddressModeView = addressModeView
         @setView '#address-mode', addressModeView
         @performValidation()
+
+    serialize: ->
+        showModeToggleButton: not @collection.isEmpty()
+        toggleButtonText: if @currentAddressMode is 'create' then 'cancel' else '+ address'

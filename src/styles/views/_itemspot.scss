@@ -45,6 +45,7 @@
             padding: 10px 0 10px 10px;
             z-index: 10;
             @include box-shadow(0 0 15px 3px rgba(black, 0.2));
+            margin-top: 0em !important;
 
             &.fixed {
                 position: fixed;
@@ -83,7 +84,6 @@
                 }
 
                 .views-count, .likes-count {
-                    font-size: 1.2em;
                     color: #999;
                     margin-right: 30px;
                 }

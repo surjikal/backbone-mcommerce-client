@@ -30,9 +30,6 @@ class App.Views.AddressCreate extends App.Views.AddressModeView
                 success: (address) ->
                     callbacks.success {address}
 
-    serialize: ->
-        showCancelButton: not @collection.isEmpty()
-
 
 # TODO: need to port this..
 PostalCodeUtils = do ->
