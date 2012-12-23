@@ -1,17 +1,26 @@
 
-img.item-image(src="{{image}}")
 
-h1.price.item-price {{{formatPrice itemPrice}}}
+section.item-images
 
-header
-    h1.item-name {{item.name}}
-    button.btn-big#buy-button Buy
+    .carousel
+        img(src="{{image}}")
 
-    .item-stats
-        .views-icon
-        .views-count {{stats.views}}
-        .likes-icon
-        .likes-count {{stats.likes}}
+    h1.price.item-price {{{formatPrice itemPrice}}}
 
-.item-details
-    p {{item.details}}
+
+section.item-info
+
+    header.waypoint
+
+        h1.item-name {{item.name}}
+        button.btn-big#buy-button Buy
+
+        .item-stats
+            i.views-icon
+            .views-count {{stats.views}}
+            i.likes-icon
+            .likes-count {{stats.likes}}
+
+
+    .item-details
+        p {{item.details}}

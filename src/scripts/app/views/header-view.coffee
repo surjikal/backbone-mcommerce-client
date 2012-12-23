@@ -93,7 +93,7 @@ class App.Views.Header extends Backbone.LayoutView
 
     initialize: ->
         console.debug 'Initializing header.'
-        @setView '.menu-view', (@menu = @createMenu())
+        @setView '.menu', (@menu = @createMenu())
 
     createMenu: ->
         new App.Views.Menu

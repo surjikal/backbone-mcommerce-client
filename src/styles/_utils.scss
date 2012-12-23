@@ -15,31 +15,3 @@
 .hidden {
     display: none !important;
 }
-
-.loading-modal {
-
-    position: fixed;
-    top: 30%;
-    left: 10%;
-    right: 10%;
-    height: 120px;
-    margin-top: -60px;
-
-    background: rgba(black, 0.8);
-
-    color: #f2f2f2;
-    font-size: 120%;
-    z-index: 2e7;
-
-    @include border-radius(5px);
-
-    p {
-        text-align: center;
-        margin: 0.5em 0 0;
-    }
-
-    .spin-wrap {
-        height: 70px;
-    }
-
-}

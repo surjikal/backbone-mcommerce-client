@@ -8,7 +8,7 @@ form#confirm-form(method='post', action='.')
             tbody
                 tr.item-cost
                     td {{ item.name }}
-                    td.price ${{ formatPrice bill.item }}
+                    td.price {{ formatPrice bill.item }}
 
                 tr.variable-cost.shipping-cost
                     td Shipping
@@ -16,10 +16,10 @@ form#confirm-form(method='post', action='.')
 
                 tr.variable-cost.tax-cost
                     td Tax
-                    td.price ${{ formatPrice bill.tax }}
+                    td.price {{ formatPrice bill.tax }}
 
                 tr.variable-cost.total-cost
                     td Total
-                    td.price ${{ formatPrice bill.total }}
+                    td.price {{ formatPrice bill.total }}
 
     button#wizard-next-step.btn-big(type="submit") Sounds good!

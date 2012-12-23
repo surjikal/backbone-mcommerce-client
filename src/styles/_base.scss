@@ -3,9 +3,11 @@ $body-background-color: #f7f7f7;
 
 $font-color-normal: #444;
 $font-color-light:  #888;
-$font-base-size: 62.5%;
+$font-base-size: 16px;
 $font-weight: 300;
 $font-stack: "Source Sans Pro", "HelveticaNeue67MediumCondensed", "Helvetica Neue", sans-serif;
+
+$primary-color: #00ccc5;
 
 $logo-font-stack: "FuturaFile", sans-serif;
 
@@ -24,6 +26,9 @@ $input-focus-border-color: rgba(82, 168, 236, 0.8);
 
     // Prevent safari from resizing our text
     -webkit-text-size-adjust: none;
+
+    // Making the box model not suck
+    @include box-sizing(border-box);
 }
 
 :not(input)
@@ -38,7 +43,7 @@ html {
 
 body {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     background-color: $body-background-color;
     color: $font-color-normal;
     font: $font-base-size $font-stack;
@@ -63,10 +68,15 @@ hr {
     border-bottom: 1px solid #fdfdfd;
 }
 
+#page {
+    background-color: rgb(232,232,232);
+}
+
 .logo {
     text-align: center;
     font-family: $font-stack;
-    @include text-shadow(0px 1px 1px white);
+    color: $primary-color;
+    font-weight: 600;
 }
 
 .instructions {

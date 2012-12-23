@@ -1,98 +1,114 @@
 
 .itemspot-view {
+    position: relative;
+    min-height: 100%;
 
-    .item-image {
-        max-height: 300px;
-        display: block;
-        position: relative;
-        max-width: 100%;
-        margin: 0 auto;
-    }
+    section.item-images  {
 
-    .item-price {
-        background: rgba(white, 0.6);
-        margin: 0 auto;
-        min-width: 85px;
-        color: #232323;
-        right: 0;
-        top: 70px;
-        position: absolute;
-        font-weight: bold;
-        text-align: center;
-        font-size: 1.4em;
-        padding: 0.6em 0.8em;
-    }
-
-
-    header {
-        position: relative;
-        margin-top: 0.5em;
-        color: #232323;
-        font-weight: bold;
-        background-color: #eee;
-        padding: 20px 0 20px 20px;
-        z-index: 10;
-        @include box-shadow(0 0 15px 3px rgba(black, 0.2));
-
-
-        .item-name {
-            display: inline-block;
-            width: 70%;
-            font-size: 2.2em;
+        .carousel {
+            img {
+                max-height: 300px;
+                display: block;
+                max-width: 100%;
+                margin: 0 auto;
+            }
         }
 
-
-        #buy-button {
-            width: 85px;
+        .item-price {
+            background: rgba(white, 0.6);
+            margin: 0 auto;
+            min-width: 85px;
+            color: #232323;
+            right: 0;
+            top: 70px;
+            position: absolute;
             font-weight: bold;
-            float: right;
-        }
-
-
-        .item-stats {
-            overflow: hidden;
-            margin: 20px 0 0 0;
-
-            div {
-                float: left;
-            }
-
-            .views-icon {
-                position: relative;
-                width: 20px;
-                height: 20px;
-                background: red;
-                margin: 0 10px 0 0;
-            }
-
-            .views-count, .likes-count {
-                font-size: 1.2em;
-                color: #999;
-                margin-right: 30px;
-            }
-
-            .likes-icon {
-                position: relative;
-                width: 20px;
-                height: 20px;
-                background: red;
-                margin: 0 10px 0 0;
-            }
+            text-align: center;
+            padding: 0.6em 0.8em;
         }
 
     }
 
-    .item-details {
-        position: relative;
-        color: #666;
-        background: #fff;
-        z-index: 20;
+    .item-info {
+        min-height: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        // `top` value is calculated dynamically based on the height of `.item-images`.
+        //  See `itemspot-view.coffee` for details.
 
-        p {
-            font-size: 120%;
-            line-height: 1.6em;
-            padding: 20px;
-            text-align: justify;
+        header {
+            color: #232323;
+            font-weight: bold;
+            background-color: #eee;
+            padding: 10px 0 10px 10px;
+            z-index: 10;
+            @include box-shadow(0 0 15px 3px rgba(black, 0.2));
+
+            &.fixed {
+                position: fixed;
+                top: $header-height;
+                left: 0;
+                right: 0;
+            }
+
+            .item-name {
+                display: inline-block;
+                width: 70%;
+                font-size: 120%;
+            }
+
+            #buy-button {
+                width: 85px;
+                font-weight: bold;
+                float: right;
+            }
+
+
+            .item-stats {
+                overflow: hidden;
+                margin: 20px 0 0 0;
+
+                div {
+                    float: left;
+                }
+
+                i {
+                    position: relative;
+                    width: 20px;
+                    height: 20px;
+                    background: red;
+                    margin: 0 10px 0 0;
+                }
+
+                .views-count, .likes-count {
+                    font-size: 1.2em;
+                    color: #999;
+                    margin-right: 30px;
+                }
+            }
+        }
+
+        .item-details {
+            color: #666;
+            background: #fff;
+            z-index: 20;
+
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            // `top` value is calculated dynamically based on the height of `header`.
+            //  See `itemspot-view.coffee` for details.
+
+            p {
+                background: white;
+
+                line-height: 1.6em;
+                padding: 20px;
+                text-align: justify;
+            }
         }
     }
 }
