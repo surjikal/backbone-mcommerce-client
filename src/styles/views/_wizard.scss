@@ -1,90 +1,62 @@
 
-$complete-color: #5EC456;
-$active-color: darken(#666, 10%);
+$complete-color: $primary-color;
+$active-color: $font-color-normal;
 $invalid-color: yellow;
 
 #wizard-step-list {
-
-    overflow: hidden;
     text-align: center;
-    background: white;
+    clear: both;
+    overflow: hidden;
+    margin-top: 0.5em;
+    line-height: 2em;
 
-   li {
+    .wizard-step-list-item {
         float: left;
-        font-size: 50%;
-        color: #888;
-        font-weight: 300;
-        border-bottom: 1px solid #ddd;
-    }
-
-    li:before {
-        $radius: 30px;
-        line-height: $radius;
-        padding-right: 0.4em;
-        color: #ccc;
+        font-size: 70%;
         position: relative;
-        top: 0.1em;
-
-        font-family: 'typicons';
-        font-style: normal;
-        speak: none;
+        color: $font-color-light;
         font-weight: normal;
-        -webkit-font-smoothing: antialiased;
-    }
 
-    li.active {
-        color: $active-color;
-        background: $body-background-color;
-        border: 1px solid #ddd;
-        border-bottom-color: $body-background-color;
-        border-top-width: 0;
-        @include box-sizing(border-box);
-    }
+        &:after {
+            opacity: 0.4;
+            content: '· · ·';
+            display: inline;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            left: 50%;
+            top: 0;
+            font-weight: 700;
+            // color: $font-color-light;
+        }
 
-    li.active:first-child {
-        border-left-width: 0;
-    }
+        &.active {
+            color: $active-color;
+        }
 
-    li.active:last-child {
-        border-right-width: 0;
-    }
+        &.complete {
+            color: $complete-color;
+        }
 
-    li.active:before {
-        color: $active-color;
-        border-color: $active-color;
-    }
+        &.invalid {
+            color: $invalid-color;
+        }
 
-    li.complete {
-        color: $complete-color;
-    }
+        i {
+            position: relative;
+            top: 0.1em;
+            left: -0.3em;
+        }
 
-    li.complete:before {
-        color: $complete-color;
-        border-color: $complete-color;
-    }
+        .index {
+            position: relative;
+            margin-right: 0.4em;
+        }
 
-    li.invalid {
-        color: $invalid-color;
-    }
-
-    li.invalid:before {
-        color: $invalid-color;
-        border-color: $invalid-color;
-    }
-
-    li.user-icon:before {
-        content: '\e008';
-    }
-
-    li.tag-icon:before {
-        content: '\e00a';
-    }
-
-    li.house-icon:before {
-        content: '\e00b';
-    }
-
-    li.checkmark-icon:before {
-        content: '✓'
+        &:last-child {
+            &:after {
+                display: none !important;
+            }
+        }
     }
 }

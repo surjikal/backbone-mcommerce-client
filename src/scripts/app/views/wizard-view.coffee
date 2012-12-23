@@ -2,7 +2,8 @@
 class App.Views.WizardStepListItem extends Backbone.LayoutView
 
     tagName: 'li'
-    className: 'restrict-width wizard-list-item'
+    className: 'wizard-step-list-item'
+    template: 'wizard-step-list-item'
 
     initialize: (options) ->
         @step = options.step
@@ -15,12 +16,32 @@ class App.Views.WizardStepListItem extends Backbone.LayoutView
         if @step.state is 'complete' then 'checkmark' else @step.icon
 
     beforeRender: ->
-        @$el.text @step.title
-        @$el.removeClass()
-        @$el.addClass @className
-        @$el.addClass "#{@getIcon()}-icon"
-        @$el.addClass "#{@step.state or ''}"
+        @$el.addClass @step.state or ''
 
+    serialize: ->
+        index: @step._index + 1
+        title: @step.title
+        icon:  @getIcon()
+        completed: @step.state is 'complete'
+
+
+class App.Views.WizardStepList extends Backbone.LayoutView
+
+    tagName: 'ol'
+    className: 'wizard-steps'
+
+    initialize: (options) ->
+        @steps           = options.steps
+        @eventDispatcher = options.eventDispatcher
+
+        @eventDispatcher.on 'step:completed', =>
+            @render()
+
+    beforeRender: ->
+        _.each @steps, (step) =>
+            view = new App.Views.WizardStepListItem {step, @eventDispatcher}
+            view.setPercentageWidth (100 / @steps.length)
+            @insertView view
 
 class App.Views.WizardStep extends App.Views.FormView
 
@@ -58,26 +79,6 @@ class App.Views.WizardStep extends App.Views.FormView
     completed: (data) ->
         @step.state = 'complete'
         @eventDispatcher.trigger 'step:completed', {data, @step}
-
-
-
-class App.Views.WizardStepList extends Backbone.LayoutView
-
-    tagName: 'ol'
-    className: 'wizard-steps'
-
-    initialize: (options) ->
-        @steps           = options.steps
-        @eventDispatcher = options.eventDispatcher
-
-        @eventDispatcher.on 'step:completed', =>
-            @render()
-
-    beforeRender: ->
-        _.each @steps, (step) =>
-            view = new App.Views.WizardStepListItem {step, @eventDispatcher}
-            view.setPercentageWidth (100 / @steps.length)
-            @insertView view
 
 
 # TODO: Refactor; separate view and controller. Add step model and collection.
@@ -203,4 +204,4 @@ class App.Views.Wizard extends Backbone.LayoutView
             step
 
     _setUrl: (url) ->
-        App.router.navigate url, {trigger: false, replace: true}
+        App.router.navigate url, {trigger: false, replace: false}

@@ -18,8 +18,8 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
         @steps = [
             {
                 id: 'shipping'
-                title: '1. Shipping'
-                icon: 'house'
+                title: 'Shipping'
+                icon: 'home'
                 initialize: (options) => (wizardData) =>
                     new App.Views.Shipping _.extend options, {
                         collection: addresses
@@ -29,7 +29,7 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
             }
             {
                 id: 'billing'
-                title: '2. Billing'
+                title: 'Billing'
                 icon: 'tag'
                 initialize: (options) => (wizardData) =>
                     new App.Views.PaypalBilling _.extend options, {
@@ -41,7 +41,7 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
             }
             {
                 id: 'confirm'
-                title: '3. Confirm'
+                title: 'Confirm'
                 icon: 'user'
                 initialize: (options) => (wizardData) =>
                     new App.Views.Confirm _.extend options, {
