@@ -1,8 +1,13 @@
 
 .boutique-select-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 
-    margin-top: 10%;
     text-align: center;
+    background: #f7f7f7;
 
     hr {
         clear: both;
