@@ -1,7 +1,10 @@
 
-{{#if completed}}
-i.icon-checkmark
-{{else}}
-em.index {{index}}
-{{/if}}
-{{title}}
+.step
+    {{#if completed}}
+    i.icon-checkmark
+    {{else}}
+    em.index {{index}}
+    {{/if}}
+    span.title {{title}}
+
+.separator

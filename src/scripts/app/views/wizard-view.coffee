@@ -19,9 +19,9 @@ class App.Views.WizardStepListItem extends Backbone.LayoutView
         @$el.addClass @step.state or ''
 
     serialize: ->
-        index: @step._index + 1
-        title: @step.title
-        icon:  @getIcon()
+        index:     @step._index + 1
+        title:     @step.title
+        icon:      @getIcon()
         completed: @step.state is 'complete'
 
 
@@ -37,11 +37,30 @@ class App.Views.WizardStepList extends Backbone.LayoutView
         @eventDispatcher.on 'step:completed', =>
             @render()
 
+        $(window).resize _.debounce (=>
+            @adjustSeparatorWidth()
+        ), 10
+
     beforeRender: ->
         _.each @steps, (step) =>
             view = new App.Views.WizardStepListItem {step, @eventDispatcher}
             view.setPercentageWidth (100 / @steps.length)
             @insertView view
+
+    afterRender: ->
+        @adjustSeparatorWidth()
+
+    adjustSeparatorWidth: ->
+        prev = null
+        views = @views['']
+
+        _.each views, (view, index) ->
+            if prev
+                offset = view.$('.step').offset()
+                $sep = prev.$('.separator')
+                $sep.css 'width', offset.left - $sep.offset().left
+            prev = view
+
 
 class App.Views.WizardStep extends App.Views.FormView
 
