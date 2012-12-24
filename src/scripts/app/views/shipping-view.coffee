@@ -17,8 +17,6 @@ class App.Views.Shipping extends App.Views.WizardStep
     initialize: (options) ->
         super
 
-        {@user} = options
-
         @collection.on 'remove', =>
             @render() if @collection.isEmpty()
 
@@ -100,4 +98,4 @@ class App.Views.Shipping extends App.Views.WizardStep
     serialize: ->
         showModeToggleButton: not @collection.isEmpty()
         toggleButtonText: if @currentAddressMode is 'create' then 'cancel' else '+ address'
-        user: @user.toJSON() if @user.isLoggedIn()
+        user: App.auth.user.toJSON() if App.auth.user.isLoggedIn()
