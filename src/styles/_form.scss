@@ -67,22 +67,33 @@ input[type="search"],
 input[type="tel"],
 input[type="color"] {
 
+    $border-width: 1px;
+    $horizontal-padding: 6px;
+
     display: block;
     font-size: 110%;
-    border: 1px solid #ddd;
-    padding: 0.3em 10px;
+    border: $border-width solid #ddd;
+    padding: 0.3em $horizontal-padding;
     margin: 0.5em auto 0.7em auto;
     color: #555;
     width: 100%;
+
+    &.input-auto-width {
+        width: auto;
+    }
+
     outline: none;
 
+    @include appearance(none);
+    @include border-radius(0);
     @include box-shadow(inset 0px 2px 2px rgba(black, 0.05),
                               0px 0px 0px rgba(white, 0.1));
 
     &:focus {
+        $border-left-width: 3px;
         border-color: $primary-color;
-        border-left-width: 3px;
-        padding-left: 8px; // side padding - border left width + original border width
+        border-left-width: $border-left-width;
+        padding-left: $horizontal-padding - $border-left-width + $border-width;
     }
 }
 
@@ -101,8 +112,7 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"], {
-    -webkit-appearance: listbox;
-       -moz-appearance: listbox;
+    @include appearance(listbox);
 }
 
 input[type=checkbox],
