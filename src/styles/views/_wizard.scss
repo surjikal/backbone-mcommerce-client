@@ -4,8 +4,8 @@ $active-color: $font-color-normal;
 $invalid-color: yellow;
 
 #wizard-status-bar {
-    margin: 0 (-5%);
-    padding: 0.5em 5%;
+    margin: 0 (-4%);
+    padding: 0.5em 4%;
     background: white;
     @include box-shadow(0px 1px 4px rgba(#333, 0.1));
     @include box-sizing(content-box);
@@ -13,7 +13,7 @@ $invalid-color: yellow;
 }
 
 #wizard-step {
-    margin: 0 4%;
+    margin: 0 4% 1em;
 }
 
 #wizard-step-list {
@@ -44,18 +44,19 @@ $invalid-color: yellow;
 
         .step {
             display: inline;
+            position: relative;
 
             .title {
                 margin-left: 1.2em;
             }
 
-            i {
+            i, .index {
                 position: absolute;
-                margin-top: 1px;
+                left: 0;
             }
 
-            .index {
-                position: absolute;
+            i {
+                margin-top: 1px;
             }
         }
 

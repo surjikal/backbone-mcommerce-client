@@ -223,4 +223,4 @@ class App.Views.Wizard extends Backbone.LayoutView
             step
 
     _setUrl: (url) ->
-        App.router.navigate url, {trigger: false, replace: false}
+        App.router.navigate url, {trigger: false, replace: true}
