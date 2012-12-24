@@ -11,10 +11,13 @@ class App.Views.Shipping extends App.Views.WizardStep
     events:
         _.extend {}, App.Views.WizardStep::events,
             'click #toggle-address-mode': 'toggleAddressMode'
+            'click #show-login-popup':    'showLoginPopup'
             'keydown input':              'performValidation'
 
     initialize: (options) ->
-        super options
+        super
+
+        {@user} = options
 
         @collection.on 'remove', =>
             @render() if @collection.isEmpty()
@@ -88,6 +91,13 @@ class App.Views.Shipping extends App.Views.WizardStep
         @setView '#address-mode', addressModeView
         @performValidation()
 
+    showLoginPopup: ->
+        App.views.main.showPopup new App.Views.LoginPopup callbacks:
+            success: =>
+                @render()
+                App.views.main.removePopup()
+
     serialize: ->
         showModeToggleButton: not @collection.isEmpty()
         toggleButtonText: if @currentAddressMode is 'create' then 'cancel' else '+ address'
+        user: @user.toJSON() if @user.isLoggedIn()

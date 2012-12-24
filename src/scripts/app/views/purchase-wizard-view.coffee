@@ -24,6 +24,7 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
                     new App.Views.Shipping _.extend options, {
                         collection: addresses
                         @itemspot
+                        @user
                         wizardData
                     }
             }
@@ -35,6 +36,7 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
                     new App.Views.PaypalBilling _.extend options, {
                         collection: addresses
                         @itemspot
+                        @user
                         params
                         wizardData
                     }
@@ -46,6 +48,7 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
                 initialize: (options) => (wizardData) =>
                     new App.Views.Confirm _.extend options, {
                         @itemspot
+                        @user
                         wizardData
                     }
             }

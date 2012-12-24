@@ -91,9 +91,8 @@ class AddressListItemView extends Backbone.LayoutView
         @selected
 
     setSelected: (selected) ->
-        $check = @$el.find('.check')
         @selected = selected
-        if @selected then $check.show() else $check.hide()
+        @render()
 
     serialize: ->
         serializedModel = @model.toJSON()

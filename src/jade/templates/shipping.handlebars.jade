@@ -1,7 +1,12 @@
 
-.wizard-status-bar
+#wizard-status-bar
+    {{#if user}}
+    | {{user.email}}
+    a#show-login-popup Not you?
+    {{else}}
     | Have an account?
     a#show-login-popup Login
+    {{/if}}
 
 
 header

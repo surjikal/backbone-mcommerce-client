@@ -3,10 +3,9 @@
 //- http://microformats.org/wiki/hcard
 
 .vcard
-    em.n
+    .n
         span.given-name {{firstName}}
-        | 
-        span.family-name {{lastName}}
+        span.family-name  {{lastName}}
     p.adr
         span.street {{street}}
         br
@@ -14,7 +13,10 @@
         //- span.region, {{province}}
         span.postal-code {{postalCode}}
 
-
-i.icon-checkmark.active.check(style="{{#unless selected}}display: none;{{/unless}}")
+{{#if selected}}
+i.icon-checkmark.active.check
+{{else}}
+i.icon-checkmark.check
+{{/if}}
 
 span.remove.label.label-important(style="display: none;") remove

@@ -26,7 +26,6 @@ button {
         text-indent: -9999px;
         white-space: nowrap;
     }
-
 }
 
 button.button-secondary {
@@ -49,7 +48,6 @@ button.button-primary, .btn-big {
 }
 
 .btn.bs-big {
-
     @include button-color(#f5f5f5, #444);
 }
 

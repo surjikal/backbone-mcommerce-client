@@ -5,11 +5,12 @@ form(method="post", action=".")
 
     fieldset.section
         {{#with user}}
-        input#user-email( type='email'
-                        , name='email'
-                        , required=true
-                        , placeholder='Email Address'
-                        , value="{{#if email}}{{email}}{{/if}}")
+        label Email Address
+            input#user-email( type='email'
+                            , name='email'
+                            , required=true
+                            //- , placeholder='bob@example.com'
+                            , value="{{#if email}}{{email}}{{/if}}")
         {{/with}}
         .password-widget
 

@@ -19,6 +19,12 @@ class App.Views.PasswordWidget extends App.Views.FormView
 
 
 # TODO: Refactor this so that some code can be shared with registration form.
+#
+# Callbacks:
+# - success:   user was logged in successfully
+# - incorrect: credentials are not valid
+# - disabled:  the user is disabled
+# - error:     generic error
 class App.Views.Auth extends App.Views.FormView
 
     template: 'auth-login'
@@ -52,9 +58,9 @@ class App.Views.Auth extends App.Views.FormView
             error: (message) ->
                 $button.text message
                 $button.attr 'disabled', true
-            success: ->
+            success: (cleanedFields) ->
                 $button.text 'Login'
-                $button.attr 'disabled', false
+                $button.removeAttr 'disabled'
 
     validateForm: (callbacks) ->
         email    = @getFieldValue 'email'
@@ -200,6 +206,15 @@ class App.Views.LoginOrNewUserPopup extends App.Views.Popup
             @callbacks.loginSuccess? user
 
         @setContents new App.Views.Auth {@model, callbacks}
+
+
+class App.Views.LoginPopup extends App.Views.Popup
+
+    title: 'Welcome back!'
+
+    initialize: (options) ->
+        super
+        @setContents new App.Views.Auth options
 
 
 class App.Views.RegistrationPopup extends App.Views.Popup

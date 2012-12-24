@@ -1,12 +1,11 @@
 
-.wizard-status-bar {
-    line-height: 2em;
-    a {
-        margin-left: 1em;
-    }
-}
-
 .shipping-view {
+
+    #wizard-status-bar {
+        a {
+            margin-left: 1em;
+        }
+    }
 
     #shipping-firstname,
     #shipping-lastname {
@@ -18,8 +17,8 @@
         border-right: 0;
     }
 
-    #shipping-firstname:focus + input {
-        border-left: 1px solid $primary-color;
+    #shipping-firstname:focus + #shipping-lastname {
+        border-left: 0.1em solid $primary-color;
     }
 
     header {
@@ -34,42 +33,21 @@
     }
 
     .addresses {
-        border: 1px solid #dedede;
         clear: both;
         font-size: 80%;
-        margin-bottom: 0.6em;
         position: relative;
 
-        a {
-            color: #888;
-            text-decoration: none;
-        }
-
         .address {
+            position: relative;
+            cursor: pointer;
+            padding: 0.5em 0;
 
             &:first-child {
-                border-top: none;
+                padding-top: 0;
             }
 
-            @include background(
-                darken($body-background-color, 4%)
-            );
-
-            @include box-shadow(
-                inset 0px 1px 0px darken($body-background-color, 2%),
-                inset 0px -1px 0px darken($body-background-color, 2%)
-            );
-
-            border-top: 1px solid #cfcfcf;
-            padding: 0.5em 1em;
-            position: relative;
-            text-shadow: 0 1px 0 white;
-            cursor: pointer;
-
-            .name {
-                font-weight: bold;
-                margin-bottom: 5px;
-                color: #555;
+            &:last-child {
+                padding-bottom: 0;
             }
 
             .check {
@@ -77,30 +55,27 @@
                 margin-top: -0.95em;
                 line-height: 2em;
                 top: 50%;
-                right: 5%;
+                right: 4%;
                 font-size: 180%;
-                color: #888;
+                color: #ddd;
             }
 
             .check.active {
                 display: block;
+                color: $primary-color;
+                @include text-shadow(none);
             }
 
             .remove {
                 position: absolute;
-                margin-top: -1em;
                 top: 50%;
-                right: 2%;
+                right: 0;
+                margin-top: -1em;
                 line-height: 2em;
-                font-size: 100%;
                 background-color: #b94a48;
                 padding: 1px 4px 2px;
                 color: #ffffff;
-                white-space: nowrap;
-                @include text-shadow(0 -1px 0 rgba(black, 0.25));
-                @include border-radius(3px);
             }
         }
     }
-
 }
