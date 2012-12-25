@@ -3,11 +3,13 @@ module.exports =
 
     urls:
         root:   '/'
-        api:    'http://<vipl_server_host>:9000/static'
-        static: 'http://<vipl_server_host>:9000/static'
+        api:    'http://localhost:9000/api'
+        static: 'http://localhost:9000/static'
 
         paypal:
             base: 'https://www.sandbox.paypal.com'
+
+    useStripe: true
 
     paypal:
         # Don't actually open the paypal checkout flow. Just pretend.
@@ -17,4 +19,4 @@ module.exports =
         useMockController: true
 
     stripe:
-        key: ''
+        key: '12345'

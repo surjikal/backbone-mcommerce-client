@@ -9,6 +9,8 @@ module.exports =
         paypal:
             base: 'https://www.sandbox.paypal.com'
 
+    useStripe: false
+
     paypal:
         # Don't actually open the paypal checkout flow. Just pretend.
         # It will show a popup instead, and will move to the next wizard
