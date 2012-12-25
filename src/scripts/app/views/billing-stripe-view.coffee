@@ -28,12 +28,13 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         'cvc':        '#billing-cvc'
 
     events:
-        'keydown input':                  'performValidation'
-        'keyup    #billing-card-number':  'changeCardType'
-        'keydown  #billing-card-number':  'cardNumberDigitEntered'
-        'keydown  #billing-expiry':       'formatExpiry'
-        'keypress #billing-cvc':          'restrictNumber'
-        'click #wizard-next-step':       'wizardNextStepClicked'
+        'keydown input':                 'performValidation'
+        'keyup    #billing-card-number': 'changeCardType'
+        'keydown  #billing-card-number': 'cardNumberDigitEntered'
+        'keydown  #billing-expiry':      'formatExpiry'
+        'keypress #billing-cvc':         'restrictNumber'
+        'click #wizard-next-step':      'wizardNextStepClicked'
+        'click #scan-card-button':       'scanCardButtonClicked'
 
     cardTypes:
         'Visa':             'visa'
@@ -231,3 +232,31 @@ class App.Views.StripeBilling extends App.Views.WizardStep
             year = prefix + year
 
         {month, year}
+
+    scanCardButtonClicked: ->
+        controller = new App.Controllers.CardIO App.config.cardio.key
+
+        scanOptions =
+            disableManualEntryButtons: true
+            collectExpiry: true
+            collectCVV: true
+
+        controller.scan scanOptions,
+            success: ({cardNumber, expiryMonth, expiryYear, cvv}) ->
+                @setFieldValue 'cardNumber', cardNumber
+                @setFieldValue 'expiry', "#{expiryMonth} / #{expiryYear}"
+                @setFieldValue 'cvc', cvv
+
+
+class App.Controllers.CardIO
+
+    constructor: (@key) ->
+        console.debug "CardIO using key: #{@key}"
+
+    scan: (options, callbacks = {}) ->
+        {success, cancelled} = (if callbacks then callbacks else options)
+        dummy = (->)
+        @_callPlugin @key, options, (success or dummy), (cancelled or dummy)
+
+    _callPlugin: (key, options, onSuccess, onError) ->
+        window.plugins.card_io.scan key, options, onSuccess, onError

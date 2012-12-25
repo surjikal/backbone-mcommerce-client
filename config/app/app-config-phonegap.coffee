@@ -20,3 +20,6 @@ module.exports =
 
     stripe:
         key: '12345'
+
+    cardio:
+        key: 'c6b9e2b63a5d42c4945ab3faf2f1641f'
