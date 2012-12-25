@@ -52,9 +52,6 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
                 console.error "Could not parse scanned data. Data:", scannedData
                 @errorAlert "I couldn't read the barcode :(. Please, try again!"
 
-    serialize: ->
-        phonegap: App.isPhonegap
-
 
 class App.Controllers.BarcodeScanner
 

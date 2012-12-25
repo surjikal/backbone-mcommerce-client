@@ -20,18 +20,23 @@ App.events.on 'ready', ->
 
     Backbone.LayoutManager.configure
 
-        # Adding support for our precompiled handlebars templates in Backbone.LayoutManager
+        # Adding support for our precompiled handlebars templates in `Backbone.LayoutManager`.
         fetch: (name) ->
             App.templates[name]
 
         render: (template, context) ->
-            @el = template context
+            @el = template (_.extend {}, context,
+                # These will be available in all templates.
+                isPhonegap: App.isPhonegap
+            )
 
         # Delegating to `underscore.deferred`
+        # This plugin is needed because unlike jQuery, Zepto doesn't have these features.
         deferred: _.Deferred
         when:     _.when
 
-        # Impletementation taken from jQuery. Assumes browser supports `contain` node method.
+        # Impletementation mostly taken from jQuery.
+        # It assumes the browser supports the `contain` node method.
         contains: (a, b) ->
             adown = if a.nodeType is 9 then a.documentElement else bup = b and b.parentNode
             a is bup or !!(bup and bup.nodeType is 1 and adown.contains && adown.contains bup)
