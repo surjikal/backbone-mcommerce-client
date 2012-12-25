@@ -1,25 +1,10 @@
 
+#wizard-status-bar
+    h1 Your order
+    .order-table
+
+.section
+
 form#confirm-form(method='post', action='.')
 
-    .instructions.section Here's what your bill looks like:
-
-    .section
-        table.pricing
-            tbody
-                tr.item-cost
-                    td {{ item.name }}
-                    td.price {{ formatPrice bill.item }}
-
-                tr.variable-cost.shipping-cost
-                    td Shipping
-                    td.price {{ bill.shipping }}
-
-                tr.variable-cost.tax-cost
-                    td Tax
-                    td.price {{ formatPrice bill.tax }}
-
-                tr.variable-cost.total-cost
-                    td Total
-                    td.price {{ formatPrice bill.total }}
-
-    button#wizard-next-step.btn-big(type="submit") Sounds good!
+    button#wizard-next-step.btn-big(type="submit") Confirm your order

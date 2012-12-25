@@ -62,7 +62,9 @@ class App.Views.StripeBilling extends App.Views.WizardStep
 
     initialize: (options) ->
         super
-        @setKey options.key
+        {key, itemspot} = options
+        @setKey key
+        @setView '.order-table', new App.Views.OrderTable {itemspot}
 
     setKey: (key) ->
         @key = key

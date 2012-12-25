@@ -14,19 +14,14 @@ class App.Views.Confirm extends App.Views.WizardStep
         {@itemspot} = options
         {@address}  = options.wizardData
 
+        @setView '.order-table', new App.Views.OrderTable {@itemspot}
+
     beforeNextStep: (done) ->
         done()
-
-    getPricingInfo: ->
-        item  = parseFloat (@itemspot.get 'itemPrice')
-        tax   = item * 0.13
-        total = tax + item
-        {item, tax, total, shipping: 'free!'}
 
     serialize: ->
         console.debug "Serializing confirm view."
         item: @serializeItem()
-        bill: @getPricingInfo()
 
     serializeItem: ->
         itemspot = @itemspot.toViewJSON()

@@ -20,6 +20,8 @@ class App.Views.PaypalBilling extends App.Views.WizardStep
             return _.defer =>
                 @handleCallback params
 
+        @setView '.order-table', new App.Views.OrderTable {@itemspot}
+
         # App.router.navigate "#{@itemspot.getCheckoutUrl()}", {trigger: false, replace: true}
 
     beforeNextStep: ->

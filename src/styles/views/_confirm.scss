@@ -1,37 +1,3 @@
 .confirm-view {
 
-    .pricing {
-        font-size: 80%;
-        vertical-align: middle;
-        width: 100%;
-        margin-bottom: 2em;
-        margin-top: 0;
-
-        font-family: monospace !important;
-
-        tr:first-child {
-            font-weight: bold !important;
-
-            td {
-                padding-top: 0;
-            }
-        }
-
-        tr:last-child {
-            border-top: 1px solid #ddd;
-
-            td {
-                padding-bottom: 0;
-            }
-        }
-
-        td {
-            padding: 0.5em 20px 0.5em 20px;
-        }
-
-        .price {
-            text-align: right;
-            font-family: monospace !important;
-        }
-    }
 }

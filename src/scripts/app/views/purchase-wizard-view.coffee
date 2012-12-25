@@ -32,11 +32,13 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
                 title: 'Billing'
                 icon: 'tag'
                 initialize: (options) => (wizardData) =>
-                    new App.Views.PaypalBilling _.extend options, {
+                    ViewClass = if App.config.useStripe then App.Views.StripeBilling \
+                                                        else App.Views.PaypalBilling
+                    new ViewClass  _.extend options, {
                         collection: addresses
                         @itemspot
-                        params
                         wizardData
+                        key: App.config.stripe.key if App.config.useStripe
                     }
             }
             {
@@ -67,12 +69,12 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
             # TODO: Commit purchase here...
             @done wizardData
 
-        return finish() if @user.isLoggedIn()
+        return finish() if App.auth.user.isLoggedIn()
         @_showRegistrationPopup finish
 
     _showRegistrationPopup: (done) ->
         popup = new App.Views.RegistrationPopup
-            model: @user
+            model: App.auth.user
             callbacks:
                 skipped: =>
                     console.debug "Registration was skipped."

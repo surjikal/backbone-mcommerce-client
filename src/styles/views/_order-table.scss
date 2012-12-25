@@ -1,0 +1,83 @@
+
+#wizard-status-bar {
+    overflow: hidden;
+}
+
+.order-table-view {
+
+    vertical-align: middle;
+
+    .right-column {
+        text-align: right;
+    }
+
+    table {
+        width: 50%;
+
+        // td:first-child {
+        //     padding-left: 4%;
+        // }
+        // td:last-child {
+        //     padding-right: 4%;
+        // }
+    }
+
+    .item {
+        width: 100%;
+
+        .times {
+            position: relative;
+            margin: 0 0.3em;
+            top: 1px;
+        }
+    }
+
+    hr {
+        width: 108%;
+        margin-left: -4%;
+    }
+
+    .costs {
+        line-height: 1.4em;
+        float: right;
+
+        // .spaced-bottom {
+        //     td {
+        //         padding-bottom: 0.5em !important;
+        //     }
+        //     &:last-child {
+        //         td {
+        //             padding-bottom: 0;
+        //         }
+        //     }
+        // }
+
+        // .spaced-top {
+        //     td {
+        //         padding-top: 0.5em !important;
+        //     }
+        //     &:last-child {
+        //         td {
+        //             padding-top: 0;
+        //         }
+        //     }
+        // }
+
+        .total {
+            td {
+                padding-top: 0.5em;
+                line-height: 2em;
+                color: $primary-color;
+            }
+            .price {
+                font-weight: 600;
+            }
+        }
+
+        .shipping {
+            .price:before {
+                content: '' !important;
+            }
+        }
+    }
+}
