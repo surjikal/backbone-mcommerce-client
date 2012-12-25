@@ -13,13 +13,6 @@
 
     table {
         width: 50%;
-
-        // td:first-child {
-        //     padding-left: 4%;
-        // }
-        // td:last-child {
-        //     padding-right: 4%;
-        // }
     }
 
     .item {
@@ -40,28 +33,6 @@
     .costs {
         line-height: 1.4em;
         float: right;
-
-        // .spaced-bottom {
-        //     td {
-        //         padding-bottom: 0.5em !important;
-        //     }
-        //     &:last-child {
-        //         td {
-        //             padding-bottom: 0;
-        //         }
-        //     }
-        // }
-
-        // .spaced-top {
-        //     td {
-        //         padding-top: 0.5em !important;
-        //     }
-        //     &:last-child {
-        //         td {
-        //             padding-top: 0;
-        //         }
-        //     }
-        // }
 
         .total {
             td {

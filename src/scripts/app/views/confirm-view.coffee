@@ -27,16 +27,3 @@ class App.Views.Confirm extends App.Views.WizardStep
         itemspot = @itemspot.toViewJSON()
         name: itemspot.item.name
         price: itemspot.itemPrice
-
-
-# API inputs:
-# - country
-# - postal code
-# - price
-
-
-# API returns:
-# - shipping
-# - tax
-# - total
-

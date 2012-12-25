@@ -9,9 +9,9 @@ form#boutique-select-form(method='post', action='.')
 
     input#boutique-code(name='boutique-code', type='text', autocapitalize='off', autocorrect='off')
 
-    button.btn-big#navigate-to-boutique-button(type="submit") Visit Boutique
+    button.button-primary#navigate-to-boutique-button(type="submit") Visit Boutique
 
     {{#if phonegap}}
     .sep(style="color: #aaa; padding: 1em 0; clear: both; text-shadow: 0px 1px 0px white") or
-    button.btn-big#scan-button(type="button") Scan Item
+    button.button-primary#scan-button(type="button") Scan Item
     {{/if}}
