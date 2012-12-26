@@ -7,7 +7,6 @@ class App.Views.WizardStepListItem extends Backbone.LayoutView
 
     initialize: (options) ->
         @step = options.step
-        @eventDispatcher = options.eventDispatcher
 
     setPercentageWidth: (width) ->
         @$el.css 'width', "#{width}%"
@@ -36,21 +35,23 @@ class App.Views.WizardStepList extends Backbone.LayoutView
 
         @eventDispatcher.on 'step:completed', =>
             @render()
+        , @
 
-        $(window).resize _.debounce (=>
-            @adjustSeparatorWidth()
-        ), 10
+        $(window).resize _.debounce (=> @_adjustSeparatorWidth()), 10
 
     beforeRender: ->
         _.each @steps, (step) =>
-            view = new App.Views.WizardStepListItem {step, @eventDispatcher}
+            view = new App.Views.WizardStepListItem {step}
             view.setPercentageWidth (100 / @steps.length)
             @insertView view
 
     afterRender: ->
-        @adjustSeparatorWidth()
+        @_adjustSeparatorWidth()
 
-    adjustSeparatorWidth: ->
+    cleanup: ->
+        @eventDispatcher.off null, null, @
+
+    _adjustSeparatorWidth: ->
         prev = null
         views = @views['']
 
@@ -96,14 +97,14 @@ class App.Views.WizardStep extends App.Views.FormView
         done()
 
     completed: (data) ->
-        @step.state = 'complete'
         @eventDispatcher.trigger 'step:completed', {data, @step}
 
 
 # TODO: Refactor; separate view and controller. Add step model and collection.
 class App.Views.Wizard extends Backbone.LayoutView
 
-    template: 'wizard'
+    className: 'wizard-view'
+    # template: 'wizard'
 
     # This data object is modified every time a step is done, and is
     # injected into the current step when it is shown. When the wizard
@@ -153,9 +154,14 @@ class App.Views.Wizard extends Backbone.LayoutView
 
     onStepCompleted: ({step, data}) =>
         nextStepId = @getNextStepId step.id
-        @_data = _.extend @_data, data
-        return @setStep nextStepId, @_data, true if nextStepId
-        @completed @_data
+        @_data     = _.extend @_data, data
+
+        if nextStepId
+            step = 'completed'
+            return @setStep nextStepId, @_data, true
+
+        @completed @_data, ->
+            step = 'completed'
 
     onAddUrlParameter: ({step, parameter}) =>
         search = window.location.search
@@ -183,8 +189,8 @@ class App.Views.Wizard extends Backbone.LayoutView
         stepIdMap
 
     initStepListView: ->
-        stepListView = new App.Views.WizardStepList {@steps, @eventDispatcher}
-        @setView '#wizard-step-list', stepListView
+        @stepListView = new App.Views.WizardStepList {@steps, @eventDispatcher}
+        @setView '#wizard-step-list', @stepListView
 
     getFirstStepId: ->
         _.first @stepOrder
@@ -209,12 +215,14 @@ class App.Views.Wizard extends Backbone.LayoutView
         @_setUrl "#{@getStepUrl id}#{window.location.search}"
         step.state = 'active'
         stepView = step._createView data
-        @setView '#wizard-step', stepView
+        @setView stepView
+        @initStepListView()
         stepView.render() if render
 
     # Implement this in your derived class
-    completed: (data) ->
+    completed: (data, done) ->
         console.warn 'Wizard completed, but derived class is not handling it.'
+        done()
 
     # Resetting all step states to be normal if they are not complete.
     _resetIncompleteStepStates: ->

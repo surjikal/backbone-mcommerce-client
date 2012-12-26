@@ -1,10 +1,15 @@
 
-#wizard-status-bar
+extends layouts/wizard-step-layout
+
+
+block wizard-status-bar
     h1 Your order
     .order-table
 
-.section
 
-form#confirm-form(method='post', action='.')
+block wizard-step
+    .section
 
-    button#wizard-next-step.button-primary(type="submit") Confirm your order
+    form#confirm-form(method='post', action='.')
+
+        button#wizard-next-step.button-primary(type="submit") Confirm your order

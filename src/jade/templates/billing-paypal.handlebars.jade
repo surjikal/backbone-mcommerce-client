@@ -1,10 +1,15 @@
 
-#wizard-status-bar
-    h1 Your Order
+extends layouts/wizard-step-layout
+
+
+block wizard-status-bar
+    h1 Your order
     .order-table
 
-.instructions.section(style="margin-top: 1em")
-    p We use PayPal to ensure that your billing information is safe.
-    p You will only be charged after you confirm your order.
 
-button.button-primary#wizard-next-step(type="submit") Continue to PayPal
+block wizard-step
+    .instructions.section(style="margin-top: 1em")
+        p We use PayPal to ensure that your billing information is safe.
+        p You will only be charged after you confirm your order.
+
+    button.button-primary#wizard-next-step(type="submit") Continue to PayPal

@@ -62,11 +62,12 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
         super
         App.router.navigate "#{@itemspot.getRouterUrl()}", {trigger:true, replace:true}
 
-    completed: (wizardData) ->
+    completed: (wizardData, completeLastStep) ->
         console.debug 'Purchase wizard has been completed.'
 
         finish = =>
             # TODO: Commit purchase here...
+            completeLastStep()
             @done wizardData
 
         return finish() if App.auth.user.isLoggedIn()

@@ -4,7 +4,6 @@ $active-color: $font-color-normal;
 $invalid-color: yellow;
 
 #wizard-status-bar {
-    margin: 0 (-4%);
     padding: 0.5em 4%;
     background: white;
     @include box-shadow(0px 1px 4px rgba(#333, 0.1));
