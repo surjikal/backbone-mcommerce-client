@@ -7,7 +7,7 @@ class App.Auth
         @events = _.extend {}, Backbone.Events
 
         # TODO: Switch to native secure storage in phonegap.
-        @credentialStore = new LocalStorageCredentialStore()
+        @credentialStore = new App.Controllers.LocalStorageCredentialStore()
 
     initialize: ->
         @_initializeUser()
@@ -108,7 +108,7 @@ class App.Auth
 
 
 
-class LocalStorageCredentialStore
+class App.Controllers.LocalStorageCredentialStore
 
     save: (email, password) ->
         localStorage.setItem 'email',    email
