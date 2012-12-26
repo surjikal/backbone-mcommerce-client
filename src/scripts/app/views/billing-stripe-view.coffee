@@ -85,7 +85,6 @@ class App.Views.StripeBilling extends App.Views.WizardStep
         invalidFields = (name for name, value of fieldValues when value?.length is 0)
 
         if not _.isEmpty invalidFields or not (fieldValues.cvc.length in [3,4])
-            # @setFieldErrors invalidFields
             return callbacks.error? 'Fill in all fields'
 
         if not Stripe.validateCardNumber fieldValues.cardNumber

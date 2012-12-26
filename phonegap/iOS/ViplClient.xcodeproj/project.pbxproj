@@ -216,8 +216,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				01131257167D746C00C8FB6B /* Security.framework */,
-				01131255167D744D00C8FB6B /* OpenGLES.framework */,
 				F840E1F0165FE0F500CFE078 /* config.xml */,
 				301BF56E109A69640062928A /* www */,
 				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
@@ -262,8 +260,8 @@
 			isa = PBXGroup;
 			children = (
 				0187ADCB167D14960017B383 /* libiconv.dylib */,
-				0187ADC9167D148E0017B383 /* CoreVideo.framework */,
 				0187ADC7167D14820017B383 /* AssetsLibrary.framework */,
+				0187ADC9167D148E0017B383 /* CoreVideo.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -274,7 +272,9 @@
 				301BF5BC109A6A2B0062928A /* CFNetwork.framework */,
 				301BF5BE109A6A2B0062928A /* CoreLocation.framework */,
 				301BF5C0109A6A2B0062928A /* MediaPlayer.framework */,
+				01131255167D744D00C8FB6B /* OpenGLES.framework */,
 				301BF5C2109A6A2B0062928A /* QuartzCore.framework */,
+				01131257167D746C00C8FB6B /* Security.framework */,
 				301BF5C4109A6A2B0062928A /* SystemConfiguration.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				30E5649113A7FCAF007403D8 /* CoreMedia.framework */,
