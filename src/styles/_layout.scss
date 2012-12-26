@@ -18,9 +18,12 @@ $header-height: 50px;
     // Enables native scrolling on iOS 5.1+
     -webkit-overflow-scrolling: touch;
 
-    // Fixes bug where `position:relative` or `position:absolute` elements would
-    // disappear on scroll. This enables GPU rendering.
-    -webkit-transform: translate3d(0, 0, 0);
+    & > * {
+        // Fixes bug where `position:relative` or `position:absolute` elements would
+        // disappear on scroll. This enables GPU rendering.
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
+    }
 }
 
 .content {
