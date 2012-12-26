@@ -28,6 +28,7 @@ App.events.on 'ready', ->
             @el = template (_.extend {}, context,
                 # These will be available in all templates.
                 isPhonegap: App.isPhonegap
+                Modernizr:  Modernizr
             )
 
         # Delegating to `underscore.deferred`
