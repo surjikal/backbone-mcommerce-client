@@ -53,6 +53,8 @@ class App.Views.Shipping extends App.Views.WizardStep
                         done data
 
     beforeRender: ->
+        super
+
         if @collection.isEmpty()
             console.debug "Addresses empty."
             @setAddressCreateMode()

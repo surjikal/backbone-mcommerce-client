@@ -93,10 +93,17 @@ class App.Views.WizardStep extends App.Views.FormView
     _addUrlParameter: (key, value) ->
         @eventDispatcher.trigger 'step:addUrlParameter', {@step, parameter:{key, value}}
 
+    beforeRender: ->
+        if @wizardStepListView
+            @setView '#wizard-step-list', @wizardStepListView
+
+    setWizardStepListView: (@wizardStepListView) ->
+
     beforeNextStep: (done) ->
         done()
 
     completed: (data) ->
+        @step.state = 'complete'
         @eventDispatcher.trigger 'step:completed', {data, @step}
 
 
@@ -141,9 +148,9 @@ class App.Views.Wizard extends Backbone.LayoutView
             console.debug "Preloading wizard with data:\n", options.wizardData
             @_data = options.wizardData
 
+        @initStepListView()
         @setStep initialStepId, @_data
 
-        @initStepListView()
 
     # Creates an events object which will be passed to all wizard steps.
     initializeEventDispatcher: ->
@@ -153,15 +160,15 @@ class App.Views.Wizard extends Backbone.LayoutView
         @eventDispatcher.on 'step:unmetDependencies', @onUnmetDependencies
 
     onStepCompleted: ({step, data}) =>
+        console.debug "Step '#{step.id}' completed."
+
         nextStepId = @getNextStepId step.id
         @_data     = _.extend @_data, data
 
-        if nextStepId
-            step = 'completed'
-            return @setStep nextStepId, @_data, true
+        return @setStep nextStepId, @_data, true if nextStepId
 
         @completed @_data, ->
-            step = 'completed'
+            step = 'complete'
 
     onAddUrlParameter: ({step, parameter}) =>
         search = window.location.search
@@ -190,7 +197,6 @@ class App.Views.Wizard extends Backbone.LayoutView
 
     initStepListView: ->
         @stepListView = new App.Views.WizardStepList {@steps, @eventDispatcher}
-        @setView '#wizard-step-list', @stepListView
 
     getFirstStepId: ->
         _.first @stepOrder
@@ -216,7 +222,7 @@ class App.Views.Wizard extends Backbone.LayoutView
         step.state = 'active'
         stepView = step._createView data
         @setView stepView
-        @initStepListView()
+        stepView.setWizardStepListView @stepListView
         stepView.render() if render
 
     # Implement this in your derived class
