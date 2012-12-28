@@ -17,6 +17,8 @@ class App.Views.Shipping extends App.Views.WizardStep
     initialize: (options) ->
         super
 
+        {itemspot} = options
+
         @collection.on 'remove', =>
             @render() if @collection.isEmpty()
 
@@ -25,6 +27,11 @@ class App.Views.Shipping extends App.Views.WizardStep
             'select': @setAddressSelectView
 
         @setAddressSelectMode()
+
+        refresh = ->
+            App.router.navigate itemspot.getCheckoutUrl(), {trigger:true}
+
+        App.auth.events.on 'login', refresh
 
     performValidation: (event) -> _.defer =>
         $button = @$ '#wizard-next-step'
