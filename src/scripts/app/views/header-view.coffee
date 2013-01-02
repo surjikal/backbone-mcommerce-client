@@ -60,16 +60,13 @@ class App.Views.Menu extends Backbone.LayoutView
         @initializeMenuItems options.items
 
         # Close the menu whenever the page is changed.
-        App.router.on 'all', =>
-            _.defer =>
-                # For some reason, using `@close()` doesn't work.
-                @$el.removeClass 'active'
+        App.router.on 'all', => _.defer =>
+            # For some reason, using `@close()` doesn't work.
+            @$el.removeClass 'active'
 
     # A view item object can contain either:
-    #
-    # - {title, url} -> Creates a `App.Views.MenuItem` with the specified url and title
-    # OR
-    # - {viewClass}  -> Use custom view that extends `App.Views.MenuItem`
+    # - {title, url}: Creates a `App.Views.MenuItem` with the specified url and title    **OR**
+    # - {viewClass}:  Use custom view that extends `App.Views.MenuItem`
     initializeMenuItems: (items = []) ->
         _.each items, (item) =>
             ViewClass = item.viewClass or App.Views.MenuItem
