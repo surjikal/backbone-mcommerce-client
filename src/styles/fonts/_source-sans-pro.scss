@@ -1,6 +1,4 @@
 
-
-
 @include font-face(
     "Source Sans Pro",
     inline-font-files('source-sans-pro/SourceSansPro-ExtraLight.ttf', truetype),
@@ -29,4 +27,10 @@
     "Source Sans Pro",
     inline-font-files('source-sans-pro/SourceSansPro-Bold.ttf', truetype),
     $weight: 700
+);
+
+@include font-face(
+    "Source Sans Pro",
+    inline-font-files('source-sans-pro/SourceSansPro-Italic.ttf', truetype),
+    $style: italic
 );

@@ -1,11 +1,19 @@
 
+// The size of the left/right text margins
+$gutter-size: 5%;
+
+
 .itemspot-view {
     position: relative;
     min-height: 100%;
 
+    background: white;
+
     section.item-images  {
 
         .carousel {
+            background: white;
+
             img {
                 max-height: 300px;
                 display: block;
@@ -13,20 +21,6 @@
                 margin: 0 auto;
             }
         }
-
-        .item-price {
-            background: rgba(white, 0.6);
-            margin: 0 auto;
-            min-width: 85px;
-            color: #232323;
-            right: 0;
-            top: 70px;
-            position: absolute;
-            font-weight: bold;
-            text-align: center;
-            padding: 0.6em 0.8em;
-        }
-
     }
 
     .item-info {
@@ -38,14 +32,19 @@
         // `top` value is calculated dynamically based on the height of `.item-images`.
         //  See `itemspot-view.coffee` for details.
 
+        // @include box-shadow(0 0 18px 4px rgb(218,218,218));
+        // border-top: 1px solid #f2f2f2;
+
+        border-top: 1px solid rgb(230,230,230);
+        background-color: #fcfcfc;
+        z-index: 10;
+
         header {
             color: #232323;
             font-weight: bold;
-            background-color: #eee;
-            padding: 10px 0 10px 10px;
-            z-index: 10;
-            @include box-shadow(0 0 15px 3px rgba(black, 0.2));
-            margin-top: 0em !important;
+
+            margin: 0 !important;
+            overflow: hidden;
 
             &.fixed {
                 position: fixed;
@@ -54,47 +53,107 @@
                 right: 0;
             }
 
-            .item-name {
-                display: inline-block;
-                width: 70%;
-                font-size: 120%;
+            .item-top-bar {
+
+                padding: 0 $gutter-size;
+                background-color: #eee;
+
+                .item-name {
+                    font-size: 120%;
+                    margin: 0 !important;
+                    line-height: 2.5em !important;
+                    color: #666;
+                }
+
+                .item-stats {
+                    overflow: hidden;
+                    font-weight: 400;
+
+                    i {
+                        position: relative;
+                        width: 20px;
+                        height: 20px;
+                        background: red;
+                        margin: 0 10px 0 0;
+                    }
+
+                    .views-count, .likes-count {
+                        float: left;
+                        color: #999;
+                        margin-right: 30px;
+                    }
+                }
+            }
+
+            .item-action-bar {
+                position: relative;
+                height: 50px;
+                line-height: 50px;
+                $left-action-width: 45%;
+
+
+                .action {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                }
+
+                .action-left {
+                    line-height: 48px;
+                    left: 0;
+                    right: $left-action-width;
+                    padding-left: $gutter-size;
+                    @include box-shadow(inset 0px -1px 0px rgba(0,0,0,0.05),
+                                              0px -1px 0px #e6e6e6);
+                    // border-top: 1px solid #e6e6e6;
+                }
+
+                .action-right {
+                    left: 100% - $left-action-width;
+                    right: 0;
+                }
+            }
+
+
+            .item-price, .item-quantity {
+                color: $primary-color;
+                font-size: 140%;
+                font-weight: 600;
+            }
+
+
+            .item-price {
+                &:before {
+                    content: '$';
+                }
+            }
+
+            .item-quantity {
+
+                &:after {
+                    content: 'for';
+                    font-size: 60%;
+                    margin: 0 0.8em;
+                    font-weight: normal;
+                    font-style: italic;
+                }
             }
 
             #buy-button {
-                width: 85px;
-                font-weight: bold;
-                float: right;
+                width: 100%;
+                margin: 0;
+                height: 100%;
+                line-height: 100%;
+                text-transform: capitalize;
+                // @include box-shadow(inset 0px -3px 0px rgba(0,0,0,0.05));
             }
 
-
-            .item-stats {
-                overflow: hidden;
-                margin: 20px 0 0 0;
-
-                div {
-                    float: left;
-                }
-
-                i {
-                    position: relative;
-                    width: 20px;
-                    height: 20px;
-                    background: red;
-                    margin: 0 10px 0 0;
-                }
-
-                .views-count, .likes-count {
-                    color: #999;
-                    margin-right: 30px;
-                }
-            }
         }
 
         .item-details {
             color: #666;
-            background: #fff;
             z-index: 20;
-
+            border-top: 1px solid white;
             position: absolute;
             left: 0;
             right: 0;
@@ -103,10 +162,8 @@
             //  See `itemspot-view.coffee` for details.
 
             p {
-                background: white;
-
                 line-height: 1.6em;
-                padding: 20px;
+                padding: 1em $gutter-size;
                 text-align: justify;
             }
         }

@@ -5,22 +5,31 @@ section.item-images
     .carousel
         img(src="{{image}}")
 
-    h1.price.item-price {{{formatPrice itemPrice}}}
-
 
 section.item-info
 
     header.waypoint
 
-        h1.item-name {{item.name}}
-        button.button-primary#buy-button Buy
+        section.item-top-bar
+            h1.item-name {{item.name}}
 
-        .item-stats
-            i.views-icon
-            .views-count {{stats.views}}
-            i.likes-icon
-            .likes-count {{stats.likes}}
+            //- .item-stats
+            //-     i.views-icon
+            //-     .views-count {{stats.views}}
+            //-     i.likes-icon
+            //-     .likes-count {{stats.likes}}
 
+         section.item-action-bar
+
+            .action.action-left
+                {{#if itemQuantity}}
+                span.item-quantity {{itemQuantity}}
+                {{/if}}
+                span.item-price {{{formatPrice itemPrice}}}
+
+
+            .action.action-right
+                button.button-primary#buy-button(type='button') Purchase
 
     .item-details
         p {{item.details}}
