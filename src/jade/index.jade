@@ -11,7 +11,8 @@ html
 
         meta(charset='utf-8')
 
-        include includes/mobile-meta-tags
+        if !locals.isPhonegapBuild
+            include includes/mobile-meta-tags
 
         //- link(rel='apple-touch-icon-precomposed', href='#{STATIC_URL}images/apple-icon.png')
         //- link(rel='apple-touch-startup-image',    href='#{STATIC_URL}images/apple-startup-image.png')
