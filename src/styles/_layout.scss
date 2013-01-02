@@ -23,6 +23,7 @@ $header-height: 50px;
         // disappear on scroll. This enables GPU rendering.
         -webkit-backface-visibility: hidden;
         -webkit-perspective: 1000;
+        -webkit-transform: translateZ(0);
     }
 }
 
