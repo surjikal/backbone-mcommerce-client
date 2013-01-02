@@ -106,7 +106,8 @@ html
 
         script
             function startApp() {
-                App.config = !{appConfig};
+                App.config     = !{appConfig};
+                App.isPhonegap = !{Boolean(locals.isPhonegapBuild || locals.pretend_is_phonegap_build)};
                 App.events.trigger('ready');
             }
 
@@ -115,10 +116,7 @@ html
         //- If this is a normal build, do it after the document is ready.
         if locals.isPhonegapBuild
             script
-                $(document).on('deviceready', function() {
-                    App.isPhonegap = !{Boolean(locals.isPhonegapBuild)};
-                    startApp();
-                });
+                $(document).on('deviceready', startApp);
         else
             script
                 $(startApp);
