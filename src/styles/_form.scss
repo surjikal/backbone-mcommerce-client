@@ -76,17 +76,16 @@ input[type="color"] {
     $border-width: 1px;
     $horizontal-padding: 6px;
 
+    $border-color-normal: #ddd;
+    $border-color-focus: $primary-color;
+
     display: block;
     font-size: 110%;
-    border: $border-width solid #ddd;
+    border: $border-width solid $border-color-normal;
     padding: 0.3em $horizontal-padding;
     margin: 0.2em auto 0.7em auto;
     color: #555;
     width: 100%;
-
-    &.input-auto-width {
-        width: auto;
-    }
 
     outline: none;
 
@@ -97,9 +96,18 @@ input[type="color"] {
 
     &:focus {
         $border-left-width: 3px;
-        border-color: $primary-color;
+        border-color: $border-color-focus;
         border-left-width: $border-left-width;
         padding-left: $horizontal-padding - $border-left-width + $border-width;
+    }
+
+    &.input-auto-width {
+        width: auto;
+    }
+
+    &.input-no-focus-left-border:focus {
+        border-left-width: $border-width !important;
+        padding-left: $horizontal-padding !important;
     }
 }
 

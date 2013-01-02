@@ -1,13 +1,19 @@
 
+
 h1.logo VIRTUAL PLAZA
 
 hr
 
 form#boutique-select-form(method='post', action='.')
 
-    .instructions enter a boutique code
+    {{#if isPhonegap}}
+    .instructions Scan an item or enter a boutique code to begin!
+    {{else}}
+    .instructions Enter a boutique code to begin!
+    {{/if}}
 
-    input#boutique-code(name='boutique-code', type='text', autocapitalize='off', autocorrect='off')
+    input#boutique-code.input-no-focus-left-border(
+        name='boutique-code', type='text', autocapitalize='off', autocorrect='off')
 
     button.button-primary#navigate-to-boutique-button(type="submit") Visit Boutique
 

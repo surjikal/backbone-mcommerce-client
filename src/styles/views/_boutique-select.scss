@@ -16,7 +16,7 @@
 
     .logo {
         text-align: center;
-        font-size: 140%;
+        font-size: 200% !important;
         margin: 0 auto;
     }
 
@@ -24,10 +24,19 @@
         margin: 1em 0;
     }
 
+    .instructions {
+        font-size: 80%;
+    }
+
+    #boutique-select-form {
+        margin: 0 4%;
+    }
+
     input {
         text-align: center;
         margin: 1em auto 0.5em auto !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
+        font-size: 160%;
     }
 }
