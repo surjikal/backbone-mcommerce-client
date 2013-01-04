@@ -81,7 +81,8 @@ App.events.on 'ready', ->
 
 HandlebarsHelpers =
 
-    formatPrice: (price) ->
-        price = parseFloat price
-        decimalPlaces = if (Math.round price) == price then 0 else 2
+    formatPrice: (price, decimalPlaces) ->
+        price         = parseFloat price
+        decimalPlaces = 2 if not _.isNumber decimalPlaces
+
         (new Number price).toFixed decimalPlaces
