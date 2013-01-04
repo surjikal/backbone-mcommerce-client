@@ -49,7 +49,11 @@ class App.Views.FormView extends Backbone.LayoutView
         $button = @getSubmitButton()
         $button.text text
 
-    enablePending: (buttonSelector) ->
+    enablePending: (buttonSelector, timeout = PENDING_TIMEOUT) ->
+
+        if _.isNumber buttonSelector
+            timeout        = buttonSelector
+            buttonSelector = null
 
         showLoadingSpinner = =>
             $button = if buttonSelector then (@$ buttonSelector) else @getSubmitButton()
@@ -57,7 +61,9 @@ class App.Views.FormView extends Backbone.LayoutView
 
         @pending = true
         showLoadingSpinner()
-        @pendingTimer = setTimeout @onPendingTimeout, PENDING_TIMEOUT
+
+        if timeout >= 0
+            @pendingTimer = setTimeout @onPendingTimeout, timeout
 
     onPendingTimeout: =>
         @disablePending()

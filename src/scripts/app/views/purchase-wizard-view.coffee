@@ -37,8 +37,9 @@ class App.Views.PurchaseWizard extends App.Views.Wizard
                     new ViewClass  _.extend options, {
                         collection: addresses
                         @itemspot
+                        params
                         wizardData
-                        key: App.config.stripe.key if App.config.useStripe
+                        key:      App.config.stripe.key if App.config.useStripe
                     }
             }
             {

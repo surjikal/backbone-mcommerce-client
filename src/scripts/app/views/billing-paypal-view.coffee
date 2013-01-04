@@ -26,7 +26,7 @@ class App.Views.PaypalBilling extends App.Views.WizardStep
 
     beforeNextStep: ->
         # email = @user.get 'email'
-        @enablePending()
+        @enablePending -1
 
         @controller.getToken @address, @itemspot,
             success: (response) =>
