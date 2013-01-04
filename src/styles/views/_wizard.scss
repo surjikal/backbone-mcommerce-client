@@ -5,7 +5,7 @@ $invalid-color: yellow;
 
 #wizard-status-bar {
     padding: 0.5em 4%;
-    background: #fcfcfc;
+    background: white;
     @include box-shadow(0px 1px 4px rgba(#333, 0.1));
     @include box-sizing(content-box);
     line-height: 2em;
@@ -89,7 +89,7 @@ $invalid-color: yellow;
                     text-align: center;
                     content: '▲';
                     display: block;
-                    color: #fcfcfc;
+                    color: white;
                     font-size: 20px;
                     position: absolute;
                     bottom: 0;
