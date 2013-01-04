@@ -2,12 +2,13 @@
 
 class App.Views.AddressSelect extends App.Views.AddressModeView
     template: 'address-select'
+
     className: 'address-select'
 
     initialize: (options) ->
         super
         @addressListView = new AddressListView {@collection}
-        @setView '.container', @addressListView
+        @setView @addressListView
 
     validateForm: (callbacks) ->
         callbacks.success {}
@@ -65,10 +66,8 @@ class AddressListItemView extends Backbone.LayoutView
         @select() if options.selected
 
     clicked: ->
-        if @isSelected()
-            @toggleRemoveButton()
-        else
-            @parent.selectAddressView @
+        return @toggleRemoveButton() if @isSelected()
+        _.defer => @parent.selectAddressView @
 
     hideRemoveButton: ->
         @$el.find('.remove').hide()
