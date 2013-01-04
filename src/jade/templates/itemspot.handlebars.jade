@@ -1,5 +1,6 @@
 
 
+
 section.item-images
 
     .carousel
@@ -22,14 +23,25 @@ section.item-info
          section.item-action-bar
 
             .action.action-left
-                {{#if itemQuantity}}
-                span.item-quantity {{itemQuantity}}
-                {{/if}}
-                span.item-price {{{formatPrice itemPrice}}}
+
+                span.item-quantity
+                    | {{#if itemQuantity}}{{itemQuantity}}{{else}}1{{/if}}
+
+                span.item-price
+                    | {{{formatPrice itemPrice}}}
 
 
             .action.action-right
                 button.button-primary#buy-button(type='button') Purchase
+
+        //- .styled-select
+            //- select.item-quantities
+            //-     {{#each quantities}}
+            //-     option(value=)
+            //-     {{/each}}
+
+            //- span.item-quantity 1
+            //- span.item-price {{{formatPrice itemPrice}}}
 
     .item-details
         p {{item.details}}
