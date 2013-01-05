@@ -34,7 +34,7 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
 
     scanButtonClicked: (event) =>
         console.debug "Scan button clicked."
-        @enablePending '#scan-button', 0
+        @enablePending '#scan-button', -1
         controller = new App.Controllers.BarcodeScanner()
         controller.scan
             success: (boutiqueCode, itemspotIndex) =>
