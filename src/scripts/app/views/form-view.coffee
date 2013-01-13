@@ -1,5 +1,5 @@
 
-LOADING_TIMEOUT = 2000
+LOADING_TIMEOUT = 10000
 
 
 class App.Views.FormView extends Backbone.LayoutView
@@ -80,34 +80,45 @@ class App.Views.FormView extends Backbone.LayoutView
     cleanup: ->
         console.debug 'Cleaning up form view.'
         @disablePending()
+        clearTimeout @timer
 
     withLoadingSpinner: (event) => ({target, timeout, onEvent, onTimeout}) =>
 
-        timeout = LOADING_TIMEOUT if not timeout
-        getTargetEl = if target then (=> @$(target)) else @getSubmitButton
+            return false if @isLoading
 
-        isLoading = false
-        timer     = null
+            timeout     = LOADING_TIMEOUT if not timeout
+            getTargetEl = if target then (=> @$(target)) else @getSubmitButton
 
-        startLoading = ->
-            timer = initTimer() if timeout >= 0
-            isLoading = true
-            $target = getTargetEl()
-            $target.addClass 'loading'
+            startLoading = =>
+                @timer     = if (timeout >= 0) then initTimer() else null
+                @isLoading = true
+                $target   = getTargetEl()
+                $target.addClass 'loading'
 
-        stopLoading = ->
-            clearTimeout timer
-            isLoading = false
-            $target = getTargetEl()
-            $target.removeClass 'loading'
+            stopLoading = =>
+                clearTimeout @timer
+                @timer     = null
+                @isLoading = false
+                $target   = getTargetEl()
+                $target.removeClass 'loading'
 
-        _onTimeout = =>
-            stopLoading()
-            if onTimeout then onTimeout.call @ \
-                         else @errorAlert 'The server is not responding :(. Please try again.'
+            _onTimeout = =>
+                stopLoading()
+                if onTimeout then onTimeout.call @ \
+                             else @errorAlert 'The server is not responding :(. Please try again.'
 
-        initTimer = =>
-            setTimeout _onTimeout, timeout
+            initTimer = ->
+                setTimeout _onTimeout, timeout
 
-        return false if isLoading
-        onEvent.call @, startLoading, stopLoading
+            loader =
+                start: startLoading
+                stop:  stopLoading
+
+                callback: (handler) => =>
+                    if not @isLoading
+                        return console.debug 'Callback timed-out; not calling handler.'
+
+                    stopLoading()
+                    handler.apply @, arguments
+
+            onEvent.call @, loader

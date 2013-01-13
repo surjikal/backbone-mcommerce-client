@@ -19,18 +19,14 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
         (@$el.find '#boutique-code').val()
 
     navigateToBoutiqueButtonClicked: (event) => (@withLoadingSpinner event)
-        onEvent: (startLoading, stopLoading) =>
+        onEvent: (loader) =>
             event.preventDefault()
-
             return @onEmptyBoutiqueCode() if not (boutiqueCode = @getBoutiqueCode())
-            startLoading()
-
+            loader.start()
             App.collections.boutiques.getOrFetch boutiqueCode,
-                success: (boutique) =>
-                    stopLoading()
+                success: loader.callback (boutique) =>
                     @navigateToBoutique boutique
-                notFound: =>
-                    stopLoading()
+                notFound: loader.callback =>
                     @onBoutiqueCodeNotFound boutiqueCode
 
     navigateToBoutique: (boutique) ->
@@ -44,28 +40,23 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
         target: '#scan-button'
         timeout: -1
 
-        onEvent: (startLoading, stopLoading) ->
-            startLoading()
+        onEvent: (loader) ->
+            loader.start()
 
             controller = new App.Controllers.BarcodeScanner()
             controller.scan
                 success: (boutiqueCode, itemspotIndex) =>
                     App.collections.boutiques.getOrFetch boutiqueCode,
-                        success: =>
-                            stopLoading()
+                        success: loader.callback =>
                             @navigateToItemspot boutiqueCode, itemspotIndex
-                        notFound: =>
-                            stopLoading()
+                        notFound: loader.callback =>
                             @onBoutiqueCodeNotFound boutiqueCode
-                cancelled: =>
-                    stopLoading()
+                cancelled: loader.callback =>
                     console.log "User cancelled barcode scanner."
-                scanError: (errorMessage) =>
-                    stopLoading()
+                scanError: loader.callback =>
                     console.error "Scanner error:", errorMessage
                     @errorAlert "Something went wrong with the scanner. Please, try again!"
-                parseError: (scannedData) =>
-                    stopLoading()
+                parseError: loader.callback =>
                     console.error "Could not parse scanned data. Data:", scannedData
                     @errorAlert "I couldn't read the barcode :(. Please, try again!"
 
