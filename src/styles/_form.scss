@@ -107,7 +107,7 @@ input[type="color"] {
 
     &.input-no-focus-left-border:focus {
         border-left-width: $border-width !important;
-        padding-left: $horizontal-padding !important;
+        padding: 0.3em $horizontal-padding !important;
     }
 }
 
