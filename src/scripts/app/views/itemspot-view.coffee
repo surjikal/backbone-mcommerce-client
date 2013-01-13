@@ -12,9 +12,11 @@ class App.Views.ItemSpot extends App.Views.FormView
             @onResize()
         , 10
 
-    navigateToCheckout: ->
-        @enablePending 'button'
-        App.router.navigate @model.getCheckoutUrl(), {trigger: true}
+    navigateToCheckout: (event) => (@withLoadingSpinner event)
+        target: '#buy-button'
+        onEvent: (loader) =>
+            loader.start()
+            App.router.navigate @model.getCheckoutUrl(), {trigger: true}
 
     serialize: ->
         @model.toViewJSON()
