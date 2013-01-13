@@ -18,7 +18,11 @@ class Api
 
     post: (action, data, callbacks) ->
         url = @url action
-        App.utils.json.post {url, data, callbacks}
+
+        options = {url, data, callbacks}
+        options.auth = "Basic #{App.auth.token}" if App.auth.isLoggedIn
+
+        App.utils.json.post options
 
 
 class App.Api.Auth extends Api

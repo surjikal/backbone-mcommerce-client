@@ -11,26 +11,27 @@ App.utils =
             options.type = 'get'
             @ajax options
 
-        ajax: (options) ->
-            throw "Missing url option."  if not options.url
-            throw "Missing type option." if not options.type
+        ajax: ({url, type, data, auth, callbacks}) ->
+            throw "Missing url option."  if not url
+            throw "Missing type option." if not type
 
-            if not options.callbacks
+            if not callbacks
                 console.warn "No callbacks specified."
-                options.callbacks = {}
+                callbacks = {}
 
-            $.ajax
-                url: options.url
-                type: options.type
+            $.ajax {
+                url
+                type
                 dataType: 'json'
                 contentType: 'application/json'
-                data: (JSON.stringify options.data) if options.data
+                data: (JSON.stringify data) if data
+                headers: Authorization: auth if auth
 
                 error: (jqXHR, textStatus, errorThrown) =>
                     response = @_parseReponseText jqXHR.responseText
                     response = switch jqXHR.status
                         when 500
-                            #@_handleInternalServerError jqXHR
+                            # @_handleInternalServerError jqXHR
                             response or {reason:'serverError'}
                         when 401
                             @_handleUnauthorizedError jqXHR
@@ -39,17 +40,18 @@ App.utils =
                             response
 
                     reason = response?.reason
-                    callback = options.callbacks[response?.reason]
+                    callback = callbacks[response?.reason]
 
                     if not callback and reason
                         console.debug response
                         console.debug "Error reason '#{reason}' unhandled. Reverting to 'error' callback (if any)."
-                        callback = options.callbacks.error
+                        callback = callbacks.error
 
                     return callback?(jqXHR, textStatus, errorThrown)
 
                 success: (data) ->
-                    options.callbacks.success data
+                    callbacks.success data
+            }
 
         _parseReponseText: (responseText) ->
             return try response = JSON.parse responseText

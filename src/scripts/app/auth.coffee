@@ -47,10 +47,12 @@ class App.Auth
         @_resetUser()
         @_initializeAnonymousUser()
         @isLoggedIn = false
+        @token = null
         @events.trigger 'logout'
 
     _login: (email, password) ->
-        console.debug "Logging in user #{email}."
+        console.debug "Logging in user '#{email}'."
+        @token = @_makeBasicAuthToken email, password
         Backbone.BasicAuth.set email, password
         @credentialStore.save email, password
         @isLoggedIn = true
@@ -106,6 +108,8 @@ class App.Auth
         @credentialStore.clear()
         localStorage.clear()
 
+    _makeBasicAuthToken: (username, password) ->
+        btoa "#{username}:#{password}"
 
 
 class App.Controllers.LocalStorageCredentialStore
