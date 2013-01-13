@@ -130,7 +130,7 @@ class App.Router extends Backbone.Router
 # Some helpers
 
 getBoutiqueOrShowNotFound = (boutiqueCode, success) ->
-    App.collections.boutiques.getOrCreateFromCode boutiqueCode, {
+    App.collections.boutiques.getOrFetch boutiqueCode, {
         success
         notFound: ->
             App.router.navigate "/boutiques/#{boutiqueCode}/notFound", {trigger: true}
@@ -139,10 +139,5 @@ getBoutiqueOrShowNotFound = (boutiqueCode, success) ->
 
 getItemSpotOrShowNotFound = (boutiqueCode, index, success) ->
     getBoutiqueOrShowNotFound boutiqueCode, (boutique) ->
-        itemspot = boutique.getItemSpotFromIndex index
-
-        if not itemspot
-            return App.router.navigate "/boutiques/#{boutiqueCode}/items/#{index}/notFound", {trigger: true}
-
-        itemspot.fetch success: (itemspot) =>
-            success itemspot
+        return success itemspot if itemspot = boutique.getItemSpotFromIndex index
+        App.router.navigate "/boutiques/#{boutiqueCode}/items/#{index}/notFound", {trigger: true}

@@ -1,5 +1,5 @@
 
-class App.Collections.Address extends Backbone.Collection
+class App.Collections.Address extends App.Collections.Base
 
     model: App.Models.Address
 

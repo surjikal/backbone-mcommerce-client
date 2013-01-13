@@ -1,4 +1,4 @@
 
-class App.Collections.ItemSpot extends Backbone.Collection
+class App.Collections.ItemSpot extends App.Collections.Base
 
     model: App.Models.ItemSpot
