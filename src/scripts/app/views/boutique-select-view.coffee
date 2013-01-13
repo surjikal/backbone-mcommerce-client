@@ -5,8 +5,9 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
     className: 'content boutique-select-view'
 
     events:
-        'click #navigate-to-boutique-button': 'navigateToBoutiqueButtonClicked'
-        'click #scan-button':                 'scanButtonClicked'
+        _.extend {}, App.Views.FormView::events,
+            'click #navigate-to-boutique-button': 'navigateToBoutiqueButtonClicked'
+            'click #scan-button':                 'scanButtonClicked'
 
     onEmptyBoutiqueCode: ->
         @errorAlert "Please enter a boutique code."
@@ -17,40 +18,56 @@ class App.Views.BoutiqueSelect extends App.Views.FormView
     getBoutiqueCode: ->
         (@$el.find '#boutique-code').val()
 
-    navigateToBoutiqueButtonClicked: (event) ->
-        event.preventDefault()
-        boutiqueCode = @getBoutiqueCode()
-        return @onEmptyBoutiqueCode() if not boutiqueCode
-        @navigateToBoutique boutiqueCode
-        return false
+    navigateToBoutiqueButtonClicked: (event) => (@withLoadingSpinner event)
+        onEvent: (startLoading, stopLoading) =>
+            event.preventDefault()
 
-    navigateToBoutique: (boutiqueCode) ->
-        @enablePending()
+            return @onEmptyBoutiqueCode() if not (boutiqueCode = @getBoutiqueCode())
+            startLoading()
+
+            App.collections.boutiques.getOrFetch boutiqueCode,
+                success: (boutique) =>
+                    stopLoading()
+                    @navigateToBoutique boutique
+                notFound: =>
+                    stopLoading()
+                    @onBoutiqueCodeNotFound boutiqueCode
+
+    navigateToBoutique: (boutique) ->
+        boutiqueCode = boutique.get 'code'
         App.router.navigate "/boutiques/#{boutiqueCode}", {trigger: true}
 
     navigateToItemspot: (boutiqueCode, itemspotIndex) ->
-        @enablePending()
         App.router.navigate "/boutiques/#{boutiqueCode}/items/#{itemspotIndex}", {trigger: true}
 
-    scanButtonClicked: (event) =>
-        console.debug "Scan button clicked."
-        @enablePending '#scan-button', -1
-        controller = new App.Controllers.BarcodeScanner()
-        controller.scan
-            success: (boutiqueCode, itemspotIndex) =>
-                @disablePending()
-                @navigateToItemspot boutiqueCode, itemspotIndex
-            cancelled: =>
-                @disablePending()
-                console.log "User cancelled barcode scanner."
-            scanError: (errorMessage) =>
-                @disablePending()
-                console.error "Scanner error:", errorMessage
-                @errorAlert "Something went wrong with the scanner. Please, try again!"
-            parseError: (scannedData) =>
-                @disablePending()
-                console.error "Could not parse scanned data. Data:", scannedData
-                @errorAlert "I couldn't read the barcode :(. Please, try again!"
+    scanButtonClicked: (e) => (@withLoadingSpinner e)
+        target: '#scan-button'
+        timeout: -1
+
+        onEvent: (startLoading, stopLoading) ->
+            startLoading()
+
+            controller = new App.Controllers.BarcodeScanner()
+            controller.scan
+                success: (boutiqueCode, itemspotIndex) =>
+                    App.collections.boutiques.getOrFetch boutiqueCode,
+                        success: =>
+                            stopLoading()
+                            @navigateToItemspot boutiqueCode, itemspotIndex
+                        notFound: =>
+                            stopLoading()
+                            @onBoutiqueCodeNotFound boutiqueCode
+                cancelled: =>
+                    stopLoading()
+                    console.log "User cancelled barcode scanner."
+                scanError: (errorMessage) =>
+                    stopLoading()
+                    console.error "Scanner error:", errorMessage
+                    @errorAlert "Something went wrong with the scanner. Please, try again!"
+                parseError: (scannedData) =>
+                    stopLoading()
+                    console.error "Could not parse scanned data. Data:", scannedData
+                    @errorAlert "I couldn't read the barcode :(. Please, try again!"
 
 
 class App.Controllers.BarcodeScanner
@@ -97,6 +114,11 @@ class App.Controllers.BarcodeScanner
         [boutiqueCode, itemspotIndex] = tokens
         success? boutiqueCode, itemspotIndex
 
-    # Override this for testing
     _callScanPlugin: ->
         window.plugins.barcodeScanner.scan arguments...
+
+
+class App.Controllers.MockBarcodeScanner
+
+    scan: ({success, cancelled, parseError, scanError}) ->
+        success? 'vipl', 5

@@ -1,8 +1,11 @@
 
-PENDING_TIMEOUT = 5000
+LOADING_TIMEOUT = 2000
 
 
 class App.Views.FormView extends Backbone.LayoutView
+
+    events:
+        'submit': -> false
 
     initiliaze: ->
         @fields = @fields or {}
@@ -49,7 +52,7 @@ class App.Views.FormView extends Backbone.LayoutView
         $button = @getSubmitButton()
         $button.text text
 
-    enablePending: (buttonSelector, timeout = PENDING_TIMEOUT) ->
+    enablePending: (buttonSelector, timeout = LOADING_TIMEOUT) ->
 
         if _.isNumber buttonSelector
             timeout        = buttonSelector
@@ -72,8 +75,39 @@ class App.Views.FormView extends Backbone.LayoutView
     disablePending: ->
         clearTimeout @pendingTimer
         @pending = false
-        (@$ '.loading')?.removeClass 'loading'
+        @$('.loading')?.removeClass 'loading'
 
     cleanup: ->
         console.debug 'Cleaning up form view.'
         @disablePending()
+
+    withLoadingSpinner: (event) => ({target, timeout, onEvent, onTimeout}) =>
+
+        timeout = LOADING_TIMEOUT if not timeout
+        getTargetEl = if target then (=> @$(target)) else @getSubmitButton
+
+        isLoading = false
+        timer     = null
+
+        startLoading = ->
+            timer = initTimer() if timeout >= 0
+            isLoading = true
+            $target = getTargetEl()
+            $target.addClass 'loading'
+
+        stopLoading = ->
+            clearTimeout timer
+            isLoading = false
+            $target = getTargetEl()
+            $target.removeClass 'loading'
+
+        _onTimeout = =>
+            stopLoading()
+            if onTimeout then onTimeout.call @ \
+                         else @errorAlert 'The server is not responding :(. Please try again.'
+
+        initTimer = =>
+            setTimeout _onTimeout, timeout
+
+        return false if isLoading
+        onEvent.call @, startLoading, stopLoading
