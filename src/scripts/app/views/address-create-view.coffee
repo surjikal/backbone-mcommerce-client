@@ -26,6 +26,12 @@ class App.Views.AddressCreate extends App.Views.AddressModeView
         callbacks.success? fieldValues
 
     submitForm: (cleanedFields, callbacks) ->
+
+        if App.config.offlineMode
+            address = new App.Models.Address cleanedFields
+            @collection.add address
+            return callbacks.success {address}
+
         @collection.create cleanedFields,
                 success: (address) ->
                     callbacks.success {address}

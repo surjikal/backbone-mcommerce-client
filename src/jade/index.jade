@@ -99,8 +99,14 @@ html
 
         //- If we were given a config object, inject it in the App, otherwise panic!
         if locals.appConfig
+
+            if locals.appConfig.offlineMode
+                mixin app-core('offline-images')
+                mixin app-core('offline-data')
+
             - var appConfig = JSON.stringify(locals.appConfig, null, 2)
             - console.log('Using app config:\n' + appConfig)
+
         else
             != console.error('ERROR: App config is undefined!')
             != console.error(derp) //- Causes an exception, stops compilation

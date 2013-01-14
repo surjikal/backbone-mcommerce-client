@@ -14,6 +14,8 @@ App =
         App.api.initialize App.config.urls.api
         App.auth.initialize()
 
+        App.loadOfflineData() if App.config.offlineMode
+
     getAbsoluteUrl: (relativeUrl) ->
         "#{App.location}/#{relativeUrl}"
 

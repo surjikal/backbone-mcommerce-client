@@ -19,6 +19,7 @@ class App.Auth
     # - disabled:  the account associated to the credentials has been disabled
     # - error:     there was an error communicating with the server
     login: (email, password, {success, incorrect, invalid, disabled, error} = {}) ->
+        console.debug App.api.auth
         App.api.auth.validate email, password, {incorrect, invalid, disabled, error, success: =>
             @_resetUser()
             @_login email, password
@@ -83,11 +84,21 @@ class App.Auth
         addressesCopy = new App.Collections.Address()
         (@user.get 'account').set 'addresses', addressesCopy
 
+        serializeAddress = (address) ->
+            serialized = address.toJSON()
+            delete serialized.id
+            serialized
+
+        if App.config.offlineMode
+            addresses.each (address) ->
+                serialized = (serializeAddress address)
+                addressesCopy.add serialized
+            return success?()
+
         # FIXME: This is nasty, but I don't know how to POST to a address list endpoint!
         #        So instead, I just create all of the addresses in parallel.
         makeAddressCreateCallback = (address) -> (callback) ->
-            serialized = address.toJSON()
-            delete serialized.id
+            serialized = (serializeAddress address)
             addressesCopy.create serialized,
                 error: (model, error)->
                     callback error

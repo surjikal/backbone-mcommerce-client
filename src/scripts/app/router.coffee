@@ -76,9 +76,11 @@ class App.Router extends Backbone.Router
                         purchaseWizardCompleted()
 
             fetchUserAndShowPurchaseWizard = (user) ->
-                user.fetch success: (user) ->
-                    showPurchaseWizard user, ->
-                        purchaseWizardCompleted()
+                success = (user) ->
+                    showPurchaseWizard user, -> purchaseWizardCompleted()
+
+                return success user if App.config.offlineMode
+                user.fetch {success}
 
             user = App.auth.user
             return fetchUserAndShowPurchaseWizard user if user.isLoggedIn()

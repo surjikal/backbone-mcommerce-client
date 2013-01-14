@@ -15,6 +15,7 @@ class App.Models.ItemSpot extends Backbone.RelationalModel
 
     getImageUrl: ->
         item = @get 'item'
+        return item.image if App.config.offlineMode
         "#{App.config.urls.static}/images/#{item.image}"
 
     getStats: ->
