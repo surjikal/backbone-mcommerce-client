@@ -14,14 +14,5 @@ class App.Collections.Address extends App.Collections.Base
     parse: (response) ->
         response.objects
 
-    fetch: (callbacks = {}) ->
-        super
-            success: callbacks.success
-            error: (addresses, response) ->
-                callback = switch response.status
-                    when 401 then callbacks.unauthorized
-                    else          callbacks.error
-                callback? addresses, response
-
     url: ->
         "#{App.config.urls.api}/addresses/"
