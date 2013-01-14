@@ -138,7 +138,7 @@ class App.Views.Registration extends App.Views.FormView
                 text = if password then 'Register and Continue' \
                                    else 'Continue'
                 $button.text text
-                $button.attr 'disabled', false
+                $button.removeAttr 'disabled'
 
     validateForm: (callbacks) ->
         email    = @getFieldValue 'email'
