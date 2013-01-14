@@ -4,12 +4,13 @@ ul.items
   div.table-row
     {{#each itemSpots}}
     li
-      a.image(href="{{url}}", style="background-image: url({{image}});")
-      footer
-        .bottom-bar
-          p.price
-            span.dollar
-            {{{formatPrice itemPrice}}}
-          a.buy-button(href="{{url}}") Buy
+      .itemspot
+        a.image(href="{{url}}", style="background-image: url({{image}});")
+        footer
+          .bottom-bar
+            .item-name {{item.name}}
+            .price
+              span.dollar
+              {{{formatPrice itemPrice}}}
     {{/each}}
   {{/each}}

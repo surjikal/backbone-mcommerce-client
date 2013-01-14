@@ -16,7 +16,6 @@ $boutique-grid-size: 0.2em;
             display: table-row;
 
             li {
-                @include box-sizing(border-box);
                 list-style: none outside none;
                 padding: $boutique-grid-size;
                 width: 33.33333333%;
@@ -24,6 +23,12 @@ $boutique-grid-size: 0.2em;
                 margin: 0 !important;
                 position: relative;
                 display: table-cell;
+
+                .itemspot {
+                    border: 1px solid #dfdfdf;
+                    background: white;
+                    padding-top: 0.4em;
+                }
 
                 .image {
                     @include background-size(contain);
@@ -46,13 +51,14 @@ $boutique-grid-size: 0.2em;
                     );
 
                     clear: both;
-                    background: #ddd;
+                    // @include background(linear-gradient(top, white 50%, #f3f3f3));
+                    background: white;
                     font-size: 70%;
                     overflow: hidden;
                     padding: 3px 5px;
                     position: relative;
-                    border: 1px solid #dadada;
-                    border-top-color: #cfcfcf;
+                    border: 1px solid #fcfcfc;
+                    border-top-width: 0;
 
                     .title {
                         font-size: 60%;
@@ -67,10 +73,13 @@ $boutique-grid-size: 0.2em;
                         width: 100%;
                         right: 0;
 
-                        .price {
-                            float: right;
-                            position: relative;
+                        .item-name {
+                            font-weight: 500;
+                        }
 
+                        .price {
+                            color: $primary-color;
+                            font-weight: 600;
                             &:before {
                                 content: '$';
                             }
