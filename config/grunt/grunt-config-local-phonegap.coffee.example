@@ -7,6 +7,9 @@ module.exports =
     # These files will be deleted at the end of the grunt task
     tmp_directory:   'tmp'
 
+    # Shows the baseline, helpful for css development
+    show_baseline: false
+
     # Weinre remote debugger configuration
     remote_debugging:
 
