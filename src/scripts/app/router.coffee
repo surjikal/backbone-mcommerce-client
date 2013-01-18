@@ -122,7 +122,7 @@ class App.Router extends Backbone.Router
     routeNotFound: (route) ->
         if route[-1..] is '/'
             console.error "Requested route '#{route}' has a trailing slash. Redirecting."
-            return @navigate route[..-2], {trigger: true}
+            return @navigate route[..-2], {trigger: true, replace: true}
         console.debug "Route '#{route}' not found."
 
 
@@ -133,11 +133,11 @@ getBoutiqueOrShowNotFound = (boutiqueCode, success) ->
     App.collections.boutiques.getOrFetch boutiqueCode, {
         success
         notFound: ->
-            App.router.navigate "/boutiques/#{boutiqueCode}/notFound", {trigger: true}
+            App.router.navigate "/boutiques/#{boutiqueCode}/notFound", {trigger: true, replace: true}
     }
 
 
 getItemSpotOrShowNotFound = (boutiqueCode, index, success) ->
     getBoutiqueOrShowNotFound boutiqueCode, (boutique) ->
         return success itemspot if itemspot = boutique.getItemSpotFromIndex index
-        App.router.navigate "/boutiques/#{boutiqueCode}/items/#{index}/notFound", {trigger: true}
+        App.router.navigate "/boutiques/#{boutiqueCode}/items/#{index}/notFound", {trigger: true, replace: true}
