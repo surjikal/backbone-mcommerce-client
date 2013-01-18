@@ -28,7 +28,18 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
         App.auth.events.on 'logout', @onLogout, @
 
     clicked: =>
-        App.auth.logout() if @mode is 'logout'
+        if @mode is 'logout' then @logoutClicked() \
+                             else @loginClicked()
+
+    loginClicked: =>
+        popup = new App.Views.LoginPopup
+            model: App.auth.user
+            callbacks: success: =>
+                popup.close()
+        App.views.main.showPopup popup
+
+    logoutClicked: =>
+        App.auth.logout()
 
     onLogin: =>
         @setLogoutMode()
@@ -41,7 +52,7 @@ class App.Views.AuthMenuItem extends App.Views.MenuItem
     setLoginMode: ->
         @mode  = 'login'
         @title = 'Login'
-        @url   = '/login'
+        @url   = null
 
     setLogoutMode: ->
         @mode  = 'logout'
