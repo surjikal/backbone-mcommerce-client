@@ -108,7 +108,6 @@ class App.Views.Header extends Backbone.LayoutView
             items: [
                 {viewClass: App.Views.AuthMenuItem}
                 {title: 'Home',    url: '/'}
-                {title: 'Profile', url: '/profile'}
             ]
 
     rightActionClicked: =>
