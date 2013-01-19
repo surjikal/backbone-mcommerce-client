@@ -220,10 +220,11 @@ class App.Views.Wizard extends Backbone.LayoutView
         @_resetIncompleteStepStates()
         @_setUrl "#{@getStepUrl id}#{window.location.search}"
         step.state = 'active'
-        stepView = step._createView data
-        @setView stepView
-        stepView.setWizardStepListView @stepListView
-        stepView.render() if render
+        @stepView.close() if @stepView
+        @stepView = step._createView data
+        @setView @stepView
+        @stepView.setWizardStepListView @stepListView
+        @stepView.render() if render
 
     # Implement this in your derived class
     completed: (data, done) ->

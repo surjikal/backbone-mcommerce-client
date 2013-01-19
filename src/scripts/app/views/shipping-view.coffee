@@ -31,7 +31,7 @@ class App.Views.Shipping extends App.Views.WizardStep
         refresh = ->
             App.router.navigate itemspot.getCheckoutUrl(), {trigger:true}
 
-        App.auth.events.on 'login', refresh
+        App.auth.events.on 'login', refresh, @
 
     performValidation: (event) -> _.defer =>
         $button = @$ '#wizard-next-step'
@@ -108,3 +108,7 @@ class App.Views.Shipping extends App.Views.WizardStep
         showModeToggleButton: not @collection.isEmpty()
         toggleButtonText: if @currentAddressMode is 'create' then 'cancel' else '+ address'
         user: App.auth.user.toJSON() if App.auth.user.isLoggedIn()
+
+    close: ->
+        console.debug "Cleaning up shipping view."
+        App.auth.events.off null, null, @
