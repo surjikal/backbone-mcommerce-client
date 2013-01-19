@@ -15,6 +15,13 @@ class App.Views.Main extends Backbone.LayoutView
         @popup = null
 
     setPageView: (page, removeHeader = false) ->
+
+        # HACKCKKCKCKCK
+        if page.className is 'boutique-select-view'
+            @$('#page').addClass 'no-border'
+        else
+            @$('#page').removeClass 'no-border'
+
         if removeHeader then @removeHeader() else @attachHeader()
         @setView '#page', page
         page.render()
