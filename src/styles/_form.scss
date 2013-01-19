@@ -57,6 +57,18 @@ button {
 }
 
 
+.anti-button-flicker {
+    background-color: $primary-color;
+
+    &.loading {
+        background-image: inline-image('spinner.gif');
+        background-position: center;
+        background-repeat: no-repeat;
+        text-indent: -9999px;
+        white-space: nowrap;
+    }
+}
+
 select, textarea,
 input[type="text"],
 input[type="password"],

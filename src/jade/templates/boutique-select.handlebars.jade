@@ -19,5 +19,6 @@ form#boutique-select-form(method='post', action='.')
 
     {{#if isPhonegap}}
     .sep(style="color: #aaa; padding: 1em 0; clear: both; text-shadow: 0px 1px 0px white") or
-    button.button-primary#scan-button(type="button") Scan Item
+    .anti-button-flicker.loading
+        button.button-primary#scan-button(type="button") Scan Item
     {{/if}}
