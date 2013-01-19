@@ -18,5 +18,6 @@ class App.Views.Boutique extends Backbone.LayoutView
 
     serializeItemSpotModels: ->
         itemSpots = @model.get 'itemSpots'
-        itemSpots.map (itemSpot) =>
+        itemSpots.sort()
+        itemSpots = itemSpots.map (itemSpot) =>
             itemSpot.toViewJSON()

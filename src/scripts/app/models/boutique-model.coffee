@@ -19,6 +19,7 @@ class App.Models.Boutique extends Backbone.RelationalModel
 
     getItemSpotFromIndex: (index) ->
         itemSpots = @get 'itemSpots'
+        itemSpots.sort()
         itemSpots.at index-1
 
     getRouterUrl: ->
