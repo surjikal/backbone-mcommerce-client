@@ -19,17 +19,21 @@
 // iPads (portrait and landscape)
 @media only screen and (min-width : 768px) {
 
-    #page, .content, .restrict-width {
+    .popup, #page, .content, .restrict-width {
         width: 768px;
         margin-left: auto;
         margin-right: auto;
     }
 
     #page {
-        border-left: 1px solid #eee;
+        border-left:  1px solid #eee;
         border-right: 1px solid #eee;
-    }
+        @include box-sizing(content-box);
 
+        &.no-border {
+            border: none;
+        }
+    }
 }
 
 // iPads (landscape)

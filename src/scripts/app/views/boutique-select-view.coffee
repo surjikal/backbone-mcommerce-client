@@ -2,7 +2,7 @@
 class App.Views.BoutiqueSelect extends App.Views.FormView
 
     template: 'boutique-select'
-    className: 'content boutique-select-view'
+    className: 'boutique-select-view'
 
     events:
         _.extend {}, App.Views.FormView::events,

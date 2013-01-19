@@ -28,7 +28,7 @@ class App.Views.PasswordWidget extends App.Views.FormView
 class App.Views.Auth extends App.Views.FormView
 
     template: 'auth-login'
-    className: 'content auth-view auth-login-view'
+    className: 'auth-view auth-login-view'
 
     events:
         'click #login-button': 'submitButtonClicked'
@@ -98,7 +98,7 @@ class App.Views.Auth extends App.Views.FormView
 class App.Views.Registration extends App.Views.FormView
 
     template: 'auth-register'
-    className: 'content auth-view auth-register-view'
+    className: 'auth-view auth-register-view'
 
     events:
         'click  #register-button': 'submitButtonClicked'
