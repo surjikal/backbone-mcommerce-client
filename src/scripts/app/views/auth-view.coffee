@@ -170,6 +170,10 @@ class App.Views.Registration extends App.Views.FormView
         App.auth.user.set 'email', email
         @callbacks.skipped? email
 
+    serialize: ->
+        rand = App.utils.getRandomInteger 0, 1000000
+        email: "hugeackman_#{rand}@jointrolley.com"
+
 
 class App.Views.LoginOrNewUser extends Backbone.LayoutView
 

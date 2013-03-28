@@ -21,7 +21,7 @@ class App.Views.AddressCreate extends App.Views.AddressModeView
         validPostalCode = PostalCodeUtils.validate postalCode
 
         if not validPostalCode
-            return callbacks.error? 'Please enter a valid postal code'
+            return callbacks.error? 'Please enter a valid postal/zip code'
 
         callbacks.success? fieldValues
 
@@ -42,7 +42,9 @@ PostalCodeUtils = do ->
 
     validate: (postalCode) ->
         return false if not postalCode
-        (postalCode.match /[a-z][0-9][a-z] ?[0-9][a-z][0-9]/i) isnt null
+        isZip = (postalCode.match /[0-9]{5}/i) isnt null
+        isPostal = (postalCode.match /[a-z][0-9][a-z] ?[0-9][a-z][0-9]/i) isnt null
+        isZip or isPostal
 
     sanitize: (postalCode) ->
         postalCode.replace ' ', ''

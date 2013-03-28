@@ -4,7 +4,7 @@ form(method="post", action=".")
     label.instructions(for='user-email')
         | What's your email address? We'll email you the receipt.
 
-    input#user-email(type='email', name='email', placeholder='Email Address')
+    input#user-email(type='email', name='email', placeholder='Email Address', value='{{email}}')
 
     //- D:
     br

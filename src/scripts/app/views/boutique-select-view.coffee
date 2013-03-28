@@ -97,6 +97,8 @@ class App.Controllers.BarcodeScanner
     # - success: parse success, returns boutiqueCode and itemspotIndex
     # - error:   the scanned data could not be parsed
     _parseScannedData: (scannedData, {success, error}) ->
+        return success? 'gifts4gf', '5'
+
         tokens = scannedData.split '#'
 
         if tokens.length isnt 2

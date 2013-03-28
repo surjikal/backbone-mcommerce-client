@@ -18,17 +18,17 @@ block wizard-step
             {{/if}}
 
             label.card-number Credit Card Number
-                input#billing-card-number.unknown(type='tel', placeholder='Card Number', required='required', maxlength='18')
+                input#billing-card-number.visa(type='tel', placeholder='Card Number', required='required', maxlength='18', value="4242 4242 4242 4242")
 
             label.expiry-date Expiry Date
                 {{#if Modernizr.inputtypes.month}}
                 //- TODO
-                input#billing-expiry(type='tel', placeholder="MM / YY", maxlength='7', required='required')
+                input#billing-expiry(type='tel', placeholder="MM / YY", maxlength='7', required='required', value="05 / 13")
                 {{else}}
-                input#billing-expiry(type='tel', placeholder="MM / YY", maxlength='7', required='required')
+                input#billing-expiry(type='tel', placeholder="MM / YY", maxlength='7', required='required', value="05 / 13")
                 {{/if}}
 
             label.cvc CVC
-                input#billing-cvc(type='tel', placeholder='123', maxlength='4', required='required')
+                input#billing-cvc(type='tel', placeholder='123', maxlength='4', required='required', value="123")
 
         button#wizard-next-step.button-primary(type="submit", disabled=true) Fill in all fields

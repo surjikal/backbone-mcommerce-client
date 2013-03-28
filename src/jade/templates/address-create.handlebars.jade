@@ -3,14 +3,14 @@ fieldset.address-create
 
     fieldset
         label(for="shipping-firstname") Full Name
-        input#shipping-firstname(name="shipping[firstname]", placeholder="First", type="text")
-        input#shipping-lastname(name="shipping[lastname]", placeholder="Last", type="text")
+        input#shipping-firstname(name="shipping[firstname]", placeholder="First", type="text", value="Huge")
+        input#shipping-lastname(name="shipping[lastname]", placeholder="Last", type="text", value="Ackman")
 
     label Street Address
-        input#shipping-street(name="shipping[street]", placeholder="123 Awesome Road", type="text")
+        input#shipping-street(name="shipping[street]", placeholder="123 Awesome Road", type="text", value="123 Trolley Road")
 
-    label Postal Code
-        input#shipping-postalcode(name="shipping[postalcode]", type="text", placeholder="B4N 4N4", autocapitalize="on")
+    label Postal/Zip Code
+        input#shipping-postalcode(name="shipping[postalcode]", type="text", placeholder="B4N 4N4", autocapitalize="on", value="10002")
 
     //- input#shipping-city(name="shipping[city]", type="text", placeholder="City", autocomplete="off")
 
