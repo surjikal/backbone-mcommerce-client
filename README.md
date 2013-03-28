@@ -1,5 +1,6 @@
+# Trolley Client
 
-# Virtual Plaza Client
+Designed by [Sarah Hum](http://sarahhum.com/), implemented by [Nicolas Porter](http://nicolasporter.ca)
 
 
 ## Main Dependencies
@@ -29,6 +30,7 @@ Nginx         | http://wiki.nginx.org/Install
 The **same origin policy** prevents your document loaded from one origin from getting stuff from a different origin.
 This means that you can't access the server from the client because they are not from the same origin. To bypass this,
 you can use Nginx.
+
 
 #### Nginx Installation and Configuration
 
