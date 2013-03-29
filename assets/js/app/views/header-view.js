@@ -205,7 +205,7 @@
             viewClass: App.Views.AuthMenuItem
           }, {
             title: 'Home',
-            url: '/'
+            url: App.config.urls.root
           }
         ]
       });
