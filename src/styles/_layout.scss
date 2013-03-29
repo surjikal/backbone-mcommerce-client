@@ -27,6 +27,10 @@ $header-height: 50px;
     }
 }
 
+.popup, #page, .content, .restrict-width {
+    min-width: 300px;
+}
+
 .content {
     position: relative;
 }
