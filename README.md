@@ -87,6 +87,6 @@ This is where you set up the **run-time** configuration. It is injected into the
 
 ## License
 
-Copyright (C) 2013 Nicolas Porter
+Copyright © 2013 Nicolas Porter
 
 GPLv3
