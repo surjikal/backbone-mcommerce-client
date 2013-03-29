@@ -26,7 +26,7 @@ OfflineData =
 
   boutiques: [
     {
-      code: "vipl"
+      code: "trolley"
       itemSpots: [
         itemPrice: "299.99"
         item:
@@ -130,7 +130,7 @@ App.loadOfflineData = do ->
       boutique.itemSpots = _.map boutique.itemSpots, (itemspot, index) ->
         image = itemspot.item.image
         itemspot.item.image = App.OfflineImages[image]
-        itemspot.index      = index
+        itemspot.index      = index+1
         itemspot
 
       console.debug "- #{boutique.code}"

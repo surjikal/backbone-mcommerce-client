@@ -22,7 +22,7 @@ class App.Router extends Backbone.Router
 
 
     index: ->
-        @boutiqueSelect()
+        @boutique 'trolley'
 
 
     boutiqueSelect: ->
