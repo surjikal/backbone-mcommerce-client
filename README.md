@@ -84,3 +84,8 @@ Located in: `/config/app`
 
 This is where you set up the **run-time** configuration. It is injected into the `App` object as the
 `config` property.
+
+## License
+
+Copyright (C) 2013 Nicolas Porter
+GPLv3
