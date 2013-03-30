@@ -14,9 +14,9 @@
             country: "canada",
             firstName: "Nick",
             lastName: "Porter",
-            postalCode: "K4A 4H5",
+            postalCode: "H0H 0H0",
             province: "ON",
-            street: "1911 Venus Avenue"
+            street: "2112 Ottawa Street"
           }, {
             city: "Toronto",
             country: "canada",
