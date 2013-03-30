@@ -1,6 +1,6 @@
 # Trolley Client
 
-Designed by [Sarah Hum](http://sarahhum.com/), implemented by [Nicolas Porter](http://nicolasporter.ca)
+Design by [Sarah Hum](http://sarahhum.com/)
 
 
 ## Main Dependencies

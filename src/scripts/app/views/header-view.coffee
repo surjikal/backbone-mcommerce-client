@@ -107,7 +107,7 @@ class App.Views.Header extends Backbone.LayoutView
         new App.Views.Menu
             items: [
                 {viewClass: App.Views.AuthMenuItem}
-                {title: 'Home',    url: '/'}
+                {title: 'Home',    url: App.config.urls.root}
             ]
 
     rightActionClicked: =>
