@@ -17,7 +17,6 @@
       var disabled, error, incorrect, invalid, success, _ref,
         _this = this;
       _ref = _arg != null ? _arg : {}, success = _ref.success, incorrect = _ref.incorrect, invalid = _ref.invalid, disabled = _ref.disabled, error = _ref.error;
-      console.debug(App.api.auth);
       return App.api.auth.validate(email, password, {
         incorrect: incorrect,
         invalid: invalid,

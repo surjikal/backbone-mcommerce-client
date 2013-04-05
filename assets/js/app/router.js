@@ -29,7 +29,9 @@
     };
 
     Router.prototype.index = function() {
-      return this.boutique('trolley');
+      return App.router.navigate("/boutiques/trolley", {
+        trigger: true
+      });
     };
 
     Router.prototype.boutiqueSelect = function() {
