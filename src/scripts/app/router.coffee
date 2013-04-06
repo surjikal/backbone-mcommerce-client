@@ -86,24 +86,6 @@ class App.Router extends Backbone.Router
             return fetchUserAndShowPurchaseWizard user if user.isLoggedIn()
             return showNewUserPurchaseWizard user      # if resumingWizard and App.auth.user.isNew()
 
-            # console.debug "Starting guest purchase wizard; showing popup."
-
-            # We are starting the wizard, so show the popup.
-            # App.views.main.showPopup new App.Views.LoginOrNewUserPopup
-            #     model: App.auth.user
-            #     callbacks:
-            #         # The "new user" button is clicked.
-            #         newUserSuccess: (user) ->
-            #             App.views.main.removePopup()
-            #             showNewUserPurchaseWizard user
-            #         # The user logs in.
-            #         loginSuccess: (user) ->
-            #             App.views.main.removePopup()
-            #             fetchUserAndShowPurchaseWizard user
-            #         # The popup is closed, i.e. the 'x' button is clicked.
-            #         closed: ->
-            #             window.history.back()
-
 
     thanks: (boutiqueCode, index) ->
         console.debug 'Routing to thanks.'

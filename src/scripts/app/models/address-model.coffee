@@ -5,11 +5,12 @@ class App.Models.Address extends Backbone.RelationalModel
         firstName: null
         lastName: null
         street: null
-        # city: 'Orleans'
-        # province: 'Ontario'
+        # city: ''
+        # province: ''
         postalCode: null
 
     urlRoot: ->
         "#{App.config.urls.api}/addresses/"
+
 
 App.Models.Address.setup()
