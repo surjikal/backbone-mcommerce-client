@@ -5,6 +5,7 @@ OfflineData =
     password: 'trolley'
     account:
       addresses: [
+        id: 1
         city: "Ottawa"
         country: "canada"
         firstName: "Nick"
@@ -13,6 +14,7 @@ OfflineData =
         province: "ON"
         street: "2112 Ottawa Street"
       ,
+        id: 2
         city: "Toronto"
         country: "canada"
         firstName: "Justin"
@@ -120,6 +122,7 @@ App.loadOfflineData = do ->
 
     user      = App.auth.user
     addresses = user.getAddresses()
+
     addresses.add account.addresses
 
   loadBoutiques = (boutiques) ->
