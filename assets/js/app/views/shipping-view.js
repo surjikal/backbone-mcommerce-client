@@ -81,7 +81,7 @@
             },
             success: function(data) {
               _this.disablePending();
-              _this._addUrlParameter('address', data.address.get('_id'));
+              _this._addUrlParameter('address', data.address.get('id'));
               return done(data);
             }
           });
