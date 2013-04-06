@@ -22,7 +22,7 @@ class App.Router extends Backbone.Router
 
 
     index: ->
-        @boutique 'trolley'
+        App.router.navigate "/boutiques/trolley", {trigger: true}
 
 
     boutiqueSelect: ->
